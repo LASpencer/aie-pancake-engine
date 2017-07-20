@@ -45,8 +45,9 @@ public:
 	*	collider (2):	Collider		Contains entity's hitboxes
 										and tests for collisions
 	
-	*	controller (4):	Controller		Manages other components and 
-										controls entity's behaviour
+	*	agent (4):		Agent			Controls entity's behaviour
+
+	*	body (8):		Body			Moves entity //TODO update comments
 	*/
 	enum Identifier {
 		sprite = 0x1,		// Derived from SpriteBase class

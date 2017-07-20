@@ -22,6 +22,9 @@ bool GameProjectApp::startup() {
 	m_resourceManager = new ResourceManager();
 	m_entityFactory = new EntityFactory(this);
 	m_sceneRoot = std::make_shared<SceneObject>();
+
+	m_entityFactory->createEntity(EntityFactory::ship, glm::translate(glm::mat3(1), glm::vec2(500,500)));
+
 	// Disable face culling, so sprites can be flipped
 	glDisable(GL_CULL_FACE);
 	return true;
@@ -99,6 +102,16 @@ void GameProjectApp::updateEntities(float deltaTime)
 
 void GameProjectApp::drawEntities()
 {
+	std::vector<EntityPtr> entitiesWithComponent = Entity::getEntitiesWithComponent(Component::sprite, m_entityList);
+	for (EntityPtr entity : entitiesWithComponent) {
+		entity->getComponent(Component::sprite)->draw(m_2dRenderer);
+	}
+	if (Collider::draw_boxes) {
+		entitiesWithComponent = Entity::getEntitiesWithComponent(Component::collider, m_entityList);
+		for (EntityPtr entity : entitiesWithComponent) {
+			entity->getComponent(Component::collider)->draw(m_2dRenderer);
+		}
+	}
 }
 
 ResourceManager * GameProjectApp::getResourceManager()

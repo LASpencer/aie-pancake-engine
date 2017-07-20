@@ -1,8 +1,8 @@
 #pragma once
 #include "Component.h"
+#include "Behaviour.h"
 
-/*	Abstract base class for components which control and manage the entity
-	This should be the last component added, as it may depend on other components*/
+
 class Agent 
 	: public Component {
 public:
@@ -14,4 +14,7 @@ public:
 
 	// Tests whether entity is valid owner of this controller
 	virtual bool isValidEntity(EntityPtr entity) = 0;
+
+protected:
+	std::vector<BehaviourPtr> m_behaviours;
 };

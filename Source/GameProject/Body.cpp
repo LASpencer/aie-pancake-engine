@@ -2,6 +2,16 @@
 #include "Body.h"
 #include "Entity.h"
 
+Body::Body() : m_velocity(0), m_force(0), m_invmass(0), m_drag(0)
+{
+}
+
+Body::Body(float mass, float drag, glm::vec2 velocity) : m_velocity(velocity), m_force(0)
+{
+	setMass(mass);
+	setDrag(drag);
+}
+
 Body::~Body()
 {
 }
@@ -19,6 +29,11 @@ void Body::applyDeltaV(glm::vec2 deltaV)
 void Body::applyImpulse(glm::vec2 impulse)
 {
 	m_velocity += (impulse * m_invmass);
+}
+
+void Body::addForce(glm::vec2 force)
+{
+	m_force += force;
 }
 
 void Body::setDrag(float drag)
@@ -60,7 +75,14 @@ void Body::update(float deltaTime)
 
 	m_velocity += deltaTime * m_invmass * m_force;
 
+	m_force = glm::vec2(0);
+
 	displacement += 0.5f * deltaTime * m_velocity;
 
 	entity->getPosition()->globalTranslate(displacement);
+}
+
+Component::Identifier Body::getID()
+{
+	return body;
 }

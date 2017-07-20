@@ -100,10 +100,12 @@
     <ClCompile Include="EventBase.cpp" />
     <ClCompile Include="GameProjectApp.cpp" />
     <ClCompile Include="InputEvent.cpp" />
+    <ClCompile Include="KeyboardController.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MultiSprite.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SceneObject.cpp" />
+    <ClCompile Include="ShipAgent.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteBase.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -113,6 +115,7 @@
     <ClCompile Include="TextBar.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Behaviour.h" />
     <ClInclude Include="Body.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Collider.h" />
@@ -127,10 +130,12 @@
     <ClInclude Include="Filepaths.h" />
     <ClInclude Include="GameProjectApp.h" />
     <ClInclude Include="InputEvent.h" />
+    <ClInclude Include="KeyboardController.h" />
     <ClInclude Include="MultiSprite.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceneObject.h" />
+    <ClInclude Include="ShipAgent.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteBase.h" />
     <ClInclude Include="stdafx.h" />

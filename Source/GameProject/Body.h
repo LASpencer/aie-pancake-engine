@@ -9,6 +9,7 @@ typedef std::weak_ptr<Body>	BodyWeakPtr;
 
 class Body 
 	: public Component {
+public:
 	Body();
 	Body(float mass, float drag, glm::vec2 velocity = glm::vec2(0));
 	virtual ~Body();
@@ -35,6 +36,8 @@ class Body
 	//TODO update method
 
 	virtual void update(float deltaTime);
+
+	virtual Identifier getID();
 
 protected:
 	//mass, velocity, force, drag, friction
