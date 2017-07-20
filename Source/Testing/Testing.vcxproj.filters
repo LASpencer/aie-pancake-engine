@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Test Classes">
+      <UniqueIdentifier>{e58d8130-72f4-4e37-8998-59b0f96382f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Test Classes\States">
+      <UniqueIdentifier>{9d4f701d-6a39-4d7b-aa71-07201e681d1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Test Classes">
+      <UniqueIdentifier>{197b85fa-7be4-49da-b59b-37741fb745a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Test Classes\States">
+      <UniqueIdentifier>{63b94a1c-b6ea-4891-a5ec-551616620de9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Test Classes\Components">
+      <UniqueIdentifier>{91314277-3789-4bfc-aadf-e70dc4f83ffb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Test Classes\Entities">
+      <UniqueIdentifier>{42eaa909-6a00-4a05-ab9e-2a2deaae4357}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dependencies\catch\include\catch.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FooState.h">
+      <Filter>Header Files\Test Classes\States</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx_test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BarState.h">
+      <Filter>Header Files\Test Classes\States</Filter>
+    </ClInclude>
+    <ClInclude Include="BazState.h">
+      <Filter>Header Files\Test Classes\States</Filter>
+    </ClInclude>
+    <ClInclude Include="FooStackState.h">
+      <Filter>Header Files\Test Classes\States</Filter>
+    </ClInclude>
+    <ClInclude Include="TestApp.h">
+      <Filter>Header Files\Test Classes</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Testing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FooState.cpp">
+      <Filter>Source Files\Test Classes\States</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameProject\State.cpp">
+      <Filter>Source Files\Test Classes\States</Filter>
+    </ClCompile>
+    <ClCompile Include="StateMachineTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BarState.cpp">
+      <Filter>Source Files\Test Classes\States</Filter>
+    </ClCompile>
+    <ClCompile Include="BazState.cpp">
+      <Filter>Source Files\Test Classes\States</Filter>
+    </ClCompile>
+    <ClCompile Include="FooStackState.cpp">
+      <Filter>Source Files\Test Classes\States</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManagerTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestApp.cpp">
+      <Filter>Source Files\Test Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameProject\Component.cpp">
+      <Filter>Source Files\Test Classes\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameProject\SceneObject.cpp">
+      <Filter>Source Files\Test Classes\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameProject\ResourceManager.cpp">
+      <Filter>Source Files\Test Classes</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
