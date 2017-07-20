@@ -33,7 +33,7 @@ bool Entity::addComponent(const ComponentPtr & component)
 
 bool Entity::removeComponent(Component::Identifier id)
 {
-	las::Array<ComponentPtr>::iterator component = m_components.begin();
+	std::vector<ComponentPtr>::iterator component = m_components.begin();
 	bool removed = false;
 	while (component != m_components.end()) {
 		if ((*component)->getID() == id) {
@@ -87,13 +87,13 @@ SceneObjectPtr Entity::getPosition()
 	return m_position;
 }
 
-las::Array<EntityPtr> Entity::getEntitiesWithComponent(Component::Identifier component, las::Array<EntityPtr>&entities)
+std::vector<EntityPtr> Entity::getEntitiesWithComponent(Component::Identifier component, std::vector<EntityPtr>&entities)
 {
 	// use find_if to fill new array with all entities with matching bitmask
-	las::Array<EntityPtr> entitiesWithComponent;
+	std::vector<EntityPtr> entitiesWithComponent;
 	auto maskMatches = [=](EntityPtr e) {return bool(component&(e->getComponentMask())); };
 	// Until end reached, push back next entity with matching component bitset
-	las::Array<EntityPtr>::iterator entity = std::find_if(entities.begin(), entities.end(), maskMatches);
+	std::vector<EntityPtr>::iterator entity = std::find_if(entities.begin(), entities.end(), maskMatches);
 	while (entity != entities.end()) {
 		entitiesWithComponent.push_back(*entity);
 		entity = std::find_if(++entity, entities.end(), maskMatches);

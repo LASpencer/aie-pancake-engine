@@ -77,12 +77,12 @@ void GameProjectApp::draw() {
 void GameProjectApp::updateEntities(float deltaTime)
 {
 	//Update controller components
-	std::vector<EntityPtr> entitiesWithComponent = Entity::getEntitiesWithComponent(Component::controller, m_entityList);
+	std::vector<EntityPtr> entitiesWithComponent = Entity::getEntitiesWithComponent(Component::agent, m_entityList);
 	for (EntityPtr entity : entitiesWithComponent) {
-		entity->getComponent(Component::controller)->update(deltaTime);
+		entity->getComponent(Component::agent)->update(deltaTime);
 	}
 	//Update body components
-	std::vector<EntityPtr> entitiesWithComponent = Entity::getEntitiesWithComponent(Component::body, m_entityList);
+	entitiesWithComponent = Entity::getEntitiesWithComponent(Component::body, m_entityList);
 	for (EntityPtr entity : entitiesWithComponent) {
 		entity->getComponent(Component::body)->update(deltaTime);
 	}

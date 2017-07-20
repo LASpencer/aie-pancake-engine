@@ -51,7 +51,7 @@ public:
 	enum Identifier {
 		sprite = 0x1,		// Derived from SpriteBase class
 		collider = 0x2,		// Collider class
-		controller = 0x4,	// Derived from Controller class
+		agent = 0x4,	// Derived from Controller class
 		body = 0x8
 	};
 

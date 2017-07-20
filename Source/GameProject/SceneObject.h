@@ -56,6 +56,10 @@ public:
 	*	@param post whether to translate after or before current transformation*/
 	void translate(glm::vec2 translate, bool post = true);
 
+	/** Applies translation in terms of global position
+	*	@param translate vector to translate by*/
+	void globalTranslate(glm::vec2 translate);
+
 	/** Rotate local transform
 	*	@param angle angle of rotation in radians
 	*	@param post whether to rotate after or before current transformation*/

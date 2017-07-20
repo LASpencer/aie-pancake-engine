@@ -96,9 +96,6 @@
     <ClCompile Include="SceneObject.cpp">
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="Controller.cpp">
-      <Filter>Source Files\Entities\Components</Filter>
-    </ClCompile>
     <ClCompile Include="EntityFactory.cpp">
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
@@ -106,6 +103,9 @@
       <Filter>Source Files\Observer\Events</Filter>
     </ClCompile>
     <ClCompile Include="Body.cpp">
+      <Filter>Source Files\Entities\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Agent.cpp">
       <Filter>Source Files\Entities\Components</Filter>
     </ClCompile>
   </ItemGroup>
@@ -167,9 +167,6 @@
     <ClInclude Include="SceneObject.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="Controller.h">
-      <Filter>Header Files\Entities\Components</Filter>
-    </ClInclude>
     <ClInclude Include="EntityFactory.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
@@ -177,6 +174,9 @@
       <Filter>Header Files\Observer\Events</Filter>
     </ClInclude>
     <ClInclude Include="Body.h">
+      <Filter>Header Files\Entities\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Agent.h">
       <Filter>Header Files\Entities\Components</Filter>
     </ClInclude>
   </ItemGroup>

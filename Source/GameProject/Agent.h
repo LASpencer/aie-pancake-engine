@@ -3,11 +3,11 @@
 
 /*	Abstract base class for components which control and manage the entity
 	This should be the last component added, as it may depend on other components*/
-class Controller 
+class Agent 
 	: public Component {
 public:
-	Controller();
-	virtual ~Controller();
+	Agent();
+	virtual ~Agent();
 
 	// Returns Controller identifier
 	virtual Identifier getID();

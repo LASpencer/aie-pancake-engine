@@ -91,16 +91,16 @@ public:
 private:
 	GameProjectApp* m_app;
 
-	// Creates a Hero entity
-	EntityPtr createHero(glm::mat3 position, SceneObjectPtr parent);
-	// Creates a Block entity
-	EntityPtr createBlock(glm::mat3 position, SceneObjectPtr parent);
-	// Creates a Platform entity
-	EntityPtr createPlatform(glm::mat3 position, SceneObjectPtr parent);
-	// Creates a Door entity
-	EntityPtr createDoor(glm::mat3 position, SceneObjectPtr parent);
-	// Creates a Floor entity
-	EntityPtr createFloor(glm::mat3 position, SceneObjectPtr parent);
+	//// Creates a Hero entity
+	//EntityPtr createHero(glm::mat3 position, SceneObjectPtr parent);
+	//// Creates a Block entity
+	//EntityPtr createBlock(glm::mat3 position, SceneObjectPtr parent);
+	//// Creates a Platform entity
+	//EntityPtr createPlatform(glm::mat3 position, SceneObjectPtr parent);
+	//// Creates a Door entity
+	//EntityPtr createDoor(glm::mat3 position, SceneObjectPtr parent);
+	//// Creates a Floor entity
+	//EntityPtr createFloor(glm::mat3 position, SceneObjectPtr parent);
 
 	// Sets entity's position, and place in scene graph
 	bool setEntityPosition(EntityPtr entity, glm::mat3 position, SceneObjectPtr parent);

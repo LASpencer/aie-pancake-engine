@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "GameProjectApp.h"
-
+//TODO update to new bootstrap version
 int main() {
 	
 	auto app = new GameProjectApp();

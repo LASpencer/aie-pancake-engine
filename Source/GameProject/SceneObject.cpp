@@ -90,6 +90,17 @@ void SceneObject::translate(glm::vec2 displacement, bool post)
 	setDirty();		// Change in transform invalidates subtree's global transform
 }
 
+void SceneObject::globalTranslate(glm::vec2 translate)
+{
+	// Calculate equivalent local translation
+	glm::vec2 localTranslate = translate;
+	if (m_parent) {
+		localTranslate = (glm::vec2)(glm::vec3(localTranslate.x,localTranslate.y,0) * glm::inverse(m_parent->getGlobalTransform()));
+	}
+	m_localTransform = glm::translate(m_localTransform, localTranslate);
+	setDirty();
+}
+
 void SceneObject::rotate(float angle, bool post)
 {
 	if (post) {
