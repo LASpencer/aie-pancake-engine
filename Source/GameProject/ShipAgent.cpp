@@ -3,9 +3,13 @@
 #include "Entity.h"
 #include "KeyboardController.h"
 
-ShipAgent::ShipAgent()
+ShipAgent::ShipAgent() : Agent()
 {
 	m_behaviours.push_back(std::make_shared<KeyboardController>());
+}
+
+ShipAgent::ShipAgent(float maxVelocity, float maxForce) : Agent(maxVelocity,maxForce)
+{
 }
 
 ShipAgent::~ShipAgent()
@@ -30,6 +34,6 @@ void ShipAgent::update(float deltaTime)
 
 bool ShipAgent::isValidEntity(EntityPtr entity)
 {
-	// Entity must have a body
-	return (entity->getComponentMask() & Component::body);
+	//can have extra requirements
+	Agent::isValidEntity(entity);
 }

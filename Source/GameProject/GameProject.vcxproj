@@ -100,6 +100,7 @@
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="EventBase.cpp" />
+    <ClCompile Include="FSMAgent.cpp" />
     <ClCompile Include="GameProjectApp.cpp" />
     <ClCompile Include="InputEvent.cpp" />
     <ClCompile Include="KeyboardController.cpp" />
@@ -109,6 +110,7 @@
     <ClCompile Include="OrCondition.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SceneObject.cpp" />
+    <ClCompile Include="SeekForce.cpp" />
     <ClCompile Include="ShipAgent.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteBase.cpp" />
@@ -117,8 +119,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SteeringForce.cpp" />
     <ClCompile Include="TextBar.cpp" />
     <ClCompile Include="Transition.cpp" />
+    <ClCompile Include="utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AndCondition.h" />
@@ -138,6 +142,7 @@
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="EventBase.h" />
     <ClInclude Include="Filepaths.h" />
+    <ClInclude Include="FSMAgent.h" />
     <ClInclude Include="GameProjectApp.h" />
     <ClInclude Include="InputEvent.h" />
     <ClInclude Include="KeyboardController.h" />
@@ -147,15 +152,19 @@
     <ClInclude Include="OrCondition.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceneObject.h" />
+    <ClInclude Include="SeekForce.h" />
     <ClInclude Include="ShipAgent.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteBase.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SteeringForce.h" />
     <ClInclude Include="Subject.h" />
+    <ClInclude Include="Target.h" />
     <ClInclude Include="TextBar.h" />
     <ClInclude Include="Transition.h" />
+    <ClInclude Include="utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

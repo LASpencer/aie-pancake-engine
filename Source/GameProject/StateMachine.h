@@ -14,11 +14,7 @@ public:
 	//TODO copy, copy assignment
 
 	bool addState(int id, std::shared_ptr<State<S>> newState) {
-		bool success = m_states.insert(id, newState);
-		//If no current state, this is now current state
-		if (!m_currentState) {
-			forceState(id);
-		}
+		bool success = m_states.insert(id, newState).second;
 		return success;
 	}
 
@@ -26,7 +22,7 @@ public:
 		m_fromAnyTransitions.push_back(transition);
 	}
 
-	void forceState(int id) {
+	void forceState(int id, std::shared_ptr<S> entity) {
 		// If going to same state, no transition
 		if (!m_currentState || m_currentID != id) {
 			m_currentID = id;
@@ -39,14 +35,14 @@ public:
 				throw std::out_of_range("No state with given id exists in state machine");
 			}
 			if (m_currentState) {
-				m_currentState->onExit();
+				m_currentState->onExit(entity);
 			}
-			newState->onEnter();
+			newState->onEnter(entity);
 			m_currentState = newState;
 		}
 	}
 
-	void update(std::shared_ptr<S> entity) {
+	void update(std::shared_ptr<S> entity, float deltaTime) {
 		//TODO exception instead?
 		assert(m_currentState);	//Assert current state not null
 								//Check transitions from any state
@@ -60,7 +56,7 @@ public:
 			}
 		}
 		// Update current state
-		m_currentState->update(entity, this);
+		m_currentState->update(entity, this, deltaTime);
 	}
 
 	std::shared_ptr<State<S>> getState() {

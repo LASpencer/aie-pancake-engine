@@ -6,7 +6,8 @@ Body::Body() : m_velocity(0), m_force(0), m_invmass(0), m_drag(0)
 {
 }
 
-Body::Body(float mass, float drag, glm::vec2 velocity) : m_velocity(velocity), m_force(0)
+Body::Body(float mass, float drag, glm::vec2 velocity) 
+	: m_velocity(velocity), m_force(0)
 {
 	setMass(mass);
 	setDrag(drag);
@@ -19,6 +20,11 @@ Body::~Body()
 void Body::setVelocity(glm::vec2 velocity)
 {
 	m_velocity = velocity;
+}
+
+glm::vec2 Body::getVelocity()
+{
+	return m_velocity;
 }
 
 void Body::applyDeltaV(glm::vec2 deltaV)

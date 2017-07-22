@@ -18,6 +18,8 @@ public:
 
 	void setVelocity(glm::vec2 velocity);
 
+	glm::vec2 getVelocity();
+
 	// Instantaneous change in velocity
 	void applyDeltaV(glm::vec2 deltaV);
 
@@ -47,3 +49,5 @@ protected:
 	float m_invmass;
 	float m_drag;
 };
+
+//HACK not sure where to put this 

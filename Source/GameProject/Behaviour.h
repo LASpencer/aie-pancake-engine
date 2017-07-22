@@ -10,5 +10,8 @@ typedef std::shared_ptr<Behaviour> BehaviourPtr;
 class Behaviour
 {
 public:
+	Behaviour() {};
+	virtual ~Behaviour() {};
+
 	virtual void update(EntityPtr entity, float deltaTime) = 0;
 };

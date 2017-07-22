@@ -8,6 +8,8 @@ class ShipAgent
 public:
 	ShipAgent();
 
+	ShipAgent(float maxVelocity, float maxForce = def_max_force);
+
 	virtual ~ShipAgent();
 
 	virtual bool onAdd(EntityPtr entity);

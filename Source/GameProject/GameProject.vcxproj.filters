@@ -67,6 +67,18 @@
     <Filter Include="Source Files\State Machine\Conditions\Complex Conditions">
       <UniqueIdentifier>{a7fbfede-29a2-483c-9a13-91da81a32c08}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Entities\Components\Agents">
+      <UniqueIdentifier>{f9fad9d1-85d0-4e11-8aaf-d85f1f607a67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Components\Agents">
+      <UniqueIdentifier>{c48772ff-1912-4957-84c0-3768f60736d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\Behaviours\Steering">
+      <UniqueIdentifier>{a8d135d5-6247-46d1-b781-959ac45651c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Behaviours\Steering">
+      <UniqueIdentifier>{6f0704a5-168a-4b6d-8841-abe63df2c723}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -129,12 +141,6 @@
     <ClCompile Include="Body.cpp">
       <Filter>Source Files\Entities\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Agent.cpp">
-      <Filter>Source Files\Entities\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ShipAgent.cpp">
-      <Filter>Source Files\Entities\Components</Filter>
-    </ClCompile>
     <ClCompile Include="KeyboardController.cpp">
       <Filter>Source Files\Entities\Behaviours</Filter>
     </ClCompile>
@@ -155,6 +161,24 @@
     </ClCompile>
     <ClCompile Include="NotCondition.cpp">
       <Filter>Source Files\State Machine\Conditions\Complex Conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="Agent.cpp">
+      <Filter>Source Files\Entities\Components\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMAgent.cpp">
+      <Filter>Source Files\Entities\Components\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="ShipAgent.cpp">
+      <Filter>Source Files\Entities\Components\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="utility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SteeringForce.cpp">
+      <Filter>Source Files\Entities\Behaviours\Steering</Filter>
+    </ClCompile>
+    <ClCompile Include="SeekForce.cpp">
+      <Filter>Source Files\Entities\Behaviours\Steering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -224,14 +248,8 @@
     <ClInclude Include="Body.h">
       <Filter>Header Files\Entities\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Agent.h">
-      <Filter>Header Files\Entities\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Behaviour.h">
       <Filter>Header Files\Entities\Behaviours</Filter>
-    </ClInclude>
-    <ClInclude Include="ShipAgent.h">
-      <Filter>Header Files\Entities\Components</Filter>
     </ClInclude>
     <ClInclude Include="KeyboardController.h">
       <Filter>Header Files\Entities\Behaviours</Filter>
@@ -262,6 +280,27 @@
     </ClInclude>
     <ClInclude Include="NotCondition.h">
       <Filter>Header Files\State Machine\Conditions\Complex Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="Agent.h">
+      <Filter>Header Files\Entities\Components\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMAgent.h">
+      <Filter>Header Files\Entities\Components\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipAgent.h">
+      <Filter>Header Files\Entities\Components\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="utility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SteeringForce.h">
+      <Filter>Header Files\Entities\Behaviours\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="Target.h">
+      <Filter>Header Files\Entities\Behaviours\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="SeekForce.h">
+      <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

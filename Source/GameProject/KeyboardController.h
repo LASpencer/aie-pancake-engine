@@ -7,7 +7,7 @@ class KeyboardController :
 {
 public:
 	KeyboardController();
-	~KeyboardController();
+	virtual ~KeyboardController();
 
 	virtual void update(EntityPtr entity, float deltaTime);
 };

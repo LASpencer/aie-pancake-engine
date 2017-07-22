@@ -3,8 +3,9 @@
 #include "Transition.h"
 
 template <typename S>
-void State<S>::update(std::shared_ptr<S> entity, StateMachine<S>* sm)
+void State<S>::update(std::shared_ptr<S> entity, StateMachine<S>* sm, float deltaTime)
 {
+	tryTransitions(entity, sm);
 }
 
 template <typename S>
