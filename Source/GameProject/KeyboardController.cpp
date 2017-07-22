@@ -17,7 +17,7 @@ void KeyboardController::update(EntityPtr entity, float deltaTime)
 	// HACK
 	aie::Input* input = aie::Input::getInstance();
 
-	float magnitude = 100.f;
+	float magnitude = 200.f;
 	glm::vec2 force(0);
 
 	if (input->isKeyDown(aie::INPUT_KEY_W)) {

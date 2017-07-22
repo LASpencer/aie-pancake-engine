@@ -14,7 +14,8 @@ public:
 	Body(float mass, float drag, glm::vec2 velocity = glm::vec2(0));
 	virtual ~Body();
 
-	//TODO methods to alter
+	//TODO torque/rotational inertia
+
 	void setVelocity(glm::vec2 velocity);
 
 	// Instantaneous change in velocity

@@ -87,6 +87,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AndCondition.cpp" />
+    <ClCompile Include="BinaryCondition.cpp" />
     <ClCompile Include="Body.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Collider.cpp" />
@@ -103,25 +105,33 @@
     <ClCompile Include="KeyboardController.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MultiSprite.cpp" />
+    <ClCompile Include="NotCondition.cpp" />
+    <ClCompile Include="OrCondition.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SceneObject.cpp" />
     <ClCompile Include="ShipAgent.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteBase.cpp" />
+    <ClCompile Include="State.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TextBar.cpp" />
+    <ClCompile Include="Transition.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AndCondition.h" />
     <ClInclude Include="Behaviour.h" />
+    <ClInclude Include="BinaryCondition.h" />
     <ClInclude Include="Body.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionEvent.h" />
+    <ClInclude Include="ComplexCondition.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Agent.h" />
+    <ClInclude Include="Condition.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityFactory.h" />
     <ClInclude Include="Event.h" />
@@ -132,15 +142,20 @@
     <ClInclude Include="InputEvent.h" />
     <ClInclude Include="KeyboardController.h" />
     <ClInclude Include="MultiSprite.h" />
+    <ClInclude Include="NotCondition.h" />
     <ClInclude Include="Observer.h" />
+    <ClInclude Include="OrCondition.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="ShipAgent.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteBase.h" />
+    <ClInclude Include="State.h" />
+    <ClInclude Include="StateMachine.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="TextBar.h" />
+    <ClInclude Include="Transition.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

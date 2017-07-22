@@ -49,6 +49,24 @@
     <Filter Include="Source Files\Entities\Behaviours">
       <UniqueIdentifier>{6d10f577-acee-4a88-80e3-4987165e196c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\State Machine">
+      <UniqueIdentifier>{eda8ccf4-e4ca-43f2-87ce-bbc2b7415113}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\State Machine">
+      <UniqueIdentifier>{471b6551-e972-44a9-a39c-02e6f66aef05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\State Machine\Conditions">
+      <UniqueIdentifier>{fdb984fd-e0ca-4da9-9363-ce7e72927a5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\State Machine\Conditions\Complex Conditions">
+      <UniqueIdentifier>{21008e58-1583-408a-91a5-ea625df3a430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\State Machine\Conditions">
+      <UniqueIdentifier>{4ab9ca9d-c219-428c-9f82-13b1ab9e1fde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\State Machine\Conditions\Complex Conditions">
+      <UniqueIdentifier>{a7fbfede-29a2-483c-9a13-91da81a32c08}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -119,6 +137,24 @@
     </ClCompile>
     <ClCompile Include="KeyboardController.cpp">
       <Filter>Source Files\Entities\Behaviours</Filter>
+    </ClCompile>
+    <ClCompile Include="State.cpp">
+      <Filter>Source Files\State Machine</Filter>
+    </ClCompile>
+    <ClCompile Include="Transition.cpp">
+      <Filter>Source Files\State Machine</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryCondition.cpp">
+      <Filter>Source Files\State Machine\Conditions\Complex Conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="AndCondition.cpp">
+      <Filter>Source Files\State Machine\Conditions\Complex Conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="OrCondition.cpp">
+      <Filter>Source Files\State Machine\Conditions\Complex Conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="NotCondition.cpp">
+      <Filter>Source Files\State Machine\Conditions\Complex Conditions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +235,33 @@
     </ClInclude>
     <ClInclude Include="KeyboardController.h">
       <Filter>Header Files\Entities\Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>Header Files\State Machine</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Header Files\State Machine</Filter>
+    </ClInclude>
+    <ClInclude Include="Transition.h">
+      <Filter>Header Files\State Machine</Filter>
+    </ClInclude>
+    <ClInclude Include="Condition.h">
+      <Filter>Header Files\State Machine\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="ComplexCondition.h">
+      <Filter>Header Files\State Machine\Conditions\Complex Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryCondition.h">
+      <Filter>Header Files\State Machine\Conditions\Complex Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="AndCondition.h">
+      <Filter>Header Files\State Machine\Conditions\Complex Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="OrCondition.h">
+      <Filter>Header Files\State Machine\Conditions\Complex Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="NotCondition.h">
+      <Filter>Header Files\State Machine\Conditions\Complex Conditions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
