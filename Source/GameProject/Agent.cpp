@@ -6,11 +6,11 @@
 const float Agent::def_max_velocity = 500.f;
 const float Agent::def_max_force = 100.f;
 
-Agent::Agent() : Component(), m_maxVelocity(def_max_velocity), m_maxForce(def_max_force), m_velocity(0), m_force(0)
+Agent::Agent() : Component(), m_maxVelocity(def_max_velocity), m_maxForce(def_max_force), m_velocity(0), m_force(0), m_time(0)
 {
 }
 
-Agent::Agent(float maxVelocity, float maxForce) : Component(), m_maxVelocity(maxVelocity), m_maxForce(maxForce), m_velocity(0), m_force(0)
+Agent::Agent(float maxVelocity, float maxForce) : Component(), m_maxVelocity(maxVelocity), m_maxForce(maxForce), m_velocity(0), m_force(0), m_time(0)
 {
 }
 
@@ -48,6 +48,8 @@ void Agent::update(float deltaTime)
 	displacement += 0.5f * deltaTime * m_velocity;
 
 	entity->getPosition()->globalTranslate(displacement);
+
+	m_time += deltaTime;
 }
 
 Agent::Identifier Agent::getID()
@@ -63,5 +65,10 @@ void Agent::setMaxVelocity(float maxVelocity)
 void Agent::setMaxForce(float maxForce)
 {
 	m_maxForce = maxForce;
+}
+
+void Agent::resetTime()
+{
+	m_time = 0.f;
 }
 

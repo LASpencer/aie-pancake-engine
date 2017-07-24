@@ -186,6 +186,9 @@
     <ClCompile Include="FSMBehaviour.cpp">
       <Filter>Source Files\Entities\Behaviours</Filter>
     </ClCompile>
+    <ClCompile Include="TargetInRangeCondition.cpp">
+      <Filter>Source Files\State Machine\Conditions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameProjectApp.h">
@@ -313,6 +316,9 @@
     </ClInclude>
     <ClInclude Include="FSMBehaviour.h">
       <Filter>Header Files\Entities\Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetInRangeCondition.h">
+      <Filter>Header Files\State Machine\Conditions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

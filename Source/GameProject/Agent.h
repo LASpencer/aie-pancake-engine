@@ -33,13 +33,17 @@ public:
 	void setMaxVelocity(float maxVelocity);
 	void setMaxForce(float maxForce);
 
+	void resetTime();
+
 	float getMaxVelocity() { return m_maxVelocity; };
 
 	float getMaxForce() { return m_maxForce; };
+
+	float getTime() { return m_time; };
 
 protected:
 	std::vector<BehaviourPtr> m_behaviours;
 	glm::vec2 m_velocity;
 	glm::vec2 m_force;
-	float m_maxVelocity, m_maxForce;
+	float m_maxVelocity, m_maxForce, m_time;
 };
