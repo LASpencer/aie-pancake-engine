@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "Entity.h"
-#include "Body.h"
+#include "Agent.h"
 
 class Target {
 public:
@@ -77,9 +77,9 @@ public:
 	virtual glm::vec2 getVelocity()
 	{
 		EntityPtr target(m_target);
-		BodyPtr body = std::dynamic_pointer_cast<Body>(target->getComponent(Component::body));
-		if (body) {
-			return body->getVelocity();
+		std::shared_ptr<Agent> agent = std::dynamic_pointer_cast<Agent>(target->getComponent(Component::agent));
+		if (agent) {
+			return agent->getVelocity();
 		}
 		else {
 			return glm::vec2(0);

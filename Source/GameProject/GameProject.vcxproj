@@ -89,7 +89,6 @@
   <ItemGroup>
     <ClCompile Include="AndCondition.cpp" />
     <ClCompile Include="BinaryCondition.cpp" />
-    <ClCompile Include="Body.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionEvent.cpp" />
@@ -128,7 +127,6 @@
     <ClInclude Include="AndCondition.h" />
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="BinaryCondition.h" />
-    <ClInclude Include="Body.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionEvent.h" />

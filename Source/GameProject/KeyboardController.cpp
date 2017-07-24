@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "KeyboardController.h"
 #include "Entity.h"
-#include "Body.h"
+#include "Agent.h"
 
 KeyboardController::KeyboardController()
 {
@@ -32,5 +32,5 @@ void KeyboardController::update(EntityPtr entity, float deltaTime)
 		force += glm::vec2(-magnitude, 0);
 	}
 
-	std::dynamic_pointer_cast<Body>(entity->getComponent(Component::body))->addForce(force);
+	std::dynamic_pointer_cast<Agent>(entity->getComponent(Component::agent))->addForce(force);
 }

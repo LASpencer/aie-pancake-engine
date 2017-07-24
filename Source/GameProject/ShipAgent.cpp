@@ -16,13 +16,6 @@ ShipAgent::~ShipAgent()
 {
 }
 
-bool ShipAgent::onAdd(EntityPtr entity)
-{
-	bool added = isValidEntity(entity) && Agent::onAdd(entity);
-
-	return added;
-}
-
 void ShipAgent::update(float deltaTime)
 {
 	EntityPtr entity(m_entity);
@@ -30,10 +23,5 @@ void ShipAgent::update(float deltaTime)
 	for (auto it = m_behaviours.begin(); it != m_behaviours.end(); ++it) {
 		(*it)->update(entity, deltaTime);
 	}
-}
-
-bool ShipAgent::isValidEntity(EntityPtr entity)
-{
-	//can have extra requirements
-	Agent::isValidEntity(entity);
+	Agent::update(deltaTime);
 }

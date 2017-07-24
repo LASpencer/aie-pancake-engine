@@ -5,7 +5,6 @@
 #include "MultiSprite.h"
 #include "Collider.h"
 #include "Filepaths.h"
-#include "Body.h"
 #include "ShipAgent.h"
 
 
@@ -52,8 +51,6 @@ EntityPtr EntityFactory::createShip(glm::mat3 position, SceneObjectPtr parent)
 	//TODO add tags
 	// Add sprite
 	ship->addComponent(std::make_shared<Sprite>(m_app->getResourceManager()->getTexture(filepath::ship)));
-	// Add body
-	ship->addComponent(std::make_shared<Body>(1, 4.f));
 	// TODO collider?
 	// Add agent
 	ship->addComponent(std::make_shared<ShipAgent>());

@@ -53,7 +53,6 @@ public:
 		sprite = 0x1,		// Derived from SpriteBase class
 		collider = 0x2,		// Collider class
 		agent = 0x4,	// Derived from Controller class
-		body = 0x8
 	};
 
 	// Returns identifier for derived class type

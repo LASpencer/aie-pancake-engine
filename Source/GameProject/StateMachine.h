@@ -18,7 +18,7 @@ public:
 		return success;
 	}
 
-	void addTransition(std::shared_ptr<Transition> transition) {
+	void addTransition(std::shared_ptr<Transition<S>> transition) {
 		m_fromAnyTransitions.push_back(transition);
 	}
 
@@ -67,5 +67,5 @@ protected:
 	int m_currentID;
 	std::shared_ptr<State<S>> m_currentState;
 	std::map<int, std::shared_ptr<State<S>>> m_states;
-	las::Array<std::shared_ptr<Transition<S>>> m_fromAnyTransitions;
+	std::vector<std::shared_ptr<Transition<S>>> m_fromAnyTransitions;
 };

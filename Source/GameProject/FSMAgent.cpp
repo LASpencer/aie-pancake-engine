@@ -15,21 +15,9 @@ FSMAgent::~FSMAgent()
 {
 }
 
-bool FSMAgent::onAdd(EntityPtr entity)
-{
-	bool added = isValidEntity(entity) && Agent::onAdd(entity);
-
-	return added;
-}
-
 void FSMAgent::update(float deltaTime)
 {
-}
-
-bool FSMAgent::isValidEntity(EntityPtr entity)
-{
-	//Might add extra requirements?
-	Agent::isValidEntity(entity);
+	Agent::update(deltaTime);
 }
 
 StateMachine<FSMAgent>& FSMAgent::getStateMachine()

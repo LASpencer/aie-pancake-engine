@@ -84,11 +84,6 @@ void GameProjectApp::updateEntities(float deltaTime)
 	for (EntityPtr entity : entitiesWithComponent) {
 		entity->getComponent(Component::agent)->update(deltaTime);
 	}
-	//Update body components
-	entitiesWithComponent = Entity::getEntitiesWithComponent(Component::body, m_entityList);
-	for (EntityPtr entity : entitiesWithComponent) {
-		entity->getComponent(Component::body)->update(deltaTime);
-	}
 	// Update colliders and test collision
 	entitiesWithComponent = Entity::getEntitiesWithComponent(Component::collider, m_entityList);
 	std::vector<std::shared_ptr<Collider>> colliders;

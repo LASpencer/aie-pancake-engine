@@ -13,11 +13,23 @@ public:
 	Agent(float maxVelocity, float maxForce = def_max_force);
 	virtual ~Agent();
 
+	void setVelocity(glm::vec2 velocity);
+
+	glm::vec2 getVelocity() { return m_velocity; };
+
+	// Instantaneous change in velocity
+	void applyImpulse(glm::vec2 impulse);
+
+	//Add rate of change t
+	void addForce(glm::vec2 force);
+
+	virtual void update(float deltaTime);
+
 	// Returns Controller identifier
 	virtual Identifier getID();
 
-	// Tests whether entity is valid owner of this controller
-	virtual bool isValidEntity(EntityPtr entity);
+	void setMaxVelocity(float maxVelocity);
+	void setMaxForce(float maxForce);
 
 	float getMaxVelocity() { return m_maxVelocity; };
 
@@ -25,5 +37,7 @@ public:
 
 protected:
 	std::vector<BehaviourPtr> m_behaviours;
+	glm::vec2 m_velocity;
+	glm::vec2 m_force;
 	float m_maxVelocity, m_maxForce;
 };
