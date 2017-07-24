@@ -2,10 +2,12 @@
 #include "ShipAgent.h"
 #include "Entity.h"
 #include "KeyboardController.h"
+#include "DrunkenModifier.h"
 
 ShipAgent::ShipAgent() : Agent()
 {
 	m_behaviours.push_back(std::make_shared<KeyboardController>());
+	m_behaviours.push_back(std::make_shared<DrunkenModifier>());
 }
 
 ShipAgent::ShipAgent(float maxVelocity, float maxForce) : Agent(maxVelocity,maxForce)

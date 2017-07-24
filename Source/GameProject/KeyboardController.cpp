@@ -17,7 +17,9 @@ void KeyboardController::update(EntityPtr entity, float deltaTime)
 	// HACK
 	aie::Input* input = aie::Input::getInstance();
 
-	float magnitude = 200.f;
+	std::shared_ptr<Agent> agent = std::dynamic_pointer_cast<Agent>(entity->getComponent(Component::agent));
+
+	float magnitude = agent->getMaxForce();
 	glm::vec2 force(0);
 
 	if (input->isKeyDown(aie::INPUT_KEY_W)) {
@@ -32,5 +34,5 @@ void KeyboardController::update(EntityPtr entity, float deltaTime)
 		force += glm::vec2(-magnitude, 0);
 	}
 
-	std::dynamic_pointer_cast<Agent>(entity->getComponent(Component::agent))->addForce(force);
+	agent->addForce(force);
 }

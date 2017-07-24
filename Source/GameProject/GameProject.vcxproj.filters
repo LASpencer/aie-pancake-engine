@@ -177,6 +177,9 @@
     <ClCompile Include="SeekForce.cpp">
       <Filter>Source Files\Entities\Behaviours\Steering</Filter>
     </ClCompile>
+    <ClCompile Include="DrunkenModifier.cpp">
+      <Filter>Source Files\Entities\Behaviours</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameProjectApp.h">
@@ -295,6 +298,9 @@
     </ClInclude>
     <ClInclude Include="SeekForce.h">
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="DrunkenModifier.h">
+      <Filter>Header Files\Entities\Behaviours</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

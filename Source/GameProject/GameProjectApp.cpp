@@ -47,6 +47,9 @@ void GameProjectApp::update(float deltaTime) {
 	if (input->wasKeyPressed(aie::INPUT_KEY_F)) {
 		m_showFPS = !m_showFPS;
 	}
+	if (input->wasKeyPressed(aie::INPUT_KEY_ESCAPE)) {
+		quit();
+	}
 
 	updateEntities(deltaTime);
 }

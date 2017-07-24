@@ -3,8 +3,8 @@
 #include "Entity.h"
 #include "utility.h"
 
-const float Agent::def_max_velocity = 1000.f;
-const float Agent::def_max_force = 1000.f;
+const float Agent::def_max_velocity = 500.f;
+const float Agent::def_max_force = 100.f;
 
 Agent::Agent() : Component(), m_maxVelocity(def_max_velocity), m_maxForce(def_max_force), m_velocity(0), m_force(0)
 {

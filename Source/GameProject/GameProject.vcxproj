@@ -94,6 +94,7 @@
     <ClCompile Include="CollisionEvent.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Agent.cpp" />
+    <ClCompile Include="DrunkenModifier.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityFactory.cpp" />
     <ClCompile Include="Event.cpp" />
@@ -134,6 +135,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="Agent.h" />
     <ClInclude Include="Condition.h" />
+    <ClInclude Include="DrunkenModifier.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityFactory.h" />
     <ClInclude Include="Event.h" />
