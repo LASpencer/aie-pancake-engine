@@ -11,7 +11,7 @@ public:
 		m_condition(condition), m_targetID(targetID)
 	{}
 
-	bool isConditionMet(std::shared_ptr<S> entity);
+	bool isConditionMet(S entity);
 
 	int getTargetID() const;
 

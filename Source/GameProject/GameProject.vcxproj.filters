@@ -79,6 +79,9 @@
     <Filter Include="Source Files\Entities\Behaviours\Steering">
       <UniqueIdentifier>{6f0704a5-168a-4b6d-8841-abe63df2c723}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\State Machine\States">
+      <UniqueIdentifier>{8f3fc7e0-fb6c-4cbd-a52e-61bc35e47854}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -178,6 +181,9 @@
       <Filter>Source Files\Entities\Behaviours\Steering</Filter>
     </ClCompile>
     <ClCompile Include="DrunkenModifier.cpp">
+      <Filter>Source Files\Entities\Behaviours</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMBehaviour.cpp">
       <Filter>Source Files\Entities\Behaviours</Filter>
     </ClCompile>
   </ItemGroup>
@@ -300,6 +306,12 @@
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
     <ClInclude Include="DrunkenModifier.h">
+      <Filter>Header Files\Entities\Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="GuardStates.h">
+      <Filter>Header Files\State Machine\States</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMBehaviour.h">
       <Filter>Header Files\Entities\Behaviours</Filter>
     </ClInclude>
   </ItemGroup>

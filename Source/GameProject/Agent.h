@@ -2,6 +2,8 @@
 #include "Component.h"
 #include "Behaviour.h"
 
+class Agent;
+typedef std::shared_ptr<Agent> AgentPtr;
 
 class Agent 
 	: public Component {

@@ -11,11 +11,9 @@ DrunkenModifier::~DrunkenModifier()
 {
 }
 
-void DrunkenModifier::update(EntityPtr entity, float deltaTime)
+void DrunkenModifier::update(Agent* agent, float deltaTime)
 {
 	m_time += deltaTime;
-
-	std::shared_ptr<Agent> agent = std::dynamic_pointer_cast<Agent>(entity->getComponent(Component::agent));
 
 	float magnitude = agent->getMaxForce() * 0.5f;
 

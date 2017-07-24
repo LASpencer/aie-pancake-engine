@@ -3,7 +3,7 @@
 #include "Condition.h"
 
 template <typename S>
-bool Transition<S>::isConditionMet(std::shared_ptr<S> entity)
+bool Transition<S>::isConditionMet(S entity)
 {
 	return m_condition->test(entity);
 }

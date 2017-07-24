@@ -22,7 +22,7 @@ public:
 		m_fromAnyTransitions.push_back(transition);
 	}
 
-	void forceState(int id, std::shared_ptr<S> entity) {
+	void forceState(int id, S entity) {
 		// If going to same state, no transition
 		if (!m_currentState || m_currentID != id) {
 			m_currentID = id;
@@ -42,7 +42,7 @@ public:
 		}
 	}
 
-	void update(std::shared_ptr<S> entity, float deltaTime) {
+	void update(S entity, float deltaTime) {
 		//TODO exception instead?
 		assert(m_currentState);	//Assert current state not null
 								//Check transitions from any state
@@ -50,7 +50,7 @@ public:
 			if (transition->isConditionMet(entity)) {
 				int id = transition->getTargetID();
 				if (!m_currentState || m_currentID != id) {
-					forceState(id);
+					forceState(id, entity);
 					break;
 				}
 			}

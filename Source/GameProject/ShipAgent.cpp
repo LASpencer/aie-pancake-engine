@@ -23,7 +23,7 @@ void ShipAgent::update(float deltaTime)
 	EntityPtr entity(m_entity);
 	//TODO sensing and thinking?
 	for (auto it = m_behaviours.begin(); it != m_behaviours.end(); ++it) {
-		(*it)->update(entity, deltaTime);
+		(*it)->update(this, deltaTime);
 	}
 	Agent::update(deltaTime);
 }

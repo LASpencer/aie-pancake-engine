@@ -101,6 +101,7 @@
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="EventBase.cpp" />
     <ClCompile Include="FSMAgent.cpp" />
+    <ClCompile Include="FSMBehaviour.cpp" />
     <ClCompile Include="GameProjectApp.cpp" />
     <ClCompile Include="InputEvent.cpp" />
     <ClCompile Include="KeyboardController.cpp" />
@@ -143,7 +144,9 @@
     <ClInclude Include="EventBase.h" />
     <ClInclude Include="Filepaths.h" />
     <ClInclude Include="FSMAgent.h" />
+    <ClInclude Include="FSMBehaviour.h" />
     <ClInclude Include="GameProjectApp.h" />
+    <ClInclude Include="GuardStates.h" />
     <ClInclude Include="InputEvent.h" />
     <ClInclude Include="KeyboardController.h" />
     <ClInclude Include="MultiSprite.h" />

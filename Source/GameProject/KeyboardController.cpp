@@ -12,12 +12,10 @@ KeyboardController::~KeyboardController()
 {
 }
 
-void KeyboardController::update(EntityPtr entity, float deltaTime)
+void KeyboardController::update(Agent* agent, float deltaTime)
 {
 	// HACK
 	aie::Input* input = aie::Input::getInstance();
-
-	std::shared_ptr<Agent> agent = std::dynamic_pointer_cast<Agent>(entity->getComponent(Component::agent));
 
 	float magnitude = agent->getMaxForce();
 	glm::vec2 force(0);

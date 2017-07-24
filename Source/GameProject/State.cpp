@@ -3,7 +3,7 @@
 #include "Transition.h"
 
 template <typename S>
-void State<S>::update(std::shared_ptr<S> entity, StateMachine<S>* sm, float deltaTime)
+void State<S>::update(S entity, StateMachine<S>* sm, float deltaTime)
 {
 	tryTransitions(entity, sm);
 }
@@ -15,7 +15,7 @@ void State<S>::addTransition(std::shared_ptr<Transition<S>> transition)
 }
 
 template<typename S>
-void State<S>::tryTransitions(std::shared_ptr<S> entity, StateMachine<S>* sm)
+void State<S>::tryTransitions(S entity, StateMachine<S>* sm)
 {
 	for (std::shared_ptr<Transition<S>> transition : m_transitions) {
 		if (transition->isConditionMet(entity)) {

@@ -9,5 +9,5 @@ public:
 	Condition() {};
 	virtual ~Condition() {};
 
-	virtual bool test(std::shared_ptr<E> entity) = 0;
+	virtual bool test(E entity) = 0;
 };

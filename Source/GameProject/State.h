@@ -17,19 +17,19 @@ public:
 	virtual State* clone() const = 0;
 
 	// Called when transitioning to the state
-	virtual void onEnter(std::shared_ptr<S> entity) = 0;
+	virtual void onEnter(S entity) = 0;
 
 	// Called when transitioning from the state
-	virtual void onExit(std::shared_ptr<S> entity) = 0;
+	virtual void onExit(S entity) = 0;
 
-	virtual void update(std::shared_ptr<S> entity, StateMachine<S>* sm, float deltaTime);
+	virtual void update(S entity, StateMachine<S>* sm, float deltaTime);
 
 	/** Add a transition to another state
 	* @param transition object defining conditions of transition and key of next state*/
 	void addTransition(std::shared_ptr<Transition<S>> transition);
 
 	// Check if any transition should occur and if so do it
-	void tryTransitions(std::shared_ptr<S> entity, StateMachine<S>* sm);
+	void tryTransitions(S entity, StateMachine<S>* sm);
 
 protected:
 	std::vector<std::shared_ptr<Transition<S>>> m_transitions;
