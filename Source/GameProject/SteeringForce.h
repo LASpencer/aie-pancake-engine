@@ -2,6 +2,10 @@
 #include "stdafx.h"
 #include "Agent.h"
 
+class SteeringForce;
+
+typedef std::shared_ptr<SteeringForce> SteeringForcePtr;
+
 class SteeringForce {
 public:
 	SteeringForce() {};

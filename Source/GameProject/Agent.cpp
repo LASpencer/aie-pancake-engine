@@ -74,6 +74,13 @@ void Agent::resetTime()
 	m_time = 0.f;
 }
 
+glm::vec2 Agent::getPosition()
+{
+	EntityPtr entity(m_entity);
+
+	return glm::vec2(entity->getPosition()->getGlobalTransform()[2]);
+}
+
 void Agent::addBehaviour(BehaviourPtr behaviour)
 {
 	m_behaviours.push_back(behaviour);

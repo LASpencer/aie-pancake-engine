@@ -32,5 +32,9 @@ void KeyboardController::update(Agent* agent, float deltaTime)
 		force += glm::vec2(-magnitude, 0);
 	}
 
+	if (input->isKeyDown(aie::INPUT_KEY_LEFT_CONTROL)) {
+		force = -agent->getVelocity();
+	}
+
 	agent->addForce(force);
 }

@@ -4,6 +4,7 @@
 #include "Target.h"
 #include "SeekForce.h"
 #include "ArrivalForce.h"
+#include "PursueForce.h"
 
 class Agent;
 
@@ -78,5 +79,5 @@ public:
 	virtual void update(Agent* entity, StateMachine<Agent*>* sm, float deltaTime);
 
 protected:
-	SeekForce m_attackTarget;
+	PursueForce m_attackTarget;
 };

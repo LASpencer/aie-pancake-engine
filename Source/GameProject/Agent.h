@@ -41,6 +41,8 @@ public:
 
 	float getTime() { return m_time; };
 
+	glm::vec2 getPosition();
+
 	virtual void addBehaviour(BehaviourPtr behaviour);
 
 	virtual void setBehaviours(std::vector<BehaviourPtr> behaviours);

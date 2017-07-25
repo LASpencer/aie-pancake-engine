@@ -9,7 +9,7 @@ class SeekForce :
 public:
 	SeekForce();
 
-	SeekForce(Target* target);
+	SeekForce(Target* target); 
 
 	SeekForce(const SeekForce& other);
 
@@ -22,5 +22,5 @@ public:
 	virtual glm::vec2 getForce(Agent* agent);
 
 protected:
-	Target* m_target;
+	Target* m_target; //TODO change to shared_ptr
 };

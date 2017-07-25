@@ -37,7 +37,7 @@ void IdleState::update(Agent * entity, StateMachine<Agent*>* sm, float deltaTime
 
 // Patrol State
 
-const float PatrolState::waypoint_size = 1.0f;
+const float PatrolState::waypoint_size = 5.0f;
 
 PatrolState::PatrolState() : State<Agent*>()
 {

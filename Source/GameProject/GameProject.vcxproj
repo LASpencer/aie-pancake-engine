@@ -108,6 +108,7 @@
     <ClCompile Include="KeyboardController.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MultiSprite.cpp" />
+    <ClCompile Include="PursueForce.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SceneObject.cpp" />
     <ClCompile Include="SeekForce.cpp" />
@@ -123,6 +124,7 @@
     <ClCompile Include="TextBar.cpp" />
     <ClCompile Include="TimerCondition.cpp" />
     <ClCompile Include="utility.cpp" />
+    <ClCompile Include="WeightedSteeringForce.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AndCondition.h" />
@@ -154,6 +156,7 @@
     <ClInclude Include="NotCondition.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="OrCondition.h" />
+    <ClInclude Include="PursueForce.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="SeekForce.h" />
@@ -171,6 +174,7 @@
     <ClInclude Include="TimerCondition.h" />
     <ClInclude Include="Transition.h" />
     <ClInclude Include="utility.h" />
+    <ClInclude Include="WeightedSteeringForce.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
