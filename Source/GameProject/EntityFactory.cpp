@@ -5,7 +5,8 @@
 #include "MultiSprite.h"
 #include "Collider.h"
 #include "Filepaths.h"
-#include "ShipAgent.h"
+#include "SimpleAgent.h"
+#include "KeyboardController.h"
 
 
 EntityFactory::EntityFactory(GameProjectApp* app) : m_app(app)
@@ -30,6 +31,9 @@ EntityPtr EntityFactory::createEntity(EntityType type, glm::mat3 position, Scene
 	case(ship):
 		entity = createShip(position, parent);
 		break;
+	case(car):
+		entity = createCar(position, parent);
+		break;
 	default:
 		break;
 	}
@@ -41,6 +45,8 @@ EntityPtr EntityFactory::createEntity(EntityType type, glm::mat3 position, Scene
 void EntityFactory::loadResources()
 {
 	//TODO load sprites needed for entities
+	m_app->getResourceManager()->getTexture(filepath::ship);
+	m_app->getResourceManager()->getTexture(filepath::car);
 }
 
 
@@ -48,14 +54,26 @@ EntityPtr EntityFactory::createShip(glm::mat3 position, SceneObjectPtr parent)
 {
 	EntityPtr ship = std::make_shared<Entity>();
 	setEntityPosition(ship, position, parent);
-	//TODO add tags
 	// Add sprite
 	ship->addComponent(std::make_shared<Sprite>(m_app->getResourceManager()->getTexture(filepath::ship)));
-	// TODO collider?
 	// Add agent
-	ship->addComponent(std::make_shared<ShipAgent>());
+	std::shared_ptr<SimpleAgent> agent = std::make_shared<SimpleAgent>();
+	agent->addBehaviour(std::make_shared<KeyboardController>());
+	ship->addComponent(agent);
 	
 	return ship;
+}
+
+EntityPtr EntityFactory::createCar(glm::mat3 position, SceneObjectPtr parent)
+{
+	EntityPtr car = std::make_shared<Entity>();
+	setEntityPosition(car, position, parent);
+	// Add sprite
+	car->addComponent(std::make_shared<Sprite>(m_app->getResourceManager()->getTexture(filepath::car)));
+	// Add agent
+	car->addComponent(std::make_shared<SimpleAgent>(200, 1000));
+
+	return car;
 }
 
 bool EntityFactory::setEntityPosition(EntityPtr entity, glm::mat3 position, SceneObjectPtr parent)

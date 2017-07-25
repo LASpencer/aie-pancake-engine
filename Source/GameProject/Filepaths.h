@@ -11,5 +11,5 @@ namespace filepath {
 
 	//Textures
 	const std::string ship = "./textures/ship.png";
-	const std::string car = "./textures.car.png";
+	const std::string car = "./textures/car.png";
 }

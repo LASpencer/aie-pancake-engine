@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "TargetInRangeCondition.h"
-
+#include "Agent.h"
 
 TargetInRangeCondition::TargetInRangeCondition()
 {

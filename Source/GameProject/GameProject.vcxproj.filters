@@ -61,12 +61,6 @@
     <Filter Include="Header Files\State Machine\Conditions\Complex Conditions">
       <UniqueIdentifier>{21008e58-1583-408a-91a5-ea625df3a430}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\State Machine\Conditions">
-      <UniqueIdentifier>{4ab9ca9d-c219-428c-9f82-13b1ab9e1fde}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\State Machine\Conditions\Complex Conditions">
-      <UniqueIdentifier>{a7fbfede-29a2-483c-9a13-91da81a32c08}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Entities\Components\Agents">
       <UniqueIdentifier>{f9fad9d1-85d0-4e11-8aaf-d85f1f607a67}</UniqueIdentifier>
     </Filter>
@@ -81,6 +75,12 @@
     </Filter>
     <Filter Include="Header Files\State Machine\States">
       <UniqueIdentifier>{8f3fc7e0-fb6c-4cbd-a52e-61bc35e47854}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\State Machine\States">
+      <UniqueIdentifier>{d7c5036c-c83f-4163-928a-b686ad437306}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\State Machine\Conditions">
+      <UniqueIdentifier>{d229e5ab-fba5-4b32-a1dc-3d0802377f77}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -144,31 +144,10 @@
     <ClCompile Include="KeyboardController.cpp">
       <Filter>Source Files\Entities\Behaviours</Filter>
     </ClCompile>
-    <ClCompile Include="State.cpp">
-      <Filter>Source Files\State Machine</Filter>
-    </ClCompile>
-    <ClCompile Include="Transition.cpp">
-      <Filter>Source Files\State Machine</Filter>
-    </ClCompile>
-    <ClCompile Include="BinaryCondition.cpp">
-      <Filter>Source Files\State Machine\Conditions\Complex Conditions</Filter>
-    </ClCompile>
-    <ClCompile Include="AndCondition.cpp">
-      <Filter>Source Files\State Machine\Conditions\Complex Conditions</Filter>
-    </ClCompile>
-    <ClCompile Include="OrCondition.cpp">
-      <Filter>Source Files\State Machine\Conditions\Complex Conditions</Filter>
-    </ClCompile>
-    <ClCompile Include="NotCondition.cpp">
-      <Filter>Source Files\State Machine\Conditions\Complex Conditions</Filter>
-    </ClCompile>
     <ClCompile Include="Agent.cpp">
       <Filter>Source Files\Entities\Components\Agents</Filter>
     </ClCompile>
     <ClCompile Include="FSMAgent.cpp">
-      <Filter>Source Files\Entities\Components\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="ShipAgent.cpp">
       <Filter>Source Files\Entities\Components\Agents</Filter>
     </ClCompile>
     <ClCompile Include="utility.cpp">
@@ -186,14 +165,20 @@
     <ClCompile Include="FSMBehaviour.cpp">
       <Filter>Source Files\Entities\Behaviours</Filter>
     </ClCompile>
-    <ClCompile Include="TargetInRangeCondition.cpp">
-      <Filter>Source Files\State Machine\Conditions</Filter>
+    <ClCompile Include="GuardStates.cpp">
+      <Filter>Source Files\State Machine\States</Filter>
+    </ClCompile>
+    <ClCompile Include="GuardStateMachine.cpp">
+      <Filter>Source Files\State Machine\States</Filter>
     </ClCompile>
     <ClCompile Include="TimerCondition.cpp">
       <Filter>Source Files\State Machine\Conditions</Filter>
     </ClCompile>
-    <ClCompile Include="GuardStates.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="TargetInRangeCondition.cpp">
+      <Filter>Source Files\State Machine\Conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleAgent.cpp">
+      <Filter>Source Files\Entities\Components\Agents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -299,9 +284,6 @@
     <ClInclude Include="FSMAgent.h">
       <Filter>Header Files\Entities\Components\Agents</Filter>
     </ClInclude>
-    <ClInclude Include="ShipAgent.h">
-      <Filter>Header Files\Entities\Components\Agents</Filter>
-    </ClInclude>
     <ClInclude Include="utility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -331,6 +313,9 @@
     </ClInclude>
     <ClInclude Include="GuardStateMachine.h">
       <Filter>Header Files\State Machine\States</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleAgent.h">
+      <Filter>Header Files\Entities\Components\Agents</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

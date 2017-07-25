@@ -28,7 +28,7 @@ SeekForce::~SeekForce()
 void SeekForce::setTarget(Target * target)
 {
 	delete m_target;
-	m_target = target;
+	m_target = target->clone();
 }
 
 glm::vec2 SeekForce::getForce(Agent * agent)

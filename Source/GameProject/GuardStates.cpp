@@ -29,9 +29,15 @@ void IdleState::onExit(Agent * agent)
 {
 }
 
+void IdleState::update(Agent * entity, StateMachine<Agent*>* sm, float deltaTime)
+{
+	entity->addForce(glm::normalize(entity->getVelocity()) * -entity->getMaxForce());
+	State::update(entity, sm, deltaTime);
+}
+
 // Patrol State
 
-const float PatrolState::waypoint_size = 2.0f;
+const float PatrolState::waypoint_size = 10.0f;
 
 PatrolState::PatrolState() : State<Agent*>()
 {
@@ -82,7 +88,7 @@ void PatrolState::onExit(Agent * agent)
 
 void PatrolState::update(Agent * entity, StateMachine<Agent*>* sm, float deltaTime)
 {
-	//TODO apply steering force towards current waypoint
+	// apply steering force towards current waypoint
 	entity->addForce(m_seekWaypoint.getForce(entity));
 	if (m_hasReachedWaypoint.test(entity)) {
 		incrementWaypoint();
@@ -92,13 +98,13 @@ void PatrolState::update(Agent * entity, StateMachine<Agent*>* sm, float deltaTi
 
 void PatrolState::incrementWaypoint()
 {
+	++m_currentWaypoint;
 	if (m_currentWaypoint == m_route.end()) {
 		m_currentWaypoint = m_route.begin();
-	} else {
-		++m_currentWaypoint;
 	}
 
 	m_hasReachedWaypoint.setTarget(&(*m_currentWaypoint));
+	m_seekWaypoint.setTarget(&(*m_currentWaypoint));
 }
 
 void PatrolState::startRoute()
@@ -106,4 +112,45 @@ void PatrolState::startRoute()
 	m_currentWaypoint = m_route.begin();
 	m_hasReachedWaypoint.setTarget(&(*m_currentWaypoint));
 	m_seekWaypoint.setTarget(&(*m_currentWaypoint));
+}
+
+AttackState::AttackState() : State<Agent*>()
+{
+}
+
+AttackState::AttackState(EntityTarget* target) : State<Agent*>()
+{
+	m_attackTarget.setTarget(target);
+}
+
+AttackState::AttackState(const AttackState & other) : State<Agent*>(other), m_attackTarget(other.m_attackTarget)
+{
+}
+
+AttackState::~AttackState()
+{
+}
+
+State<Agent*> * AttackState::clone() const
+{
+	return new AttackState(*this);
+}
+
+void AttackState::setTarget(EntityTarget * target)
+{
+	m_attackTarget.setTarget(target);
+}
+
+void AttackState::onEnter(Agent * agent)
+{
+}
+
+void AttackState::onExit(Agent * agent)
+{
+}
+
+void AttackState::update(Agent * entity, StateMachine<Agent*>* sm, float deltaTime)
+{
+	entity->addForce(m_attackTarget.getForce(entity));
+	State::update(entity, sm, deltaTime);
 }

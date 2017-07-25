@@ -2,15 +2,15 @@
 #include "stdafx.h"
 #include "Agent.h"
 
-class ShipAgent
+class SimpleAgent
 	: public Agent
 {
 public:
-	ShipAgent();
+	SimpleAgent();
 
-	ShipAgent(float maxVelocity, float maxForce = def_max_force);
+	SimpleAgent(float maxVelocity, float maxForce = def_max_force);
 
-	virtual ~ShipAgent();
+	virtual ~SimpleAgent();
 
 	virtual void update(float deltaTime);
 

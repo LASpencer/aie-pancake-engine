@@ -18,4 +18,3 @@ public:
 private:
 	float m_time;
 };
-

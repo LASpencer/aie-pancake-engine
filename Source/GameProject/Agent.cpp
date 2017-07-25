@@ -72,3 +72,13 @@ void Agent::resetTime()
 	m_time = 0.f;
 }
 
+void Agent::addBehaviour(BehaviourPtr behaviour)
+{
+	m_behaviours.push_back(behaviour);
+}
+
+void Agent::setBehaviours(std::vector<BehaviourPtr> behaviours)
+{
+	m_behaviours = behaviours;
+}
+

@@ -7,8 +7,9 @@
 class Agent;
 
 //Idle state
-class IdleState : State<Agent*>
+class IdleState : public State<Agent*>
 {
+public:
 	IdleState();
 
 	IdleState(const IdleState& other);
@@ -19,11 +20,13 @@ class IdleState : State<Agent*>
 
 	virtual void onEnter(Agent* agent);
 	virtual void onExit(Agent* agent);
+	virtual void update(Agent* entity, StateMachine<Agent*>* sm, float deltaTime);
 };
 
 //Patrol state
-class PatrolState : State<Agent*>
+class PatrolState : public State<Agent*>
 {
+public:
 	static const float waypoint_size;
 
 	PatrolState();
@@ -55,16 +58,17 @@ protected:
 
 
 //Attack state
-class AttackState : State<Agent*>
+class AttackState : public State<Agent*>
 {
+public:
 	AttackState();
-	AttackState(EntityPtr target);
-	AttackState(const PatrolState& other);
+	AttackState(EntityTarget* target);
+	AttackState(const AttackState& other);
 	virtual ~AttackState();
 
 	virtual State* clone() const;
 
-	void setTarget(EntityPtr target);
+	void setTarget(EntityTarget* target);
 
 	virtual void onEnter(Agent* agent);
 

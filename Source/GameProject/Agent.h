@@ -23,7 +23,7 @@ public:
 	void applyImpulse(glm::vec2 impulse);
 
 	//Add rate of change t
-	void addForce(glm::vec2 force);
+	virtual void addForce(glm::vec2 force);
 
 	virtual void update(float deltaTime);
 
@@ -40,6 +40,10 @@ public:
 	float getMaxForce() { return m_maxForce; };
 
 	float getTime() { return m_time; };
+
+	void addBehaviour(BehaviourPtr behaviour);
+
+	void setBehaviours(std::vector<BehaviourPtr> behaviours);
 
 protected:
 	std::vector<BehaviourPtr> m_behaviours;

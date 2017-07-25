@@ -87,8 +87,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AndCondition.cpp" />
-    <ClCompile Include="BinaryCondition.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionEvent.cpp" />
@@ -103,20 +101,18 @@
     <ClCompile Include="FSMAgent.cpp" />
     <ClCompile Include="FSMBehaviour.cpp" />
     <ClCompile Include="GameProjectApp.cpp" />
+    <ClCompile Include="GuardStateMachine.cpp" />
     <ClCompile Include="GuardStates.cpp" />
     <ClCompile Include="InputEvent.cpp" />
     <ClCompile Include="KeyboardController.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MultiSprite.cpp" />
-    <ClCompile Include="NotCondition.cpp" />
-    <ClCompile Include="OrCondition.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SceneObject.cpp" />
     <ClCompile Include="SeekForce.cpp" />
-    <ClCompile Include="ShipAgent.cpp" />
+    <ClCompile Include="SimpleAgent.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteBase.cpp" />
-    <ClCompile Include="State.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -125,7 +121,6 @@
     <ClCompile Include="TargetInRangeCondition.cpp" />
     <ClCompile Include="TextBar.cpp" />
     <ClCompile Include="TimerCondition.cpp" />
-    <ClCompile Include="Transition.cpp" />
     <ClCompile Include="utility.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -160,7 +155,7 @@
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="SeekForce.h" />
-    <ClInclude Include="ShipAgent.h" />
+    <ClInclude Include="SimpleAgent.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteBase.h" />
     <ClInclude Include="State.h" />

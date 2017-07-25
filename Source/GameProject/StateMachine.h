@@ -4,6 +4,8 @@
 #include "Entity.h"
 #include "Transition.h"
 
+template <typename S> class State;
+
 template <typename S>
 class StateMachine {
 public:
@@ -12,9 +14,10 @@ public:
 	};
 
 	//TODO copy, copy assignment
+	virtual ~StateMachine() {};
 
 	bool addState(int id, std::shared_ptr<State<S>> newState) {
-		bool success = m_states.insert(id, newState).second;
+		bool success = m_states.insert(std::make_pair(id, newState)).second;
 		return success;
 	}
 

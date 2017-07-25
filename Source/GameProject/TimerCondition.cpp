@@ -10,12 +10,11 @@ TimerCondition::TimerCondition(float time) : m_time(time)
 {
 }
 
-
 TimerCondition::~TimerCondition()
 {
 }
 
 bool TimerCondition::test(Agent * agent)
 {
-	return (agent->getTime()) >= m_time;
+	return agent->getTime() > m_time;
 }

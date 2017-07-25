@@ -71,11 +71,15 @@ public:
 	*	@return global transform matrix of this scene object*/
 	glm::mat3 getGlobalTransform();
 
+	//TODO: FaceDirection: takes vector and rotates so global transform * {0,1} = normalize(vector)
+	// Do so by transforming {0,1,0} by global transform, get angle between, and rotate by angle
+
 	// Sets dirty global flag on this and all descendants
 	void setDirty();
 
 	// Erases any expired references in m_children
 	void collectGarbage();
+
 
 protected:
 	SceneObjectPtr m_parent;
