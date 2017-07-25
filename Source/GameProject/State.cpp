@@ -2,6 +2,11 @@
 #include "State.h"
 #include "Transition.h"
 
+template<typename S>
+State<S>::State(const State & other) : m_transitions(other.m_transitions)
+{
+}
+
 template <typename S>
 void State<S>::update(S entity, StateMachine<S>* sm, float deltaTime)
 {

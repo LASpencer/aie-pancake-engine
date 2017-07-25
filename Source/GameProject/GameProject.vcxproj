@@ -103,6 +103,7 @@
     <ClCompile Include="FSMAgent.cpp" />
     <ClCompile Include="FSMBehaviour.cpp" />
     <ClCompile Include="GameProjectApp.cpp" />
+    <ClCompile Include="GuardStates.cpp" />
     <ClCompile Include="InputEvent.cpp" />
     <ClCompile Include="KeyboardController.cpp" />
     <ClCompile Include="main.cpp" />
@@ -123,6 +124,7 @@
     <ClCompile Include="SteeringForce.cpp" />
     <ClCompile Include="TargetInRangeCondition.cpp" />
     <ClCompile Include="TextBar.cpp" />
+    <ClCompile Include="TimerCondition.cpp" />
     <ClCompile Include="Transition.cpp" />
     <ClCompile Include="utility.cpp" />
   </ItemGroup>
@@ -147,6 +149,7 @@
     <ClInclude Include="FSMAgent.h" />
     <ClInclude Include="FSMBehaviour.h" />
     <ClInclude Include="GameProjectApp.h" />
+    <ClInclude Include="GuardStateMachine.h" />
     <ClInclude Include="GuardStates.h" />
     <ClInclude Include="InputEvent.h" />
     <ClInclude Include="KeyboardController.h" />
@@ -168,6 +171,7 @@
     <ClInclude Include="Target.h" />
     <ClInclude Include="TargetInRangeCondition.h" />
     <ClInclude Include="TextBar.h" />
+    <ClInclude Include="TimerCondition.h" />
     <ClInclude Include="Transition.h" />
     <ClInclude Include="utility.h" />
   </ItemGroup>

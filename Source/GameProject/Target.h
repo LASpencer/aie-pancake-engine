@@ -13,6 +13,8 @@ public:
 	virtual glm::vec2 getPosition() = 0;
 
 	virtual glm::vec2 getVelocity() = 0;
+
+	virtual bool isValid() = 0;
 };
 
 class PointTarget : public Target{
@@ -43,6 +45,11 @@ public:
 	virtual glm::vec2 getVelocity() 
 	{
 		return glm::vec2(0);
+	}
+
+	virtual bool isValid()
+	{
+		return true;
 	}
 
 protected:
@@ -85,6 +92,10 @@ public:
 			return glm::vec2(0);
 		}
 	};
+
+	virtual bool isValid() {
+		return !m_target.expired();
+	}
 
 protected:
 	EntityWeakPtr m_target;

@@ -189,6 +189,12 @@
     <ClCompile Include="TargetInRangeCondition.cpp">
       <Filter>Source Files\State Machine\Conditions</Filter>
     </ClCompile>
+    <ClCompile Include="TimerCondition.cpp">
+      <Filter>Source Files\State Machine\Conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="GuardStates.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameProjectApp.h">
@@ -319,6 +325,12 @@
     </ClInclude>
     <ClInclude Include="TargetInRangeCondition.h">
       <Filter>Header Files\State Machine\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerCondition.h">
+      <Filter>Header Files\State Machine\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="GuardStateMachine.h">
+      <Filter>Header Files\State Machine\States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

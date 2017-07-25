@@ -12,6 +12,8 @@ class State {
 public:
 	State() {};
 
+	State(const State& other);
+
 	virtual ~State() {};
 
 	virtual State* clone() const = 0;
