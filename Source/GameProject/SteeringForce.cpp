@@ -33,8 +33,11 @@ glm::vec2 SteeringForce::arrivePoint(Agent * agent, glm::vec2 target, float radi
 
 	glm::vec2 agentPos = glm::vec2(entity->getPosition()->getGlobalTransform()[2]);
 	glm::vec2 currentVelocity = agent->getVelocity();
-	float targetSpeed = std::min(glm::length(target - agentPos) / radius, agent->getMaxVelocity());
-	glm::vec2 targetVelocity = glm::normalize(target - agentPos) * targetSpeed;
-
+	glm::vec2 displacement = target - agentPos;
+	glm::vec2 targetVelocity;
+	float targetSpeed = std::min(glm::length(displacement) / radius, 1.f) * agent->getMaxVelocity();
+	if (glm::length(displacement) != 0.f) {
+		 targetVelocity = glm::normalize(target - agentPos) * targetSpeed;
+	}
 	return targetVelocity - currentVelocity;
 }

@@ -5,7 +5,7 @@ SeekForce::SeekForce() : m_target(nullptr)
 {
 }
 
-SeekForce::SeekForce(Target * target) : m_target(target)
+SeekForce::SeekForce(Target * target) : m_target(target->clone())
 {
 }
 

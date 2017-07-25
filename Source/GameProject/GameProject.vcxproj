@@ -87,6 +87,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ArrivalForce.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionEvent.cpp" />
@@ -125,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AndCondition.h" />
+    <ClInclude Include="ArrivalForce.h" />
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="BinaryCondition.h" />
     <ClInclude Include="Button.h" />

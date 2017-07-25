@@ -3,6 +3,8 @@
 #include "Entity.h"
 #include "utility.h"
 
+//TODO write agent subclass which can give weights to its behaviours
+
 const float Agent::def_max_velocity = 500.f;
 const float Agent::def_max_force = 100.f;
 

@@ -41,9 +41,9 @@ public:
 
 	float getTime() { return m_time; };
 
-	void addBehaviour(BehaviourPtr behaviour);
+	virtual void addBehaviour(BehaviourPtr behaviour);
 
-	void setBehaviours(std::vector<BehaviourPtr> behaviours);
+	virtual void setBehaviours(std::vector<BehaviourPtr> behaviours);
 
 protected:
 	std::vector<BehaviourPtr> m_behaviours;

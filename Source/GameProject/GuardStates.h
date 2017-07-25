@@ -3,6 +3,7 @@
 #include "TargetInRangeCondition.h"
 #include "Target.h"
 #include "SeekForce.h"
+#include "ArrivalForce.h"
 
 class Agent;
 
@@ -49,7 +50,7 @@ protected:
 	std::vector<PointTarget>::iterator m_currentWaypoint;
 	TargetInRangeCondition m_hasReachedWaypoint;
 
-	SeekForce m_seekWaypoint;
+	ArrivalForce m_seekWaypoint;
 
 	void incrementWaypoint();
 

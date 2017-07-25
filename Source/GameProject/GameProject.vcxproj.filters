@@ -180,6 +180,9 @@
     <ClCompile Include="SimpleAgent.cpp">
       <Filter>Source Files\Entities\Components\Agents</Filter>
     </ClCompile>
+    <ClCompile Include="ArrivalForce.cpp">
+      <Filter>Source Files\Entities\Behaviours\Steering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameProjectApp.h">
@@ -316,6 +319,9 @@
     </ClInclude>
     <ClInclude Include="SimpleAgent.h">
       <Filter>Header Files\Entities\Components\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="ArrivalForce.h">
+      <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
