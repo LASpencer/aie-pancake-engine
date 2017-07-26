@@ -10,6 +10,7 @@
 #include "FSMBehaviour.h"
 #include "GuardStateMachine.h"
 #include "KeyboardController.h"
+#include "WeightedSteeringForce.h"
 
 GameProjectApp::GameProjectApp() : m_entityList()
 {
@@ -28,7 +29,9 @@ bool GameProjectApp::startup() {
 	m_sceneRoot = std::make_shared<SceneObject>();
 
 	EntityPtr player = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(500,500)));
-	std::dynamic_pointer_cast<Agent>(player->getComponent(Component::agent))->addBehaviour(std::make_shared<KeyboardController>());
+	AgentPtr playerAgent = std::dynamic_pointer_cast<Agent>(player->getComponent(Component::agent));
+	playerAgent->addBehaviour(std::make_shared<KeyboardController>());
+
 	EntityPtr car = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(100, 100)));
 	//set guard car agent's behaviour as fsm behaviour with guard state machine
 	AgentPtr carAgent = std::dynamic_pointer_cast<Agent>(car->getComponent(Component::agent));

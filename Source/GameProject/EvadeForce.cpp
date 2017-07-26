@@ -44,5 +44,5 @@ glm::vec2 EvadeForce::getForce(Agent * agent)
 	glm::vec2 lateralVelocity = relativeVelocity - closingVelocity;*/
 	
 	glm::vec2 targetVelocity = std::min(-agent->getMaxVelocity(), closingSpeed) * glm::normalize(displacement);
-	
+	return targetVelocity - relativeVelocity;
 }

@@ -1,6 +1,29 @@
 #include "stdafx.h"
 #include "BoundsForce.h"
 
+const float BoundsForce::def_max_x = 1280.f;
+const float BoundsForce::def_max_y = 720.f;
+
+BoundsForce::BoundsForce() : m_minX(0.f), m_minY(0.f), m_maxX(def_max_x), m_maxY(def_max_y)
+{
+}
+
+BoundsForce::BoundsForce(float minX, float maxX, float minY, float maxY) : m_minX(minX), m_minY(minY), m_maxX(maxX), m_maxY(maxY)
+{
+}
+
+BoundsForce::~BoundsForce()
+{
+}
+
+void BoundsForce::setBounds(float minX, float maxX, float minY, float maxY)
+{
+	m_minX = minX;
+	m_maxX = maxX;
+	m_minY = minY;
+	m_maxY = maxY;
+}
+
 glm::vec2 BoundsForce::getForce(Agent * agent)
 {
 	glm::vec2 position = agent->getPosition();

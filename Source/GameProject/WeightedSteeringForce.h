@@ -17,6 +17,8 @@ public:
 
 	void addForce(WeightedForce force);
 
+	void addForce(std::shared_ptr<SteeringForce> force, float weight);
+
 	std::vector<WeightedForce>& getList();
 
 	virtual glm::vec2 getForce(Agent* agent);

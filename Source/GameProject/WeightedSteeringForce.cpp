@@ -25,6 +25,11 @@ void WeightedSteeringForce::addForce(WeightedForce force)
 	m_weightedList.push_back(force);
 }
 
+void WeightedSteeringForce::addForce(std::shared_ptr<SteeringForce> force, float weight)
+{
+	m_weightedList.push_back(std::make_pair(force, weight));
+}
+
 std::vector<WeightedForce>& WeightedSteeringForce::getList()
 {
 	return m_weightedList;

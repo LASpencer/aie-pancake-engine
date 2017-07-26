@@ -4,9 +4,14 @@
 class BoundsForce :
 	public SteeringForce
 {
+	static const float def_max_x;
+	static const float def_max_y;
+
 	BoundsForce();
 
 	BoundsForce(float minX, float maxX, float minY, float maxY);
+
+	virtual ~BoundsForce();
 
 	void setBounds(float minX, float maxX, float minY, float maxY);
 
