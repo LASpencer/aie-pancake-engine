@@ -45,5 +45,5 @@ private:
 	std::shared_ptr<TargetInRangeCondition> m_targetNotFar;
 	std::shared_ptr<TimerCondition> m_waitTime;
 
-	EntityTarget m_target;
+	EntityTargetPtr m_target;
 };

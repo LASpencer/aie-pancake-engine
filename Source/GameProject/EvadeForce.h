@@ -3,25 +3,21 @@
 #include "SteeringForce.h"
 #include "Target.h"
 
-class PursueForce :
-	public SteeringForce
+class EvadeForce : public SteeringForce
 {
 public:
 	static const float def_target_size;
 
-	PursueForce();
+	EvadeForce();
+	EvadeForce(TargetPtr target);
 
-	PursueForce(TargetPtr target);
+	EvadeForce(const EvadeForce& other);
 
-	PursueForce(const PursueForce& other);
+	EvadeForce& operator=(const EvadeForce& other);
 
-	PursueForce& operator=(const PursueForce& other);
-
-	virtual ~PursueForce();
+	virtual ~EvadeForce();
 
 	void setTarget(TargetPtr target);
-
-	//TODO set target size
 
 	virtual glm::vec2 getForce(Agent* agent);
 

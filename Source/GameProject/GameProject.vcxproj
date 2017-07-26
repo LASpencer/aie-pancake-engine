@@ -88,6 +88,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ArrivalForce.cpp" />
+    <ClCompile Include="BoundsForce.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionEvent.cpp" />
@@ -96,6 +97,7 @@
     <ClCompile Include="DrunkenModifier.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityFactory.cpp" />
+    <ClCompile Include="EvadeForce.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="EventBase.cpp" />
@@ -131,7 +133,10 @@
     <ClInclude Include="ArrivalForce.h" />
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="BinaryCondition.h" />
+    <ClInclude Include="BoundsForce.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="ChaseyStateMachine.h" />
+    <ClInclude Include="ChaseyStates.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionEvent.h" />
     <ClInclude Include="ComplexCondition.h" />
@@ -141,6 +146,7 @@
     <ClInclude Include="DrunkenModifier.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityFactory.h" />
+    <ClInclude Include="EvadeForce.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="EventBase.h" />

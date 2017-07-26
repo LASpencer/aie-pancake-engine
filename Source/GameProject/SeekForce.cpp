@@ -5,30 +5,27 @@ SeekForce::SeekForce() : m_target(nullptr)
 {
 }
 
-SeekForce::SeekForce(Target * target) : m_target(target->clone())
+SeekForce::SeekForce(TargetPtr target) : m_target(target)
 {
 }
 
-SeekForce::SeekForce(const SeekForce & other) : m_target(other.m_target->clone())
+SeekForce::SeekForce(const SeekForce & other) : m_target(other.m_target)
 {
 }
 
 SeekForce & SeekForce::operator=(const SeekForce & other)
 {
-	delete m_target;
-	m_target = other.m_target->clone();
+	m_target = other.m_target;
 	return *this;
 }
 
 SeekForce::~SeekForce()
 {
-	delete m_target;
 }
 
-void SeekForce::setTarget(Target * target)
+void SeekForce::setTarget(TargetPtr target)
 {
-	delete m_target;
-	m_target = target->clone();
+	m_target = target;
 }
 
 glm::vec2 SeekForce::getForce(Agent * agent)

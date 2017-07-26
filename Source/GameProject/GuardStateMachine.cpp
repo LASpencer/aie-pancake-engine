@@ -33,10 +33,10 @@ GuardStateMachine::GuardStateMachine()
 	addState(attack, attackState);
 }
 
-GuardStateMachine::GuardStateMachine(std::vector<glm::vec2> route, EntityPtr target) : m_target(target)
+GuardStateMachine::GuardStateMachine(std::vector<glm::vec2> route, EntityPtr target) : m_target(std::make_shared<EntityTarget>(target))
 {
-	m_targetClose = std::make_shared<TargetInRangeCondition>(&m_target, def_near_range);
-	m_targetNotFar = std::make_shared<TargetInRangeCondition>(&m_target, def_far_range);
+	m_targetClose = std::make_shared<TargetInRangeCondition>(m_target, def_near_range);
+	m_targetNotFar = std::make_shared<TargetInRangeCondition>(m_target, def_far_range);
 	m_waitTime = std::make_shared<TimerCondition>(def_wait_time);
 
 	std::shared_ptr<NotCondition<Agent*>> targetFar = std::make_shared<NotCondition<Agent*>>(m_targetNotFar);
@@ -52,7 +52,7 @@ GuardStateMachine::GuardStateMachine(std::vector<glm::vec2> route, EntityPtr tar
 	patrolState->addTransition(startAttack);
 	addState(patrol, patrolState);
 
-	std::shared_ptr<AttackState> attackState = std::make_shared<AttackState>(&m_target);
+	std::shared_ptr<AttackState> attackState = std::make_shared<AttackState>(m_target);
 	attackState->addTransition(std::make_shared<Transition<Agent*>>(targetFar, idle));
 	addState(attack, attackState);
 }
@@ -63,10 +63,11 @@ GuardStateMachine::~GuardStateMachine()
 
 void GuardStateMachine::setTarget(EntityPtr target)
 {
-	m_target.setTarget(target);
-	std::dynamic_pointer_cast<AttackState>(m_states[attack])->setTarget(&m_target);
-	m_targetClose->setTarget(&m_target);
-	m_targetNotFar->setTarget(&m_target);
+	m_target->setTarget(target); 
+	//HACK may be redundant 
+	std::dynamic_pointer_cast<AttackState>(m_states[attack])->setTarget(m_target);
+	m_targetClose->setTarget(m_target);
+	m_targetNotFar->setTarget(m_target);
 }
 
 void GuardStateMachine::setRoute(std::vector<glm::vec2> route)

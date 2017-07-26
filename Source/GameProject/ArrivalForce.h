@@ -10,7 +10,7 @@ public:
 
 	ArrivalForce();
 
-	ArrivalForce(Target* target, float radius = def_radius);
+	ArrivalForce(TargetPtr target, float radius = def_radius);
 
 	ArrivalForce(const ArrivalForce& other);
 
@@ -18,11 +18,11 @@ public:
 
 	virtual ~ArrivalForce();
 
-	void setTarget(Target* target);
+	void setTarget(TargetPtr target);
 
 	virtual glm::vec2 getForce(Agent* agent);
 
 protected:
-	Target* m_target;
+	TargetPtr m_target;
 	float m_radius;
 };

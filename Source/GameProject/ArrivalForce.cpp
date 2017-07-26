@@ -7,30 +7,27 @@ ArrivalForce::ArrivalForce() : m_target(nullptr), m_radius(def_radius)
 {
 }
 
-ArrivalForce::ArrivalForce(Target * target, float radius) : m_target(target->clone()), m_radius(radius)
+ArrivalForce::ArrivalForce(TargetPtr target, float radius) : m_target(target), m_radius(radius)
 {
 }
 
-ArrivalForce::ArrivalForce(const ArrivalForce & other) : m_target(other.m_target->clone())
+ArrivalForce::ArrivalForce(const ArrivalForce & other) : m_target(other.m_target)
 {
 }
 
 ArrivalForce & ArrivalForce::operator=(const ArrivalForce & other)
 {
-	delete m_target;
-	m_target = other.m_target->clone();
+	m_target = other.m_target;
 	return *this;
 }
 
 ArrivalForce::~ArrivalForce()
 {
-	delete m_target;
 }
 
-void ArrivalForce::setTarget(Target * target)
+void ArrivalForce::setTarget(TargetPtr target)
 {
-	delete m_target;
-	m_target = target->clone();
+	m_target = target;
 }
 
 glm::vec2 ArrivalForce::getForce(Agent * agent)

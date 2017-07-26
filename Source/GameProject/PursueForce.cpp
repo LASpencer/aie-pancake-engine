@@ -7,30 +7,27 @@ PursueForce::PursueForce() : m_target(nullptr)
 {
 }
 
-PursueForce::PursueForce(Target * target) : m_target(target->clone())
+PursueForce::PursueForce(TargetPtr target) : m_target(target)
 {
 }
 
-PursueForce::PursueForce(const PursueForce & other) : m_target(other.m_target->clone())
+PursueForce::PursueForce(const PursueForce & other) : m_target(other.m_target)
 {
 }
 
 PursueForce & PursueForce::operator=(const PursueForce & other)
 {
-	delete m_target;
-	m_target = other.m_target->clone();
+	m_target = other.m_target;
 	return *this;
 }
 
 PursueForce::~PursueForce()
 {
-	delete m_target;
 }
 
-void PursueForce::setTarget(Target * target)
+void PursueForce::setTarget(TargetPtr target)
 {
-	delete m_target;
-	m_target = target->clone();
+	m_target = target;
 }
 
 glm::vec2 PursueForce::getForce(Agent * agent)

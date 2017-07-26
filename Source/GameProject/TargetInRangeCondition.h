@@ -9,19 +9,19 @@ class TargetInRangeCondition :
 {
 public:
 	TargetInRangeCondition();
-	TargetInRangeCondition(Target* target, float range);
+	TargetInRangeCondition(TargetPtr target, float range);
 
 	//TODO copy ctor clones m_target
 	~TargetInRangeCondition();
 
-	void setTarget(Target* target) { m_target = target->clone(); };
+	void setTarget(TargetPtr target) { m_target = target; };
 
 	void setRange(float range) { m_range = range; };
 
 	virtual bool test(Agent* agent);
 
 private:
-	Target* m_target;
+	TargetPtr m_target;
 	float m_range;
 };
 

@@ -47,8 +47,8 @@ public:
 	virtual void update(Agent* entity, StateMachine<Agent*>* sm, float deltaTime);
 
 protected:
-	std::vector<PointTarget> m_route;
-	std::vector<PointTarget>::iterator m_currentWaypoint;
+	std::vector<PointTargetPtr> m_route;
+	std::vector<PointTargetPtr>::iterator m_currentWaypoint;
 	TargetInRangeCondition m_hasReachedWaypoint;
 
 	ArrivalForce m_seekWaypoint;
@@ -64,13 +64,13 @@ class AttackState : public State<Agent*>
 {
 public:
 	AttackState();
-	AttackState(EntityTarget* target);
+	AttackState(EntityTargetPtr target);
 	AttackState(const AttackState& other);
 	virtual ~AttackState();
 
 	virtual State* clone() const;
 
-	void setTarget(EntityTarget* target);
+	void setTarget(EntityTargetPtr target);
 
 	virtual void onEnter(Agent* agent);
 

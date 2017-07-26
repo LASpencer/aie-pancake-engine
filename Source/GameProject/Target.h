@@ -3,6 +3,8 @@
 #include "Entity.h"
 #include "Agent.h"
 
+//TODO target can give its shape
+
 class Target {
 public:
 	Target() {};
@@ -16,6 +18,9 @@ public:
 
 	virtual bool isValid() = 0;
 };
+
+typedef std::shared_ptr<Target> TargetPtr;
+typedef std::weak_ptr<Target> TargetWeakPtr;
 
 class PointTarget : public Target{
 public:
@@ -55,6 +60,8 @@ public:
 protected:
 	glm::vec2 m_point;
 };
+
+typedef std::shared_ptr<PointTarget> PointTargetPtr;
 
 class EntityTarget : public Target {
 public:
@@ -100,3 +107,5 @@ public:
 protected:
 	EntityWeakPtr m_target;
 };
+
+typedef std::shared_ptr<EntityTarget> EntityTargetPtr;

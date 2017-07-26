@@ -189,6 +189,12 @@
     <ClCompile Include="WeightedSteeringForce.cpp">
       <Filter>Source Files\Entities\Behaviours\Steering</Filter>
     </ClCompile>
+    <ClCompile Include="EvadeForce.cpp">
+      <Filter>Source Files\Entities\Behaviours\Steering</Filter>
+    </ClCompile>
+    <ClCompile Include="BoundsForce.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameProjectApp.h">
@@ -333,6 +339,18 @@
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
     <ClInclude Include="WeightedSteeringForce.h">
+      <Filter>Header Files\Entities\Behaviours\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="EvadeForce.h">
+      <Filter>Header Files\Entities\Behaviours\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="ChaseyStates.h">
+      <Filter>Header Files\State Machine\States</Filter>
+    </ClInclude>
+    <ClInclude Include="ChaseyStateMachine.h">
+      <Filter>Header Files\State Machine\States</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundsForce.h">
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
   </ItemGroup>

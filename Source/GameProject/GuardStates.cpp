@@ -41,7 +41,7 @@ const float PatrolState::waypoint_size = 5.0f;
 
 PatrolState::PatrolState() : State<Agent*>()
 {
-	m_route.push_back(PointTarget());
+	m_route.push_back(std::make_shared<PointTarget>());
 	startRoute();
 
 	m_hasReachedWaypoint.setRange(waypoint_size);
@@ -74,7 +74,7 @@ void PatrolState::setRoute(std::vector<glm::vec2> route)
 {
 	m_route.clear();
 	for (glm::vec2 waypoint : route) {
-		m_route.push_back(PointTarget(waypoint));
+		m_route.push_back(std::make_shared<PointTarget>(waypoint));
 	}
 }
 
@@ -103,22 +103,22 @@ void PatrolState::incrementWaypoint()
 		m_currentWaypoint = m_route.begin();
 	}
 
-	m_hasReachedWaypoint.setTarget(&(*m_currentWaypoint));
-	m_seekWaypoint.setTarget(&(*m_currentWaypoint));
+	m_hasReachedWaypoint.setTarget(*m_currentWaypoint);
+	m_seekWaypoint.setTarget(*m_currentWaypoint);
 }
 
 void PatrolState::startRoute()
 {
 	m_currentWaypoint = m_route.begin();
-	m_hasReachedWaypoint.setTarget(&(*m_currentWaypoint));
-	m_seekWaypoint.setTarget(&(*m_currentWaypoint));
+	m_hasReachedWaypoint.setTarget(*m_currentWaypoint);
+	m_seekWaypoint.setTarget(*m_currentWaypoint);
 }
 
 AttackState::AttackState() : State<Agent*>()
 {
 }
 
-AttackState::AttackState(EntityTarget* target) : State<Agent*>()
+AttackState::AttackState(EntityTargetPtr target) : State<Agent*>()
 {
 	m_attackTarget.setTarget(target);
 }
@@ -136,7 +136,7 @@ State<Agent*> * AttackState::clone() const
 	return new AttackState(*this);
 }
 
-void AttackState::setTarget(EntityTarget * target)
+void AttackState::setTarget(EntityTargetPtr target)
 {
 	m_attackTarget.setTarget(target);
 }

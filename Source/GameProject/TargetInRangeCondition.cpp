@@ -6,15 +6,14 @@ TargetInRangeCondition::TargetInRangeCondition()
 {
 }
 
-TargetInRangeCondition::TargetInRangeCondition(Target * target, float range) : m_range(range)
+TargetInRangeCondition::TargetInRangeCondition(TargetPtr target, float range) : m_range(range)
 {
-	m_target = target->clone();
+	m_target = target;
 }
 
 
 TargetInRangeCondition::~TargetInRangeCondition()
 {
-	delete m_target;
 }
 
 bool TargetInRangeCondition::test(Agent * agent)
