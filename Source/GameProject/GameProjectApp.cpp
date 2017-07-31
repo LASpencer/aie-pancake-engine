@@ -14,6 +14,7 @@
 #include "SteeringBehaviour.h"
 #include "WanderForce.h"
 #include "BoundsForce.h"
+#include "PathfindingBehaviour.h"
 
 GameProjectApp::GameProjectApp() : m_entityList()
 {
@@ -38,20 +39,25 @@ bool GameProjectApp::startup() {
 	m_mapGraph.addNode({ 400,300 });
 	m_mapGraph.addNode({ 300,150 });
 	m_mapGraph.addNode({ 200,300 });
+	m_mapGraph.addNode({600, 500});
 
 	m_mapGraph.addEdge(0, 1, 2);
 	m_mapGraph.addEdge(0, 5, 5);
 	m_mapGraph.addEdge(1, 2, 3);
 	m_mapGraph.addEdge(2, 0, 3);
 	m_mapGraph.addEdge(2, 3, 1);
+	m_mapGraph.addEdge(2, 6, 5);
 	m_mapGraph.addEdge(3, 4, 4);
 	m_mapGraph.addEdge(3, 5, 4);
 	m_mapGraph.addEdge(4, 0, 99);
 	m_mapGraph.addEdge(5, 4, 6);
+	m_mapGraph.addEdge(6, 2, 5);
+	m_mapGraph.addEdge(6, 4, 7);
 
 	EntityPtr player = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(500,500)));
 	AgentPtr playerAgent = std::dynamic_pointer_cast<Agent>(player->getComponent(Component::agent));
-	playerAgent->addBehaviour(std::make_shared<KeyboardController>());
+	playerAgent->addBehaviour(std::make_shared<PathfindingBehaviour>(&m_mapGraph, m_mapGraph.m_graph[0]));
+	playerAgent->setMaxVelocity(50.f);
 
 	//EntityPtr car = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(100, 100)));
 	////set guard car agent's behaviour as fsm behaviour with guard state machine
@@ -143,6 +149,12 @@ void GameProjectApp::updateEntities(float deltaTime)
 
 void GameProjectApp::drawEntities()
 {
+	for (MapNode* node : m_mapGraph.m_graph) {
+		m_2dRenderer->drawCircle(node->position.x, node->position.y, 15);
+		for (MapEdge edge : node->connections) {
+			m_2dRenderer->drawLine(node->position.x, node->position.y, edge.target->position.x, edge.target->position.y, 3);
+		}
+	}
 	std::vector<EntityPtr> entitiesWithComponent = Entity::getEntitiesWithComponent(Component::sprite, m_entityList);
 	for (EntityPtr entity : entitiesWithComponent) {
 		entity->getComponent(Component::sprite)->draw(m_2dRenderer);
@@ -152,20 +164,6 @@ void GameProjectApp::drawEntities()
 		for (EntityPtr entity : entitiesWithComponent) {
 			entity->getComponent(Component::collider)->draw(m_2dRenderer);
 		}
-	}
-	for (MapNode* node : m_mapGraph.m_graph) {
-		m_2dRenderer->drawCircle(node->position.x, node->position.y, 15);
-		for (MapEdge edge : node->connections) {
-			m_2dRenderer->drawLine(node->position.x, node->position.y, edge.target->position.x, edge.target->position.y, 3);
-		}
-	}
-	//HACK
-	std::stack<glm::vec2> path = m_mapGraph.dijkstraSearch((*m_mapGraph.m_graph.begin()), (*(m_mapGraph.m_graph.begin() + 4)));
-	while(!path.empty()){
-		glm::vec2 pos = path.top();
-		path.pop();
-		m_2dRenderer->setRenderColour(0xFF0000FF);
-		m_2dRenderer->drawCircle(pos.x, pos.y, 5);
 	}
 }
 

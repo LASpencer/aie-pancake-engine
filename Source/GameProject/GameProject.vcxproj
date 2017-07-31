@@ -111,6 +111,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapGraph.cpp" />
     <ClCompile Include="MultiSprite.cpp" />
+    <ClCompile Include="PathfindingBehaviour.cpp" />
     <ClCompile Include="PursueForce.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SceneObject.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="NotCondition.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="OrCondition.h" />
+    <ClInclude Include="PathfindingBehaviour.h" />
     <ClInclude Include="PursueForce.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceneObject.h" />

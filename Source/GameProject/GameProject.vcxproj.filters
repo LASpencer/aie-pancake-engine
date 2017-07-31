@@ -210,6 +210,9 @@
     <ClCompile Include="MapGraph.cpp">
       <Filter>Source Files\Pathfinding</Filter>
     </ClCompile>
+    <ClCompile Include="PathfindingBehaviour.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameProjectApp.h">
@@ -376,6 +379,9 @@
     </ClInclude>
     <ClInclude Include="MapGraph.h">
       <Filter>Header Files\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="PathfindingBehaviour.h">
+      <Filter>Header Files\Entities\Behaviours</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
