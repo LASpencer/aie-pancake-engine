@@ -10,10 +10,9 @@ GuardStateMachine::GuardStateMachine()
 {
 	m_targetClose = std::make_shared<TargetInRangeCondition>();
 	m_targetNotFar = std::make_shared<TargetInRangeCondition>();
-	m_waitTime = std::make_shared<TimerCondition>();
+	m_waitTime = std::make_shared<TimerCondition>(def_wait_time);
 	m_targetClose->setRange(def_near_range);
 	m_targetNotFar->setRange(def_far_range);
-	m_waitTime->setTime(def_wait_time);
 
 	std::shared_ptr<NotCondition<Agent*>> targetFar = std::make_shared<NotCondition<Agent*>>(m_targetNotFar);
 	//TODO add transitions to states

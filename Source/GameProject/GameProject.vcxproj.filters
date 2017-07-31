@@ -192,8 +192,14 @@
     <ClCompile Include="EvadeForce.cpp">
       <Filter>Source Files\Entities\Behaviours\Steering</Filter>
     </ClCompile>
+    <ClCompile Include="ChaseyStates.cpp">
+      <Filter>Source Files\State Machine\States</Filter>
+    </ClCompile>
     <ClCompile Include="BoundsForce.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Entities\Behaviours\Steering</Filter>
+    </ClCompile>
+    <ClCompile Include="ChaseyStateMachine.cpp">
+      <Filter>Source Files\State Machine\States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

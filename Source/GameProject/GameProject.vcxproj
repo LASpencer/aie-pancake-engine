@@ -90,6 +90,8 @@
     <ClCompile Include="ArrivalForce.cpp" />
     <ClCompile Include="BoundsForce.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="ChaseyStateMachine.cpp" />
+    <ClCompile Include="ChaseyStates.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionEvent.cpp" />
     <ClCompile Include="Component.cpp" />
