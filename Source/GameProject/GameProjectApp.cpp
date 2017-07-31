@@ -51,8 +51,7 @@ bool GameProjectApp::startup() {
 	m_mapGraph.addEdge(3, 5, 4);
 	m_mapGraph.addEdge(4, 0, 99);
 	m_mapGraph.addEdge(5, 4, 6);
-	m_mapGraph.addEdge(6, 2, 5);
-	m_mapGraph.addEdge(6, 4, 7);
+	m_mapGraph.addEdge(6, 3, 7);
 
 	EntityPtr player = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(500,500)));
 	AgentPtr playerAgent = std::dynamic_pointer_cast<Agent>(player->getComponent(Component::agent));

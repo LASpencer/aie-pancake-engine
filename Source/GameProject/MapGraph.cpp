@@ -69,5 +69,10 @@ void MapGraph::addNode(glm::vec2 position)
 
 void MapGraph::addEdge(size_t start, size_t end, float cost)
 {
-	m_graph[start]->connections.push_back({ m_graph[end], cost });
+	addEdge(m_graph[start], m_graph[end], cost);
+}
+
+void MapGraph::addEdge(MapNode * start, MapNode * end, float cost)
+{
+	start->connections.push_back({ end, cost });
 }

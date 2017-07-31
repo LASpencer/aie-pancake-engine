@@ -31,5 +31,7 @@ public:
 
 	void addEdge(size_t start, size_t end, float cost); //HACK better to use iterators/pointers? Or some other handle?
 
+	void addEdge(MapNode* start, MapNode* end, float cost);
+
 	std::vector<MapNode*> m_graph;
 };
