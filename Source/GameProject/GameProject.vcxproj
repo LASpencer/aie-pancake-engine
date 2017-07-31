@@ -121,11 +121,13 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SteeringBehaviour.cpp" />
     <ClCompile Include="SteeringForce.cpp" />
     <ClCompile Include="TargetInRangeCondition.cpp" />
     <ClCompile Include="TextBar.cpp" />
     <ClCompile Include="TimerCondition.cpp" />
     <ClCompile Include="utility.cpp" />
+    <ClCompile Include="WanderForce.cpp" />
     <ClCompile Include="WeightedSteeringForce.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +174,7 @@
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SteeringBehaviour.h" />
     <ClInclude Include="SteeringForce.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="Target.h" />
@@ -180,6 +183,7 @@
     <ClInclude Include="TimerCondition.h" />
     <ClInclude Include="Transition.h" />
     <ClInclude Include="utility.h" />
+    <ClInclude Include="WanderForce.h" />
     <ClInclude Include="WeightedSteeringForce.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -11,6 +11,8 @@
 #include "GuardStateMachine.h"
 #include "KeyboardController.h"
 #include "WeightedSteeringForce.h"
+#include "SteeringBehaviour.h"
+#include "WanderForce.h"
 
 GameProjectApp::GameProjectApp() : m_entityList()
 {
@@ -28,17 +30,21 @@ bool GameProjectApp::startup() {
 	m_entityFactory = new EntityFactory(this);
 	m_sceneRoot = std::make_shared<SceneObject>();
 
-	EntityPtr player = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(500,500)));
-	AgentPtr playerAgent = std::dynamic_pointer_cast<Agent>(player->getComponent(Component::agent));
-	playerAgent->addBehaviour(std::make_shared<KeyboardController>());
+	//EntityPtr player = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(500,500)));
+	//AgentPtr playerAgent = std::dynamic_pointer_cast<Agent>(player->getComponent(Component::agent));
+	//playerAgent->addBehaviour(std::make_shared<KeyboardController>());
 
-	EntityPtr car = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(100, 100)));
-	//set guard car agent's behaviour as fsm behaviour with guard state machine
-	AgentPtr carAgent = std::dynamic_pointer_cast<Agent>(car->getComponent(Component::agent));
-	GuardStateMachine* guardMachine = new GuardStateMachine({ {80,80},{1000,100},{950,600},{200,650} }, player);
-	guardMachine->forceState(GuardStateMachine::patrol, carAgent.get());
-	std::shared_ptr<FSMBehaviour> guardBehaviour = std::make_shared<FSMBehaviour>(guardMachine);
-	carAgent->addBehaviour(guardBehaviour);
+	//EntityPtr car = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(100, 100)));
+	////set guard car agent's behaviour as fsm behaviour with guard state machine
+	//AgentPtr carAgent = std::dynamic_pointer_cast<Agent>(car->getComponent(Component::agent));
+	//GuardStateMachine* guardMachine = new GuardStateMachine({ {80,80},{1000,100},{950,600},{200,650} }, player);
+	//guardMachine->forceState(GuardStateMachine::patrol, carAgent.get());
+	//std::shared_ptr<FSMBehaviour> guardBehaviour = std::make_shared<FSMBehaviour>(guardMachine);
+	//carAgent->addBehaviour(guardBehaviour);
+
+	EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(640, 360)));
+	AgentPtr wanderAgent = std::dynamic_pointer_cast<Agent>(wanderer->getComponent(Component::agent));
+	wanderAgent->addBehaviour(std::make_shared<SteeringBehaviour>(std::make_shared<WanderForce>()));
 
 	// Disable face culling, so sprites can be flipped
 	glDisable(GL_CULL_FACE);

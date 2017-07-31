@@ -195,6 +195,12 @@
     <ClCompile Include="BoundsForce.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WanderForce.cpp">
+      <Filter>Source Files\Entities\Behaviours\Steering</Filter>
+    </ClCompile>
+    <ClCompile Include="SteeringBehaviour.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameProjectApp.h">
@@ -352,6 +358,12 @@
     </ClInclude>
     <ClInclude Include="BoundsForce.h">
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="WanderForce.h">
+      <Filter>Header Files\Entities\Behaviours\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="SteeringBehaviour.h">
+      <Filter>Header Files\Entities\Behaviours</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
