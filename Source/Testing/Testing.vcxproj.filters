@@ -22,15 +22,6 @@
     <Filter Include="Source Files\Test Classes">
       <UniqueIdentifier>{197b85fa-7be4-49da-b59b-37741fb745a2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Test Classes\States">
-      <UniqueIdentifier>{63b94a1c-b6ea-4891-a5ec-551616620de9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Test Classes\Components">
-      <UniqueIdentifier>{91314277-3789-4bfc-aadf-e70dc4f83ffb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Test Classes\Entities">
-      <UniqueIdentifier>{42eaa909-6a00-4a05-ab9e-2a2deaae4357}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -68,24 +59,6 @@
     <ClCompile Include="Testing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FooState.cpp">
-      <Filter>Source Files\Test Classes\States</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GameProject\State.cpp">
-      <Filter>Source Files\Test Classes\States</Filter>
-    </ClCompile>
-    <ClCompile Include="StateMachineTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BarState.cpp">
-      <Filter>Source Files\Test Classes\States</Filter>
-    </ClCompile>
-    <ClCompile Include="BazState.cpp">
-      <Filter>Source Files\Test Classes\States</Filter>
-    </ClCompile>
-    <ClCompile Include="FooStackState.cpp">
-      <Filter>Source Files\Test Classes\States</Filter>
-    </ClCompile>
     <ClCompile Include="ResourceManagerTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -95,13 +68,16 @@
     <ClCompile Include="ComponentTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\GameProject\Component.cpp">
-      <Filter>Source Files\Test Classes\Components</Filter>
+    <ClCompile Include="..\GameProject\ResourceManager.cpp">
+      <Filter>Source Files\Test Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="PathfindingTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameProject\MapGraph.cpp">
+      <Filter>Source Files\Test Classes</Filter>
     </ClCompile>
     <ClCompile Include="..\GameProject\SceneObject.cpp">
-      <Filter>Source Files\Test Classes\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\GameProject\ResourceManager.cpp">
       <Filter>Source Files\Test Classes</Filter>
     </ClCompile>
   </ItemGroup>

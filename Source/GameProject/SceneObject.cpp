@@ -97,7 +97,7 @@ void SceneObject::globalTranslate(glm::vec2 translate)
 	if (m_parent) {
 		localTranslate = (glm::vec2)(glm::vec3(localTranslate.x,localTranslate.y,0) * glm::inverse(m_parent->getGlobalTransform()));
 	}
-	m_localTransform = glm::translate(m_localTransform, localTranslate);
+	m_localTransform = glm::translate(glm::mat3(1), localTranslate) * m_localTransform;
 	setDirty();
 }
 

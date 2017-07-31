@@ -1,6 +1,17 @@
 #include "stdafx.h"
 #include "MapGraph.h"
 
+MapGraph::MapGraph()
+{
+}
+
+MapGraph::~MapGraph()
+{
+	for (MapNode* node : m_graph) {
+		delete node;
+	}
+}
+
 std::stack<glm::vec2> MapGraph::dijkstraSearch(MapNode* startNode, MapNode* endNode)
 {
 	MapNode* currentNode;
@@ -9,9 +20,9 @@ std::stack<glm::vec2> MapGraph::dijkstraSearch(MapNode* startNode, MapNode* endN
 	std::set<MapNode*> closedNodes;
 	std::stack<glm::vec2> path;
 
-	for (MapNode node : m_graph) {
-		node.gScore = INFINITY;
-		node.parent = nullptr;
+	for (MapNode* node : m_graph) {
+		node->gScore = INFINITY;
+		node->parent = nullptr;
 	}
 	openNodes.push(startNode);
 	startNode->gScore = 0;
@@ -43,4 +54,20 @@ std::stack<glm::vec2> MapGraph::dijkstraSearch(MapNode* startNode, MapNode* endN
 		currentNode = currentNode->parent;
 	}
 	return path;
+}
+
+std::stack<glm::vec2> MapGraph::dijkstraSearch(size_t startNode, size_t endNode)
+{
+	return dijkstraSearch(m_graph[startNode], m_graph[endNode]);
+}
+
+void MapGraph::addNode(glm::vec2 position)
+{
+	MapNode* newNode = new MapNode({position, 0, nullptr, {}});
+	m_graph.push_back(newNode);
+}
+
+void MapGraph::addEdge(size_t start, size_t end, float cost)
+{
+	m_graph[start]->connections.push_back({ m_graph[end], cost });
 }
