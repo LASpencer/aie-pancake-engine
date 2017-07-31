@@ -6,7 +6,7 @@
 #include "ResourceManager.h"
 #include "Entity.h"
 #include "EntityFactory.h"
-
+#include "MapGraph.h"
 
 class GameProjectApp : public aie::Application {
 public:
@@ -35,6 +35,7 @@ protected:
 	std::vector<EntityPtr>	m_entityList;	// Currently active entities in game
 	EntityFactory*		m_entityFactory;
 	SceneObjectPtr		m_sceneRoot;		// Root node of scene graph
+	MapGraph			m_mapGraph;
 
 	bool m_showFPS;							// When true, displays fps in corner of screen
 };

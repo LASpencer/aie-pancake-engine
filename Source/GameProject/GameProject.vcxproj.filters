@@ -82,6 +82,12 @@
     <Filter Include="Source Files\State Machine\Conditions">
       <UniqueIdentifier>{d229e5ab-fba5-4b32-a1dc-3d0802377f77}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Pathfinding">
+      <UniqueIdentifier>{d4b76b79-58a3-4ad5-b36f-046c3e45cb6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Pathfinding">
+      <UniqueIdentifier>{2813a329-ca60-4421-b9cb-77beaa0f725d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -200,6 +206,18 @@
     </ClCompile>
     <ClCompile Include="ChaseyStateMachine.cpp">
       <Filter>Source Files\State Machine\States</Filter>
+    </ClCompile>
+    <ClCompile Include="WanderForce.cpp">
+      <Filter>Source Files\Entities\Behaviours\Steering</Filter>
+    </ClCompile>
+    <ClCompile Include="SteeringBehaviour.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MapGraph.cpp">
+      <Filter>Source Files\Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="PathfindingBehaviour.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -358,6 +376,18 @@
     </ClInclude>
     <ClInclude Include="BoundsForce.h">
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="WanderForce.h">
+      <Filter>Header Files\Entities\Behaviours\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="SteeringBehaviour.h">
+      <Filter>Header Files\Entities\Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="MapGraph.h">
+      <Filter>Header Files\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="PathfindingBehaviour.h">
+      <Filter>Header Files\Entities\Behaviours</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

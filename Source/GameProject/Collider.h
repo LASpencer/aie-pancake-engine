@@ -20,6 +20,8 @@ struct Box {
 
 };
 
+//TODO change so it uses different shapes (OBox, circle, etc) rather than only AABox
+
 class Collider;
 
 typedef std::shared_ptr<Collider> ColliderPtr;

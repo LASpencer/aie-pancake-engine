@@ -51,6 +51,13 @@ void Agent::update(float deltaTime)
 
 	entity->getPosition()->globalTranslate(displacement);
 
+	if (m_velocity != glm::vec2(0)) {
+		glm::vec2 heading = glm::normalize(m_velocity);
+		glm::vec2 currentAngle = glm::normalize(glm::vec2(glm::vec3(0, 1, 0) * entity->getPosition()->getGlobalTransform()));
+		float rotationNeeded =  atan2f(currentAngle.y, currentAngle.x) - atan2f(heading.y, -heading.x);
+		entity->getPosition()->rotate(rotationNeeded);
+	}
+
 	m_time += deltaTime;
 }
 

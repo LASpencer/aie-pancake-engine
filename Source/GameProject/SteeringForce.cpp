@@ -7,7 +7,7 @@ glm::vec2 SteeringForce::seekPoint(Agent * agent, glm::vec2 target)
 {
 	EntityPtr entity(agent->getEntity());
 
-	glm::vec2 agentPos = glm::vec2(entity->getPosition()->getGlobalTransform()[2]);
+	glm::vec2 agentPos = agent->getPosition();
 	glm::vec2 currentVelocity = agent->getVelocity();
 
 	glm::vec2 targetVelocity = glm::normalize(target - agentPos) * agent->getMaxVelocity();
@@ -19,7 +19,7 @@ glm::vec2 SteeringForce::avoidPoint(Agent * agent, glm::vec2 target)
 {
 	EntityPtr entity(agent->getEntity());
 
-	glm::vec2 agentPos = glm::vec2(entity->getPosition()->getGlobalTransform()[2]);
+	glm::vec2 agentPos = agent->getPosition();
 	glm::vec2 currentVelocity = agent->getVelocity();
 
 	glm::vec2 targetVelocity = glm::normalize(agentPos - target) * agent->getMaxVelocity();
@@ -31,7 +31,7 @@ glm::vec2 SteeringForce::arrivePoint(Agent * agent, glm::vec2 target, float radi
 {
 	EntityPtr entity(agent->getEntity());
 
-	glm::vec2 agentPos = glm::vec2(entity->getPosition()->getGlobalTransform()[2]);
+	glm::vec2 agentPos = agent->getPosition();
 	glm::vec2 currentVelocity = agent->getVelocity();
 	glm::vec2 displacement = target - agentPos;
 	glm::vec2 targetVelocity;
