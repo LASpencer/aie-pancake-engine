@@ -13,6 +13,7 @@
 #include "WeightedSteeringForce.h"
 #include "SteeringBehaviour.h"
 #include "WanderForce.h"
+#include "BoundsForce.h"
 
 GameProjectApp::GameProjectApp() : m_entityList()
 {
@@ -41,11 +42,15 @@ bool GameProjectApp::startup() {
 	//guardMachine->forceState(GuardStateMachine::patrol, carAgent.get());
 	//std::shared_ptr<FSMBehaviour> guardBehaviour = std::make_shared<FSMBehaviour>(guardMachine);
 	//carAgent->addBehaviour(guardBehaviour);
-
-	EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(640, 360)));
-	AgentPtr wanderAgent = std::dynamic_pointer_cast<Agent>(wanderer->getComponent(Component::agent));
-	wanderAgent->addBehaviour(std::make_shared<SteeringBehaviour>(std::make_shared<WanderForce>()));
-
+	for (int i = 0; i < 10; ++i) {
+		EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(640, 360)));
+		AgentPtr wanderAgent = std::dynamic_pointer_cast<Agent>(wanderer->getComponent(Component::agent));
+		wanderAgent->setMaxVelocity(50.f);
+		std::shared_ptr<WeightedSteeringForce> wanderInBounds = std::make_shared<WeightedSteeringForce>();
+		wanderInBounds->addForce(std::make_shared<BoundsForce>(), 1.f);
+		wanderInBounds->addForce(std::make_shared<WanderForce>(), 1.f);
+		wanderAgent->addBehaviour(std::make_shared<SteeringBehaviour>(wanderInBounds));
+	}
 	// Disable face culling, so sprites can be flipped
 	glDisable(GL_CULL_FACE);
 	return true;

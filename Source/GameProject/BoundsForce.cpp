@@ -34,11 +34,15 @@ glm::vec2 BoundsForce::getForce(Agent * agent)
 	if (position.x >m_maxX) {
 		force += glm::vec2(-1, 0);
 	}
-	if (position.x < m_minY) {
+	if (position.y < m_minY) {
 		force += glm::vec2(0, 1);
 	}
-	if (position.x > m_maxY) {
+	if (position.y > m_maxY) {
 		force += glm::vec2(0, -1);
 	}
-	return agent->getMaxForce() * glm::normalize(force);
+	if (force != glm::vec2(0)) {
+		return agent->getMaxForce() * glm::normalize(force);
+	} else {
+		return glm::vec2(0);
+	}
 }

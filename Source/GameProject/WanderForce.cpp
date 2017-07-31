@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "WanderForce.h"
 
-const float WanderForce::def_radius = 50.f;
-const float WanderForce::def_jitter = 10.f;
-const float WanderForce::def_distance = 100.f;
+const float WanderForce::def_radius = 200.f;
+const float WanderForce::def_jitter = 50.f;
+const float WanderForce::def_distance = 200.f;
 
 WanderForce::WanderForce() : m_radius(def_radius), m_jitter(def_jitter), m_distance(def_distance)
 {
@@ -41,5 +41,6 @@ glm::vec2 WanderForce::getForce(Agent * agent)
 	if (agent->getVelocity() != glm::vec2(0)) {
 		goal = m_distance * glm::normalize(agent->getVelocity()) + m_target;
 	}
+	goal += agent->getPosition();
 	return seekPoint(agent, goal);
 }
