@@ -12,7 +12,7 @@ KeyboardController::~KeyboardController()
 {
 }
 
-void KeyboardController::update(Agent* agent, float deltaTime)
+bool KeyboardController::update(Agent* agent, float deltaTime)
 {
 	// HACK
 	aie::Input* input = aie::Input::getInstance();
@@ -37,4 +37,6 @@ void KeyboardController::update(Agent* agent, float deltaTime)
 	}
 
 	agent->addForce(force);
+
+	return true;
 }

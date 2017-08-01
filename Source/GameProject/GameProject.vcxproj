@@ -163,6 +163,7 @@
     <ClInclude Include="ComplexCondition.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Agent.h" />
+    <ClInclude Include="CompositeBehaviour.h" />
     <ClInclude Include="Condition.h" />
     <ClInclude Include="DrunkenModifier.h" />
     <ClInclude Include="Entity.h" />

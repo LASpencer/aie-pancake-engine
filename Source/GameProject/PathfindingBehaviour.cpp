@@ -13,7 +13,7 @@ PathfindingBehaviour::~PathfindingBehaviour()
 {
 }
 
-void PathfindingBehaviour::update(Agent * agent, float deltaTime)
+bool PathfindingBehaviour::update(Agent * agent, float deltaTime)
 {
 	aie::Input* input = aie::Input::getInstance();
 	if (input->wasMouseButtonPressed(aie::INPUT_MOUSE_BUTTON_LEFT)) {
@@ -32,4 +32,6 @@ void PathfindingBehaviour::update(Agent * agent, float deltaTime)
 		m_path.pop();
 	}
 	agent->addForce(m_arrive.getForce(agent));
+
+	return true; //TODO return false if pathfinding fails?
 }

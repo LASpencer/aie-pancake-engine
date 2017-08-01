@@ -14,5 +14,7 @@ public:
 	Behaviour() {};
 	virtual ~Behaviour() {};
 
-	virtual void update(Agent* agent, float deltaTime) = 0;
+	virtual Behaviour* clone() = 0;
+
+	virtual bool update(Agent* agent, float deltaTime) = 0;
 };

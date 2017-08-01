@@ -14,9 +14,10 @@ FSMBehaviour::~FSMBehaviour()
 	delete m_stateMachine;
 }
 
-void FSMBehaviour::update(Agent* agent, float deltaTime)
+bool FSMBehaviour::update(Agent* agent, float deltaTime)
 {
 	m_stateMachine->update(agent, deltaTime);
+	return true;
 }
 
 void FSMBehaviour::setStateMachine(StateMachine<Agent*>* stateMachine)

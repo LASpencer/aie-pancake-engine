@@ -94,6 +94,9 @@
     <Filter Include="Source Files\imgui">
       <UniqueIdentifier>{550f67c0-0bf5-427a-883d-16daddcd6d34}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Entities\Behaviours\Composite Behaviours">
+      <UniqueIdentifier>{dcadcd8c-6622-4815-91fe-7add9f8a9999}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -412,6 +415,9 @@
     </ClInclude>
     <ClInclude Include="..\dependencies\imgui\imgui.h">
       <Filter>Header Files\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="CompositeBehaviour.h">
+      <Filter>Header Files\Entities\Behaviours\Composite Behaviours</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

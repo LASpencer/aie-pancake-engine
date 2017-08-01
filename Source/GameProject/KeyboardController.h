@@ -9,6 +9,6 @@ public:
 	KeyboardController();
 	virtual ~KeyboardController();
 
-	virtual void update(Agent* agent, float deltaTime);
+	virtual bool update(Agent* agent, float deltaTime);
 };
 

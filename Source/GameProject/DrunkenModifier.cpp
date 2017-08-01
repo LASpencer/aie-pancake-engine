@@ -11,7 +11,7 @@ DrunkenModifier::~DrunkenModifier()
 {
 }
 
-void DrunkenModifier::update(Agent* agent, float deltaTime)
+bool DrunkenModifier::update(Agent* agent, float deltaTime)
 {
 	m_time += deltaTime;
 
@@ -21,4 +21,6 @@ void DrunkenModifier::update(Agent* agent, float deltaTime)
 	force *= magnitude;
 
 	agent->addForce(force);
+
+	return true;
 }

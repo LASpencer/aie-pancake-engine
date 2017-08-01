@@ -11,7 +11,7 @@ public:
 
 	virtual ~FSMBehaviour();
 
-	virtual void update(Agent* agent, float deltaTime);
+	virtual bool update(Agent* agent, float deltaTime);
 
 	void setStateMachine(StateMachine<Agent*>* stateMachine);
 
