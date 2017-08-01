@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "PathfindingBehaviour.h"
 #include "Input.h"
+#include "imgui.h"
 
 PathfindingBehaviour::PathfindingBehaviour(MapGraph * map, MapNode * startingNode) : m_map(map), m_currentNode(startingNode)
 {
@@ -19,7 +20,8 @@ void PathfindingBehaviour::update(Agent * agent, float deltaTime)
 		glm::vec2 mousePos(input->getMouseX(), input->getMouseY());
 		for (MapNode* node : m_map->m_graph) {
 			if (glm::length(mousePos - node->position) < 15) {
-				m_path = m_map->dijkstraSearch(m_currentNode, node);
+				//m_path = m_map->dijkstraSearch(m_currentNode, node);
+				m_path = m_map->aStarSearch(m_currentNode, node, [](MapNode* current, MapNode* goal) {return glm::length(current->position - goal->position); });
 				m_currentNode = node;
 				break;
 			}

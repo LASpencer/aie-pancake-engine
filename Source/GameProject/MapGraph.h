@@ -12,6 +12,7 @@ struct MapNode {
 	glm::vec2 position;
 
 	float gScore;
+	float fScore;
 	MapNode* parent;
 
 	std::vector<MapEdge> connections;
@@ -26,6 +27,8 @@ public:
 	std::stack<glm::vec2> dijkstraSearch(MapNode* startNode, MapNode* endNode);
 
 	std::stack<glm::vec2> dijkstraSearch(size_t startNode, size_t endNode);
+
+	std::stack<glm::vec2> aStarSearch(MapNode* startNode, MapNode* endNode, float(*heuristic)(MapNode*, MapNode*));
 
 	void addNode(glm::vec2 position);
 

@@ -43,17 +43,17 @@ bool GameProjectApp::startup() {
 	m_mapGraph.addNode({ 200,300 });
 	m_mapGraph.addNode({600, 500});
 
-	m_mapGraph.addEdge(0, 1, 2);
-	m_mapGraph.addEdge(0, 5, 5);
-	m_mapGraph.addEdge(1, 2, 3);
-	m_mapGraph.addEdge(2, 0, 3);
-	m_mapGraph.addEdge(2, 3, 1);
-	m_mapGraph.addEdge(2, 6, 5);
-	m_mapGraph.addEdge(3, 4, 4);
-	m_mapGraph.addEdge(3, 5, 4);
-	m_mapGraph.addEdge(4, 0, 99);
-	m_mapGraph.addEdge(5, 4, 6);
-	m_mapGraph.addEdge(6, 3, 7);
+	m_mapGraph.addEdge(0, 1, 200);
+	m_mapGraph.addEdge(0, 5, 400);
+	m_mapGraph.addEdge(1, 2, 150);
+	m_mapGraph.addEdge(2, 0, 250);
+	m_mapGraph.addEdge(2, 3, 150);
+	m_mapGraph.addEdge(2, 6, 200);
+	m_mapGraph.addEdge(3, 4, 180);
+	m_mapGraph.addEdge(3, 5, 200);
+	m_mapGraph.addEdge(4, 0, 460);
+	m_mapGraph.addEdge(5, 4, 180);
+	m_mapGraph.addEdge(6, 3, 280);
 
 	EntityPtr player = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(500,500)));
 	AgentPtr playerAgent = std::dynamic_pointer_cast<Agent>(player->getComponent(Component::agent));
@@ -105,11 +105,11 @@ void GameProjectApp::update(float deltaTime) {
 	updateEntities(deltaTime);
 
 	//HACK
-	//ImGui::Begin("Test");
+	ImGui::Begin("Test");
 	ImGui::Text("Hello, world!");
 	//ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-	//ImGui::End();
+	ImGui::End();
 }
 
 void GameProjectApp::draw() {
