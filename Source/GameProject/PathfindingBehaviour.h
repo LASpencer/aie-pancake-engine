@@ -10,7 +10,7 @@ public:
 	PathfindingBehaviour(MapGraph* map, MapNode* startingNode);
 	virtual ~PathfindingBehaviour();
 
-	virtual bool update(Agent* agent, float deltaTime);
+	virtual BehaviourResult update(Agent* agent, float deltaTime);
 
 private:
 	std::stack<glm::vec2> m_path;

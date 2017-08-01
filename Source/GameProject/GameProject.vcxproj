@@ -99,6 +99,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="AABox.cpp" />
     <ClCompile Include="ArrivalForce.cpp" />
     <ClCompile Include="BoundsForce.cpp" />
     <ClCompile Include="Button.cpp" />
@@ -108,6 +109,7 @@
     <ClCompile Include="CollisionEvent.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Agent.cpp" />
+    <ClCompile Include="CompositeBehaviour.cpp" />
     <ClCompile Include="DrunkenModifier.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityFactory.cpp" />
@@ -130,6 +132,8 @@
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SceneObject.cpp" />
     <ClCompile Include="SeekForce.cpp" />
+    <ClCompile Include="SelectorBehaviour.cpp" />
+    <ClCompile Include="SequenceBehaviour.cpp" />
     <ClCompile Include="SimpleAgent.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteBase.cpp" />
@@ -150,6 +154,7 @@
     <ClInclude Include="..\dependencies\imgui\imconfig.h" />
     <ClInclude Include="..\dependencies\imgui\imgui.h" />
     <ClInclude Include="..\dependencies\imgui\imgui_internal.h" />
+    <ClInclude Include="AABox.h" />
     <ClInclude Include="AndCondition.h" />
     <ClInclude Include="ArrivalForce.h" />
     <ClInclude Include="Behaviour.h" />
@@ -160,6 +165,7 @@
     <ClInclude Include="ChaseyStates.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionEvent.h" />
+    <ClInclude Include="CollisionShape.h" />
     <ClInclude Include="ComplexCondition.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Agent.h" />
@@ -190,6 +196,8 @@
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="SeekForce.h" />
+    <ClInclude Include="SelectorBehaviour.h" />
+    <ClInclude Include="SequenceBehaviour.h" />
     <ClInclude Include="SimpleAgent.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteBase.h" />

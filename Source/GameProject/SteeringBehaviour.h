@@ -11,6 +11,6 @@ public:
 
 	virtual ~SteeringBehaviour();
 
-	virtual bool update(Agent* entity, float deltaTime);
+	virtual BehaviourResult update(Agent* entity, float deltaTime);
 	SteeringForcePtr m_force;
 };

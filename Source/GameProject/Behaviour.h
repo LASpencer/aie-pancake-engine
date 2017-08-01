@@ -8,6 +8,12 @@ class Agent;
 class Behaviour;
 typedef std::shared_ptr<Behaviour> BehaviourPtr;
 
+enum BehaviourResult {
+	failure,
+	success,
+	running
+};
+
 class Behaviour
 {
 public:
@@ -16,5 +22,5 @@ public:
 
 	virtual Behaviour* clone() = 0;
 
-	virtual bool update(Agent* agent, float deltaTime) = 0;
+	virtual BehaviourResult update(Agent* agent, float deltaTime) = 0;
 };

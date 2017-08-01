@@ -13,9 +13,9 @@ SteeringBehaviour::~SteeringBehaviour()
 {
 }
 
-bool SteeringBehaviour::update(Agent * entity, float deltaTime)
+BehaviourResult SteeringBehaviour::update(Agent * entity, float deltaTime)
 {
 	entity->addForce(m_force->getForce(entity));
 
-	return true;
+	return success;
 }

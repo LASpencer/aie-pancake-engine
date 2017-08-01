@@ -11,7 +11,7 @@ DrunkenModifier::~DrunkenModifier()
 {
 }
 
-bool DrunkenModifier::update(Agent* agent, float deltaTime)
+BehaviourResult DrunkenModifier::update(Agent* agent, float deltaTime)
 {
 	m_time += deltaTime;
 
@@ -22,5 +22,5 @@ bool DrunkenModifier::update(Agent* agent, float deltaTime)
 
 	agent->addForce(force);
 
-	return true;
+	return success;
 }

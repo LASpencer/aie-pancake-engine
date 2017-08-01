@@ -7,7 +7,6 @@
 	Used to determine collision resolution*/
 enum BoxType {
 	body,		// Used for physical collisions
-	feet,		// Used to test if entity is supported by a body
 	attack,		// Used for attack hitboxes
 	trigger		// Triggers some event when collided with
 };
@@ -20,8 +19,7 @@ struct Box {
 
 };
 
-//TODO change so it uses different shapes (OBox, circle, etc) rather than only AABox
-
+//TODO rewrite to take arbitrary colliders
 class Collider;
 
 typedef std::shared_ptr<Collider> ColliderPtr;

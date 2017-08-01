@@ -8,7 +8,7 @@ public:
 	DrunkenModifier();
 	virtual ~DrunkenModifier();
 
-	virtual bool update(Agent* entity, float deltaTime);
+	virtual BehaviourResult update(Agent* entity, float deltaTime);
 
 private:
 	float m_time;
