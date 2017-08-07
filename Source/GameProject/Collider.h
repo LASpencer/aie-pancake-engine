@@ -3,9 +3,13 @@
 #include "Subject.h"
 #include "EventManager.h"
 
+class CollisionShape;
+typedef std::shared_ptr<CollisionShape> CollisionShapePtr;
+
 /* Enumeration of different types of hitboxes
 	Used to determine collision resolution*/
 enum BoxType {
+	none,
 	body,		// Used for physical collisions
 	attack,		// Used for attack hitboxes
 	trigger		// Triggers some event when collided with
@@ -45,10 +49,12 @@ public:
 	Collider();
 	virtual ~Collider();
 
-	void setBoxes(std::vector<Box> boxes);
+	void setBoxes(std::vector<CollisionShapePtr> boxes);
 
-	std::vector<Box> getLocalBoxes();
-	std::vector<Box> getGlobalBoxes();
+	void addBox(CollisionShapePtr box);
+
+	std::vector<CollisionShapePtr> getLocalBoxes();
+	std::vector<CollisionShapePtr> getGlobalBoxes();
 
 
 	virtual void addObserver(std::shared_ptr<Observer> observer);
@@ -82,7 +88,7 @@ public:
 protected:
 	EventManager m_eventManager;
 	
-	std::vector<Box> m_localBoxes;	// Hitboxes with position relative to entity's position
-	std::vector<Box> m_globalBoxes;	// Hitboxes with global positon
+	std::vector<CollisionShapePtr> m_localBoxes;	// Hitboxes with position relative to entity's position
+	std::vector<CollisionShapePtr> m_globalBoxes;	// Hitboxes with global positon
 };
 

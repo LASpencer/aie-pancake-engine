@@ -503,5 +503,8 @@
     <ClInclude Include="GuardExerciseBehaviour.h">
       <Filter>Header Files\Entities\Behaviours</Filter>
     </ClInclude>
+    <ClInclude Include="Ray.h">
+      <Filter>Header Files\Entities\Components\Collision</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

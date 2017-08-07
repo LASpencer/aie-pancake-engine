@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include "OBox.h"
 #include "AABox.h"
+#include "Collider.h"
 #include "CircleCollider.h"
+#include "Ray.h"
 
 OBox::OBox() : CollisionShape(), m_xExtent(1,0), m_yExtent(0,1), m_centre(0)
 {
@@ -278,6 +280,26 @@ std::pair<bool, glm::vec2> OBox::doesCollide(CircleCollider * circle)
 		minPenetration = -minPenetration;
 	}
 	return std::make_pair(true, minPenetration);
+}
+
+float OBox::testRayCollision(Ray * ray)
+{
+	//TODO write test
+	glm::mat3 boxComponents(m_xExtent.x, m_xExtent.y, 0.f,
+							m_yExtent.x, m_yExtent.y, 0.f,
+							m_centre.x, m_centre.y, 1.f);
+	glm::mat3 inverseBox = glm::inverse(boxComponents);
+	glm::vec2 transformedOrigin = (glm::vec2)(inverseBox * glm::vec3(ray->getOrigin().x, ray->getOrigin().y, 1.f));
+	glm::vec2 transformedDirection = (glm::vec2)(inverseBox * glm::vec3(ray->getDirection().x, ray->getDirection().y, 0.f));
+	Ray transformedRay(transformedOrigin, transformedDirection);
+	float distance = AABox(glm::vec2(-1,-1), glm::vec2( 1,1)).testRayCollision(&transformedRay);
+	if (distance <= 0.f) {
+		return distance;
+	} else {
+		glm::vec2 transformedIntersection = transformedOrigin + distance * transformedDirection;
+		glm::vec2 realIntersection = (glm::vec2)(boxComponents * glm::vec3(transformedIntersection.x, transformedIntersection.y, 1.f));
+		return glm::length(realIntersection - ray->getOrigin());
+	}
 }
 
 std::tuple<glm::vec2, glm::vec2, glm::vec2, glm::vec2> OBox::getCorners()

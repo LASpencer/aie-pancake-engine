@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "CollisionShape.h"
+#include "Collider.h"
 
-CollisionShape::CollisionShape()
+CollisionShape::CollisionShape() : m_type(none)
 {
 }
 

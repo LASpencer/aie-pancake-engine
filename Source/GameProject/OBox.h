@@ -5,7 +5,7 @@
 class OBox : public CollisionShape {
 public:
 	OBox();
-	OBox(glm::vec2 xExtent, glm::vec2 yExtent, glm::vec2 centre, BoxType type);
+	OBox(glm::vec2 xExtent, glm::vec2 yExtent, glm::vec2 centre, BoxType type = none);
 	virtual ~OBox();
 
 	virtual CollisionShape* clone();
@@ -24,6 +24,8 @@ public:
 
 	// test collision with CircleCollider
 	virtual std::pair<bool, glm::vec2> doesCollide(CircleCollider* circle);
+
+	virtual float testRayCollision(Ray* ray);
 
 	// Accessor and mutator functions
 	glm::vec2 getXExtent() {

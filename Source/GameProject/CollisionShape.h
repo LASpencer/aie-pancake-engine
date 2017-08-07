@@ -1,11 +1,15 @@
 #pragma once
 #include "stdafx.h"
 
+class CollisionShape;
+typedef std::shared_ptr<CollisionShape> CollisionShapePtr;
+
 enum BoxType;
 
 class AABox;
 class OBox;
 class CircleCollider;
+class Ray;
 
 class CollisionShape {
 public:
@@ -26,6 +30,8 @@ public:
 	virtual std::pair<bool, glm::vec2> doesCollide(OBox* other) = 0;
 
 	virtual std::pair<bool, glm::vec2> doesCollide(CircleCollider* other) = 0;
+
+	virtual float testRayCollision(Ray* ray) = 0;
 
 	void setType(BoxType type) {
 		m_type = type;

@@ -2,7 +2,7 @@
 #include "CircleCollider.h"
 #include "AABox.h"
 #include "OBox.h"
-
+#include "Ray.h"
 
 CircleCollider::CircleCollider() : CollisionShape(), m_radius(1.f)
 {
@@ -99,6 +99,27 @@ std::pair<bool, glm::vec2> CircleCollider::doesCollide(CircleCollider * circle)
 	else {
 		// If distance between centres is greater, no collision
 		return std::make_pair(false, glm::vec2());
+	}
+}
+
+float CircleCollider::testRayCollision(Ray * ray)
+{
+	// TODO test this!
+	// Distance to intersection D is found by D^2 + bD + c = 0
+	// If real roots exist, lowest is entry distance. IF that's negative origin inside circle
+	glm::vec2 rayDirection = ray->getDirection();
+	glm::vec2 rayOrigin = ray->getOrigin();
+	glm::vec2 displacement = rayOrigin - m_centre;
+	float rayLength = ray->getLength();
+	float b = 2.f * glm::dot(rayDirection, displacement);
+	float c = glm::dot(displacement, displacement) * m_radius * m_radius;
+	float determinant = (b * b) - 4.f * c;
+	if (determinant < 0.f) {
+		// Imaginary determinant means no intersection
+		return -1.f;
+	} else {
+		float distance = 2.f * c / (std::sqrtf(determinant) - b);
+		return std::min(0.f, distance);
 	}
 }
 

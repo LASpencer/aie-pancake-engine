@@ -206,6 +206,7 @@
     <ClInclude Include="OrCondition.h" />
     <ClInclude Include="PathfindingBehaviour.h" />
     <ClInclude Include="PursueForce.h" />
+    <ClInclude Include="Ray.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="SeekForce.h" />

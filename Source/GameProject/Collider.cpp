@@ -2,6 +2,7 @@
 #include "Collider.h"
 #include "Entity.h"
 #include "CollisionEvent.h"
+#include "CollisionShape.h"
 
 bool Collider::draw_boxes = false;
 
@@ -14,17 +15,22 @@ Collider::~Collider()
 {
 }
 
-void Collider::setBoxes(std::vector<Box> boxes)
+void Collider::setBoxes(std::vector<CollisionShapePtr> boxes)
 {
 	m_localBoxes = boxes;
 }
 
-std::vector<Box> Collider::getLocalBoxes()
+void Collider::addBox(CollisionShapePtr box)
+{
+	m_localBoxes.push_back(box);
+}
+
+std::vector<CollisionShapePtr> Collider::getLocalBoxes()
 {
 	return m_localBoxes;
 }
 
-std::vector<Box> Collider::getGlobalBoxes()
+std::vector<CollisionShapePtr> Collider::getGlobalBoxes()
 {
 	return m_globalBoxes;
 }
@@ -59,11 +65,10 @@ void Collider::update(float deltaTime)
 	EntityPtr entity(m_entity);
 	// Fill globalBoxes with copies of localBoxes
 	m_globalBoxes.clear();
-	for (Box local : m_localBoxes) {
-		Box global = local;
-		// Transform each corner by entity's position
-		global.corner1 = glm::vec2(entity->getPosition()->getGlobalTransform() * glm::vec3(local.corner1.x, local.corner1.y, 1));
-		global.corner2 = glm::vec2(entity->getPosition()->getGlobalTransform() * glm::vec3(local.corner2.x, local.corner2.y, 1));
+	for (CollisionShapePtr local : m_localBoxes) {
+		CollisionShapePtr global(local->clone());
+		// Transform each by entity's position
+		global->transform(entity->getPosition()->getGlobalTransform());
 		m_globalBoxes.push_back(global);
 	}
 }
@@ -71,28 +76,30 @@ void Collider::update(float deltaTime)
 void Collider::draw(aie::Renderer2D * renderer)
 {
 	if (draw_boxes) {
-		EntityPtr entity(m_entity);
-		for (Box box : m_globalBoxes) {
-			// Calculate box's center and dimensions
-			glm::vec2 center = 0.5f * (box.corner1 + box.corner2);
-			float width = std::abs(box.corner1.x - box.corner2.x);
-			float height = std::abs(box.corner1.y - box.corner2.y);
-			// Set colour based on box type
-			switch (box.type) {
-			case(body):		//body is blue
-				renderer->setRenderColour(0x0000FF80);
-				break;
-			case(attack):	//attack is red
-				renderer->setRenderColour(0xFF000080);
-				break;
-			case(trigger):	//trigger is green
-				renderer->setRenderColour(0x00FF0080);
-				break;
-			default:
-				break;
-			}
-			renderer->drawBox(center.x, center.y, width, height);
-		}
+		//TODO: each shape has own draw method
+
+		//EntityPtr entity(m_entity);
+		//for (Box box : m_globalBoxes) {
+		//	// Calculate box's center and dimensions
+		//	glm::vec2 center = 0.5f * (box.corner1 + box.corner2);
+		//	float width = std::abs(box.corner1.x - box.corner2.x);
+		//	float height = std::abs(box.corner1.y - box.corner2.y);
+		//	// Set colour based on box type
+		//	switch (box.type) {
+		//	case(body):		//body is blue
+		//		renderer->setRenderColour(0x0000FF80);
+		//		break;
+		//	case(attack):	//attack is red
+		//		renderer->setRenderColour(0xFF000080);
+		//		break;
+		//	case(trigger):	//trigger is green
+		//		renderer->setRenderColour(0x00FF0080);
+		//		break;
+		//	default:
+		//		break;
+		//	}
+		//	renderer->drawBox(center.x, center.y, width, height);
+		//}
 	}
 }
 
@@ -109,11 +116,11 @@ void Collider::resolveCollisions(std::vector<std::shared_ptr<Collider>> collider
 	for (size_t i = 0; i < numColliders; ++i) {
 		for (size_t j = i+1; j < numColliders; ++j) {
 			//Test collision between boxes
-			for (Box box1 : colliders[i]->m_globalBoxes) {
-				for (Box box2 : colliders[j]->m_globalBoxes) {
-					std::pair<bool, glm::vec2> didCollide = testCollision(box1, box2);
+			for (CollisionShapePtr box1 : colliders[i]->m_globalBoxes) {
+				for (CollisionShapePtr box2 : colliders[j]->m_globalBoxes) {
+					std::pair<bool, glm::vec2> didCollide = box1->doesCollide(box2.get());
 					if (didCollide.first) {
-						collisions.push_back({ {colliders[i],colliders[j]},{box1.type,box2.type},didCollide.second });
+						collisions.push_back({ {colliders[i],colliders[j]},{box1->getType(),box2->getType()},didCollide.second });
 					}
 				}
 			}
