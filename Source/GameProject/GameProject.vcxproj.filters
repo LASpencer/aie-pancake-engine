@@ -106,6 +106,12 @@
     <Filter Include="Source Files\Entities\Components\Collision">
       <UniqueIdentifier>{fd8bab85-5722-4341-ad47-fdd6ff4f1ea6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Entities\Behaviours\Question Behaviours">
+      <UniqueIdentifier>{48efa414-d6bf-4c78-a7df-07bf79c7a5a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Behaviours\Question Behaviours">
+      <UniqueIdentifier>{0d55f9c5-e094-4719-971a-4da82271b9f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -266,6 +272,21 @@
     </ClCompile>
     <ClCompile Include="CollisionShape.cpp">
       <Filter>Source Files\Entities\Components\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="TargetInRangeQuestion.cpp">
+      <Filter>Source Files\Entities\Behaviours\Question Behaviours</Filter>
+    </ClCompile>
+    <ClCompile Include="Wander.cpp">
+      <Filter>Source Files\Entities\Behaviours</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveToTarget.cpp">
+      <Filter>Source Files\Entities\Behaviours</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackTarget.cpp">
+      <Filter>Source Files\Entities\Behaviours</Filter>
+    </ClCompile>
+    <ClCompile Include="GuardExerciseBehaviour.cpp">
+      <Filter>Source Files\Entities\Behaviours</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -466,6 +487,21 @@
     </ClInclude>
     <ClInclude Include="OBox.h">
       <Filter>Header Files\Entities\Components\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetInRangeQuestion.h">
+      <Filter>Header Files\Entities\Behaviours\Question Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="Wander.h">
+      <Filter>Header Files\Entities\Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveToTarget.h">
+      <Filter>Header Files\Entities\Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackTarget.h">
+      <Filter>Header Files\Entities\Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="GuardExerciseBehaviour.h">
+      <Filter>Header Files\Entities\Behaviours</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

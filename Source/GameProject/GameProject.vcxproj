@@ -101,6 +101,7 @@
     </ClCompile>
     <ClCompile Include="AABox.cpp" />
     <ClCompile Include="ArrivalForce.cpp" />
+    <ClCompile Include="AttackTarget.cpp" />
     <ClCompile Include="BoundsForce.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ChaseyStateMachine.cpp" />
@@ -122,12 +123,14 @@
     <ClCompile Include="FSMAgent.cpp" />
     <ClCompile Include="FSMBehaviour.cpp" />
     <ClCompile Include="GameProjectApp.cpp" />
+    <ClCompile Include="GuardExerciseBehaviour.cpp" />
     <ClCompile Include="GuardStateMachine.cpp" />
     <ClCompile Include="GuardStates.cpp" />
     <ClCompile Include="InputEvent.cpp" />
     <ClCompile Include="KeyboardController.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapGraph.cpp" />
+    <ClCompile Include="MoveToTarget.cpp" />
     <ClCompile Include="MultiSprite.cpp" />
     <ClCompile Include="OBox.cpp" />
     <ClCompile Include="PathfindingBehaviour.cpp" />
@@ -147,9 +150,11 @@
     <ClCompile Include="SteeringBehaviour.cpp" />
     <ClCompile Include="SteeringForce.cpp" />
     <ClCompile Include="TargetInRangeCondition.cpp" />
+    <ClCompile Include="TargetInRangeQuestion.cpp" />
     <ClCompile Include="TextBar.cpp" />
     <ClCompile Include="TimerCondition.cpp" />
     <ClCompile Include="utility.cpp" />
+    <ClCompile Include="Wander.cpp" />
     <ClCompile Include="WanderForce.cpp" />
     <ClCompile Include="WeightedSteeringForce.cpp" />
   </ItemGroup>
@@ -160,6 +165,7 @@
     <ClInclude Include="AABox.h" />
     <ClInclude Include="AndCondition.h" />
     <ClInclude Include="ArrivalForce.h" />
+    <ClInclude Include="AttackTarget.h" />
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="BinaryCondition.h" />
     <ClInclude Include="BoundsForce.h" />
@@ -186,11 +192,13 @@
     <ClInclude Include="FSMAgent.h" />
     <ClInclude Include="FSMBehaviour.h" />
     <ClInclude Include="GameProjectApp.h" />
+    <ClInclude Include="GuardExerciseBehaviour.h" />
     <ClInclude Include="GuardStateMachine.h" />
     <ClInclude Include="GuardStates.h" />
     <ClInclude Include="InputEvent.h" />
     <ClInclude Include="KeyboardController.h" />
     <ClInclude Include="MapGraph.h" />
+    <ClInclude Include="MoveToTarget.h" />
     <ClInclude Include="MultiSprite.h" />
     <ClInclude Include="NotCondition.h" />
     <ClInclude Include="OBox.h" />
@@ -214,10 +222,12 @@
     <ClInclude Include="Subject.h" />
     <ClInclude Include="Target.h" />
     <ClInclude Include="TargetInRangeCondition.h" />
+    <ClInclude Include="TargetInRangeQuestion.h" />
     <ClInclude Include="TextBar.h" />
     <ClInclude Include="TimerCondition.h" />
     <ClInclude Include="Transition.h" />
     <ClInclude Include="utility.h" />
+    <ClInclude Include="Wander.h" />
     <ClInclude Include="WanderForce.h" />
     <ClInclude Include="WeightedSteeringForce.h" />
   </ItemGroup>

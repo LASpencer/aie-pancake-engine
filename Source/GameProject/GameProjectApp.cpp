@@ -15,6 +15,7 @@
 #include "WanderForce.h"
 #include "BoundsForce.h"
 #include "PathfindingBehaviour.h"
+#include "GuardExerciseBehaviour.h"
 
 #include "imgui.h"
 
@@ -57,25 +58,41 @@ bool GameProjectApp::startup() {
 
 	EntityPtr player = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(500,500)));
 	AgentPtr playerAgent = std::dynamic_pointer_cast<Agent>(player->getComponent(Component::agent));
-	playerAgent->addBehaviour(std::make_shared<PathfindingBehaviour>(&m_mapGraph, m_mapGraph.m_graph[0]));
-	playerAgent->setMaxVelocity(50.f);
+	playerAgent->addBehaviour(std::make_shared<KeyboardController>());
 
-	//EntityPtr car = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(100, 100)));
+	//pathfinding
+	/*playerAgent->addBehaviour(std::make_shared<PathfindingBehaviour>(&m_mapGraph, m_mapGraph.m_graph[0]));
+	playerAgent->setMaxVelocity(50.f);*/
+
+	EntityPtr car = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(800, 300)));
+	AgentPtr carAgent = std::dynamic_pointer_cast<Agent>(car->getComponent(Component::agent));
+	carAgent->setMaxVelocity(150.f);
+
+	//HACK
+	BehaviourPtr stayinBounds = std::make_shared<SteeringBehaviour>(std::make_shared<BoundsForce>());
+	carAgent->addBehaviour(stayinBounds);
+
+	// guard car uses decision tree
+	
+	carAgent->addBehaviour(std::make_shared<GuardExerciseBehaviour>(std::make_shared<EntityTarget>(player)));
+
 	////set guard car agent's behaviour as fsm behaviour with guard state machine
-	//AgentPtr carAgent = std::dynamic_pointer_cast<Agent>(car->getComponent(Component::agent));
 	//GuardStateMachine* guardMachine = new GuardStateMachine({ {80,80},{1000,100},{950,600},{200,650} }, player);
 	//guardMachine->forceState(GuardStateMachine::patrol, carAgent.get());
 	//std::shared_ptr<FSMBehaviour> guardBehaviour = std::make_shared<FSMBehaviour>(guardMachine);
 	//carAgent->addBehaviour(guardBehaviour);
-	for (int i = 0; i < 10; ++i) {
-		EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(640, 360)));
-		AgentPtr wanderAgent = std::dynamic_pointer_cast<Agent>(wanderer->getComponent(Component::agent));
-		wanderAgent->setMaxVelocity(50.f);
-		std::shared_ptr<WeightedSteeringForce> wanderInBounds = std::make_shared<WeightedSteeringForce>();
-		wanderInBounds->addForce(std::make_shared<BoundsForce>(), 1.f);
-		wanderInBounds->addForce(std::make_shared<WanderForce>(), 1.f);
-		wanderAgent->addBehaviour(std::make_shared<SteeringBehaviour>(wanderInBounds));
-	}
+
+	// Spawn a bunch of wandering cars
+
+	//for (int i = 0; i < 10; ++i) {
+	//	EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(640, 360)));
+	//	AgentPtr wanderAgent = std::dynamic_pointer_cast<Agent>(wanderer->getComponent(Component::agent));
+	//	wanderAgent->setMaxVelocity(50.f);
+	//	std::shared_ptr<WeightedSteeringForce> wanderInBounds = std::make_shared<WeightedSteeringForce>();
+	//	wanderInBounds->addForce(std::make_shared<BoundsForce>(), 1.f);
+	//	wanderInBounds->addForce(std::make_shared<WanderForce>(), 1.f);
+	//	wanderAgent->addBehaviour(std::make_shared<SteeringBehaviour>(wanderInBounds));
+	//}
 	// Disable face culling, so sprites can be flipped
 	glDisable(GL_CULL_FACE);
 	return true;

@@ -16,5 +16,6 @@ public:
 	virtual Behaviour* clone();
 
 	virtual BehaviourResult update(Agent* entity, float deltaTime);
+
 	SteeringForcePtr m_force;
 };
