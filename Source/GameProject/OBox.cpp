@@ -3,16 +3,21 @@
 #include "AABox.h"
 #include "CircleCollider.h"
 
-OBox::OBox() : m_xExtent(1,0), m_yExtent(0,1), m_centre(0)
+OBox::OBox() : CollisionShape(), m_xExtent(1,0), m_yExtent(0,1), m_centre(0)
 {
 }
 
-OBox::OBox(glm::vec2 xExtent, glm::vec2 yExtent, glm::vec2 centre) : m_xExtent(xExtent), m_yExtent(yExtent), m_centre(centre)
+OBox::OBox(glm::vec2 xExtent, glm::vec2 yExtent, glm::vec2 centre, BoxType type) : CollisionShape(type), m_xExtent(xExtent), m_yExtent(yExtent), m_centre(centre)
 {
 }
 
 OBox::~OBox()
 {
+}
+
+CollisionShape * OBox::clone()
+{
+	return new OBox(*this);
 }
 
 std::pair<bool, glm::vec2> OBox::doesCollide(CollisionShape * other)
@@ -61,7 +66,7 @@ std::pair<bool, glm::vec2> OBox::doesCollide(glm::vec2 point)
 
 }
 
-std::pair<bool, glm::vec2> OBox::doesCollideWithAABox(AABox * box)
+std::pair<bool, glm::vec2> OBox::doesCollide(AABox * box)
 {
 	// get each corner of both boxes
 	std::tuple<glm::vec2, glm::vec2, glm::vec2, glm::vec2> corners = getCorners();
@@ -136,7 +141,7 @@ std::pair<bool, glm::vec2> OBox::doesCollideWithAABox(AABox * box)
 	return std::make_pair(true, minPenetration);
 }
 
-std::pair<bool, glm::vec2> OBox::doesCollideWithOBox(OBox * box)
+std::pair<bool, glm::vec2> OBox::doesCollide(OBox * box)
 {
 	// get each corner of both boxes
 	std::tuple<glm::vec2, glm::vec2, glm::vec2, glm::vec2> corners = getCorners();
@@ -210,7 +215,7 @@ std::pair<bool, glm::vec2> OBox::doesCollideWithOBox(OBox * box)
 	return std::make_pair(true, minPenetration);
 }
 
-std::pair<bool, glm::vec2> OBox::doesCollideWithCircle(CircleCollider * circle)
+std::pair<bool, glm::vec2> OBox::doesCollide(CircleCollider * circle)
 {
 	// Get corners of this box
 	std::tuple<glm::vec2, glm::vec2, glm::vec2, glm::vec2> corners = getCorners();

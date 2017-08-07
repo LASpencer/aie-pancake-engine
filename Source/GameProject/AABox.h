@@ -5,8 +5,10 @@
 class AABox : CollisionShape {
 public:
 	AABox();
-	AABox(glm::vec2 cornerA, glm::vec2 cornerB);
+	AABox(glm::vec2 cornerA, glm::vec2 cornerB, BoxType type);
 	~AABox();
+
+	virtual CollisionShape* clone();
 
 	// test collision with Collider of unknown concrete type
 	virtual std::pair<bool, glm::vec2> doesCollide(CollisionShape* other);
@@ -15,13 +17,13 @@ public:
 	virtual std::pair<bool, glm::vec2> doesCollide(glm::vec2 point);
 
 	// test collision with AABox
-	virtual std::pair<bool, glm::vec2> doesCollideWithAABox(AABox* box);
+	virtual std::pair<bool, glm::vec2> doesCollide(AABox* box);
 
 	// test collision with OBox
-	virtual std::pair<bool, glm::vec2> doesCollideWithOBox(OBox* box);
+	virtual std::pair<bool, glm::vec2> doesCollide(OBox* box);
 
 	// test collision with CircleCollider
-	virtual std::pair<bool, glm::vec2> doesCollideWithCircle(CircleCollider* circle);
+	virtual std::pair<bool, glm::vec2> doesCollide(CircleCollider* circle);
 
 	// Accessor and mutator methods
 	glm::vec2 getMinCorner() {

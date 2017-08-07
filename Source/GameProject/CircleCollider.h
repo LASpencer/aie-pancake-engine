@@ -5,8 +5,10 @@
 class CircleCollider : public CollisionShape {
 public:
 	CircleCollider();
-	CircleCollider(glm::vec2 centre, float radius);
+	CircleCollider(glm::vec2 centre, float radius, BoxType type);
 	virtual ~CircleCollider();
+
+	virtual CollisionShape* clone();
 
 	// test collision with Collider of unknown concrete type
 	virtual std::pair<bool, glm::vec2> doesCollide(CollisionShape* other);
@@ -15,13 +17,13 @@ public:
 	virtual std::pair<bool, glm::vec2> doesCollide(glm::vec2 point);
 
 	// test collision with AABox
-	virtual std::pair<bool, glm::vec2> doesCollideWithAABox(AABox* box);
+	virtual std::pair<bool, glm::vec2> doesCollide(AABox* box);
 
 	// test collision with OBox
-	virtual std::pair<bool, glm::vec2> doesCollideWithOBox(OBox* box);
+	virtual std::pair<bool, glm::vec2> doesCollide(OBox* box);
 
 	// test collision with CircleCollider
-	virtual std::pair<bool, glm::vec2> doesCollideWithCircle(CircleCollider* circle);
+	virtual std::pair<bool, glm::vec2> doesCollide(CircleCollider* circle);
 
 
 	virtual void transform(glm::mat3 transformation);

@@ -4,16 +4,21 @@
 #include "OBox.h"
 
 
-CircleCollider::CircleCollider() : m_radius(1.f)
+CircleCollider::CircleCollider() : CollisionShape(), m_radius(1.f)
 {
 }
 
-CircleCollider::CircleCollider(glm::vec2 centre, float radius) : m_centre(centre), m_radius(radius)
+CircleCollider::CircleCollider(glm::vec2 centre, float radius, BoxType type) : CollisionShape(type), m_centre(centre), m_radius(radius)
 {
 }
 
 CircleCollider::~CircleCollider()
 {
+}
+
+CollisionShape * CircleCollider::clone()
+{
+	return new CircleCollider(*this);
 }
 
 std::pair<bool, glm::vec2> CircleCollider::doesCollide(CollisionShape * other)
@@ -41,7 +46,7 @@ std::pair<bool, glm::vec2> CircleCollider::doesCollide(glm::vec2 point)
 
 }
 
-std::pair<bool, glm::vec2> CircleCollider::doesCollideWithAABox(AABox * box)
+std::pair<bool, glm::vec2> CircleCollider::doesCollide(AABox * box)
 {
 	// Check if circle's centre is inside box
 	std::pair<bool, glm::vec2> collision = box->doesCollide(m_centre);
@@ -66,13 +71,13 @@ std::pair<bool, glm::vec2> CircleCollider::doesCollideWithAABox(AABox * box)
 	}
 }
 
-std::pair<bool, glm::vec2> CircleCollider::doesCollideWithOBox(OBox * box)
+std::pair<bool, glm::vec2> CircleCollider::doesCollide(OBox * box)
 {
 	std::pair<bool, glm::vec2> otherResult = box->doesCollide(this);
 	return std::make_pair(otherResult.first, otherResult.second * -1.0f);
 }
 
-std::pair<bool, glm::vec2> CircleCollider::doesCollideWithCircle(CircleCollider * circle)
+std::pair<bool, glm::vec2> CircleCollider::doesCollide(CircleCollider * circle)
 {
 	glm::vec2 displacement = circle->m_centre - m_centre;
 	// Check if distance between centres is less than sum of circle radii

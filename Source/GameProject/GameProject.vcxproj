@@ -108,6 +108,7 @@
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionEvent.cpp" />
+    <ClCompile Include="CollisionShape.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Agent.cpp" />
     <ClCompile Include="CompositeBehaviour.cpp" />

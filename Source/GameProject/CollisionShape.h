@@ -10,10 +10,12 @@ class CircleCollider;
 class CollisionShape {
 public:
 	CollisionShape();
+	CollisionShape(BoxType type);
+
 
 	virtual ~CollisionShape();
 
-	virtual CollisionShape* clone();
+	virtual CollisionShape* clone() = 0;
 
 	virtual void transform(glm::mat3 transformation) = 0;
 
@@ -24,6 +26,14 @@ public:
 	virtual std::pair<bool, glm::vec2> doesCollide(OBox* other) = 0;
 
 	virtual std::pair<bool, glm::vec2> doesCollide(CircleCollider* other) = 0;
+
+	void setType(BoxType type) {
+		m_type = type;
+	};
+
+	BoxType getType() {
+		return m_type;
+	};
 
 protected:
 	BoxType m_type;

@@ -264,6 +264,9 @@
     <ClCompile Include="OBox.cpp">
       <Filter>Source Files\Entities\Components\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionShape.cpp">
+      <Filter>Source Files\Entities\Components\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameProjectApp.h">

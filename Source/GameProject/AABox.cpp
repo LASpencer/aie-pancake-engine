@@ -3,6 +3,24 @@
 #include "OBox.h"
 #include "CircleCollider.h"
 
+AABox::AABox() : CollisionShape(), m_min(0), m_max(1,1)
+{
+}
+
+AABox::AABox(glm::vec2 cornerA, glm::vec2 cornerB, BoxType type) : CollisionShape(type)
+{
+	setCorners(cornerA, cornerB);
+}
+
+AABox::~AABox()
+{
+}
+
+CollisionShape * AABox::clone()
+{
+	return new AABox(*this);
+}
+
 std::pair<bool, glm::vec2> AABox::doesCollide(CollisionShape * other)
 {
 	std::pair<bool, glm::vec2> otherResult = other->doesCollide(this);
@@ -48,7 +66,7 @@ std::pair<bool, glm::vec2> AABox::doesCollide(glm::vec2 point)
 	}
 }
 
-std::pair<bool, glm::vec2> AABox::doesCollideWithAABox(AABox * box)
+std::pair<bool, glm::vec2> AABox::doesCollide(AABox * box)
 {
 	// Check if boxes overlap
 	if (box->m_min.x >= m_max.x ||
@@ -91,13 +109,13 @@ std::pair<bool, glm::vec2> AABox::doesCollideWithAABox(AABox * box)
 	}
 }
 
-std::pair<bool, glm::vec2> AABox::doesCollideWithOBox(OBox * box)
+std::pair<bool, glm::vec2> AABox::doesCollide(OBox * box)
 {
 	std::pair<bool, glm::vec2> otherResult = box->doesCollide(this);
 	return std::make_pair(otherResult.first, otherResult.second * -1.0f);
 }
 
-std::pair<bool, glm::vec2> AABox::doesCollideWithCircle(CircleCollider * circle)
+std::pair<bool, glm::vec2> AABox::doesCollide(CircleCollider * circle)
 {
 	std::pair<bool, glm::vec2> otherResult = circle->doesCollide(this);
 	return std::make_pair(otherResult.first, otherResult.second * -1.0f);
