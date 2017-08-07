@@ -26,6 +26,7 @@ BehaviourResult SelectorBehaviour::update(Agent * agent, float deltaTime)
 			return success;
 			break;
 		case(running):
+			//TODO set running on, ongoing behaviour is child
 			return running;
 			break;
 		default:

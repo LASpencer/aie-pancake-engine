@@ -12,6 +12,11 @@ KeyboardController::~KeyboardController()
 {
 }
 
+Behaviour * KeyboardController::clone()
+{
+	return new KeyboardController(*this);
+}
+
 BehaviourResult KeyboardController::update(Agent* agent, float deltaTime)
 {
 	// HACK

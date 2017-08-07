@@ -18,6 +18,6 @@ public:
 
 protected:
 	std::vector<BehaviourPtr> m_children;
-	BehaviourPtr m_ongoingBehaviour;
+	std::vector<BehaviourPtr>::iterator m_ongoingBehaviour;
 	bool m_running;
 };

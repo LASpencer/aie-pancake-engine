@@ -256,7 +256,13 @@
       <Filter>Source Files\Entities\Components\Collision</Filter>
     </ClCompile>
     <ClCompile Include="AABox.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Entities\Components\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleCollider.cpp">
+      <Filter>Source Files\Entities\Components\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="OBox.cpp">
+      <Filter>Source Files\Entities\Components\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -450,7 +456,13 @@
       <Filter>Header Files\Entities\Components\Collision</Filter>
     </ClInclude>
     <ClInclude Include="AABox.h">
-      <Filter>Source Files\Entities\Components\Collision</Filter>
+      <Filter>Header Files\Entities\Components\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleCollider.h">
+      <Filter>Header Files\Entities\Components\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="OBox.h">
+      <Filter>Header Files\Entities\Components\Collision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

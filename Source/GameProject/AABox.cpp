@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "AABox.h"
+#include "OBox.h"
+#include "CircleCollider.h"
 
 std::pair<bool, glm::vec2> AABox::doesCollide(CollisionShape * other)
 {
@@ -87,4 +89,36 @@ std::pair<bool, glm::vec2> AABox::doesCollideWithAABox(AABox * box)
 
 		return	std::make_pair(true, penetration);
 	}
+}
+
+std::pair<bool, glm::vec2> AABox::doesCollideWithOBox(OBox * box)
+{
+	std::pair<bool, glm::vec2> otherResult = box->doesCollide(this);
+	return std::make_pair(otherResult.first, otherResult.second * -1.0f);
+}
+
+std::pair<bool, glm::vec2> AABox::doesCollideWithCircle(CircleCollider * circle)
+{
+	std::pair<bool, glm::vec2> otherResult = circle->doesCollide(this);
+	return std::make_pair(otherResult.first, otherResult.second * -1.0f);
+}
+
+void AABox::transform(glm::mat3 transformation)
+{
+}
+
+void AABox::setCorners(glm::vec2 a, glm::vec2 b)
+{
+	m_min.x = std::min(a.x, b.x);
+	m_min.y = std::min(a.y, b.y);
+
+	m_max.x = std::max(a.x, b.x);
+	m_max.y = std::max(a.y, b.y);
+}
+
+std::tuple<glm::vec2, glm::vec2, glm::vec2, glm::vec2> AABox::getCorners()
+{
+	glm::vec2 topLeft(m_min.x, m_max.y);
+	glm::vec2 bottomRight(m_max.x, m_min.y);
+	return std::make_tuple(m_min, topLeft, m_max, bottomRight);
 }

@@ -105,6 +105,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ChaseyStateMachine.cpp" />
     <ClCompile Include="ChaseyStates.cpp" />
+    <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionEvent.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -127,6 +128,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapGraph.cpp" />
     <ClCompile Include="MultiSprite.cpp" />
+    <ClCompile Include="OBox.cpp" />
     <ClCompile Include="PathfindingBehaviour.cpp" />
     <ClCompile Include="PursueForce.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
@@ -163,6 +165,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="ChaseyStateMachine.h" />
     <ClInclude Include="ChaseyStates.h" />
+    <ClInclude Include="CircleCollider.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionEvent.h" />
     <ClInclude Include="CollisionShape.h" />
@@ -189,6 +192,7 @@
     <ClInclude Include="MapGraph.h" />
     <ClInclude Include="MultiSprite.h" />
     <ClInclude Include="NotCondition.h" />
+    <ClInclude Include="OBox.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="OrCondition.h" />
     <ClInclude Include="PathfindingBehaviour.h" />

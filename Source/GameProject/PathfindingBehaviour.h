@@ -8,7 +8,12 @@ class PathfindingBehaviour :
 {
 public:
 	PathfindingBehaviour(MapGraph* map, MapNode* startingNode);
+
+	PathfindingBehaviour(const PathfindingBehaviour& other);
+
 	virtual ~PathfindingBehaviour();
+
+	virtual Behaviour* clone();
 
 	virtual BehaviourResult update(Agent* agent, float deltaTime);
 

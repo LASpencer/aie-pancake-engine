@@ -9,8 +9,18 @@ PathfindingBehaviour::PathfindingBehaviour(MapGraph * map, MapNode * startingNod
 	m_arrive.setTarget(m_target);
 }
 
+PathfindingBehaviour::PathfindingBehaviour(const PathfindingBehaviour & other) : m_path(other.m_path), m_map(other.m_map), m_currentNode(other.m_currentNode), m_arrive(other.m_arrive)
+{
+	m_target = std::make_shared<PointTarget>(*(other.m_target));
+}
+
 PathfindingBehaviour::~PathfindingBehaviour()
 {
+}
+
+Behaviour * PathfindingBehaviour::clone()
+{
+	return new PathfindingBehaviour(*this);
 }
 
 BehaviourResult PathfindingBehaviour::update(Agent * agent, float deltaTime)

@@ -2,11 +2,11 @@
 #include "stdafx.h"
 #include"CollisionShape.h"
 
-class AABox : CollisionShape {
+class CircleCollider : public CollisionShape {
 public:
-	AABox();
-	AABox(glm::vec2 cornerA, glm::vec2 cornerB);
-	~AABox();
+	CircleCollider();
+	CircleCollider(glm::vec2 centre, float radius);
+	virtual ~CircleCollider();
 
 	// test collision with Collider of unknown concrete type
 	virtual std::pair<bool, glm::vec2> doesCollide(CollisionShape* other);
@@ -23,27 +23,26 @@ public:
 	// test collision with CircleCollider
 	virtual std::pair<bool, glm::vec2> doesCollideWithCircle(CircleCollider* circle);
 
-	// Accessor and mutator methods
-	glm::vec2 getMinCorner() {
-		return m_min;
-	}
-
-	glm::vec2 getMaxCorner() {
-		return m_max;
-	}
 
 	virtual void transform(glm::mat3 transformation);
 
-	// Set corners of the bounding box
-	void setCorners(glm::vec2 a, glm::vec2 b);
+	glm::vec2 getCentre() {
+		return m_centre;
+	};
 
-	// Returns all four corners of the AABox, clockwise from minimum corner
-	std::tuple<glm::vec2, glm::vec2, glm::vec2, glm::vec2> getCorners();
+	float getRadius() {
+		return m_radius;
+	};
 
-	// Fit AABox around collision shapes given
-	void boundShapes(std::vector<CollisionShape> points);
+	void setCentre(glm::vec2 centre) {
+		m_centre = centre;
+	};
+
+	void setRadius(float radius) {
+		m_radius = radius;
+	};
 
 protected:
-	glm::vec2 m_min;		// Minimum corner of box
-	glm::vec2 m_max;		// Maximum corner of box
+	glm::vec2 m_centre;
+	float m_radius;
 };

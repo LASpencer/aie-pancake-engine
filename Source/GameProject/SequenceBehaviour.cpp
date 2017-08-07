@@ -22,17 +22,17 @@ Behaviour * SequenceBehaviour::clone()
 BehaviourResult SequenceBehaviour::update(Agent * agent, float deltaTime)
 {
 	for (BehaviourPtr child : m_children) {
-		for (BehaviourPtr child : m_children) {
-			switch (child->update(agent, deltaTime)) {
-			case(failure):
-				return failure;
-				break;
-			case(running):
-				return running;
-				break;
-			default:
-				break;
-			}
+		switch (child->update(agent, deltaTime)) {
+		case(failure):
+			return failure;
+			break;
+		case(running):
+			//TODO set running on, ongoing behaviour is child
+			return running;
+			break;
+		default:
+			break;
 		}
-		return success;
+	}
+	return success;
 }

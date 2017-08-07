@@ -7,7 +7,6 @@ class AABox;
 class OBox;
 class CircleCollider;
 
-
 class CollisionShape {
 public:
 	CollisionShape();
