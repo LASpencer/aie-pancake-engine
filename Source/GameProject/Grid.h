@@ -23,6 +23,7 @@ public:
 	friend class Grid;
 
 	GridSquare();
+	//TODO ctor taking tilemap
 
 	GridSquare(glm::vec2 position, TileType type = TileType::open);
 
@@ -30,10 +31,11 @@ public:
 
 	TileType getType();
 
+	float getMoveCost();
 
 private:
 	glm::vec2 m_position;
-	TileType type;
+	TileType m_type;
 
 	float m_gScore;
 	float m_fScore;
@@ -45,6 +47,8 @@ private:
 class Grid {
 public:
 	static const float square_size;
+
+	static const float difficult_move_cost;
 	
 	Grid();
 	
@@ -54,4 +58,8 @@ public:
 
 private:
 	std::vector<std::vector<GridSquarePtr>> m_squares;
+
+	void calculateEdges();
+
+	void connectSquares(GridSquarePtr a, GridSquarePtr b);
 };
