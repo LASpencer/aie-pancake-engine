@@ -316,7 +316,21 @@ float OBox::testRayCollision(Ray * ray)
 
 void OBox::draw(aie::Renderer2D * renderer)
 {
-	//todo
+	std::tuple<glm::vec2, glm::vec2, glm::vec2, glm::vec2> corners = getCorners();
+	glm::vec2 thisCorners[4] = { std::get<0>(corners), std::get<1>(corners), std::get<2>(corners), std::get<3>(corners) };
+
+	for (size_t i = 0; i < 4; i++) {
+		glm::vec2 endpoint;
+		if (i == 3) {
+			// Side from last corner to first
+			endpoint = thisCorners[0];
+		}
+		else {
+			// Side from current corner to next
+			endpoint = thisCorners[i + 1];
+		}
+		renderer->drawLine(thisCorners[i].x, thisCorners[i].y, endpoint.x, endpoint.y, 2.f);
+	}
 }
 
 std::tuple<glm::vec2, glm::vec2, glm::vec2, glm::vec2> OBox::getCorners()
@@ -333,13 +347,11 @@ std::tuple<glm::vec2, glm::vec2, glm::vec2, glm::vec2> OBox::getCorners()
 std::tuple<Plane, Plane, Plane, Plane> OBox::getPlanes()
 {
 	Plane planes[4];
-	planes[0].normal = glm::normalize(m_xExtent);
-	planes[1].normal = -planes[0].normal;
-	planes[2].normal = glm::normalize(m_yExtent);
-	planes[3].normal = -planes[2].normal;
-	for (int i = 0; i < 4; ++i) {
-		planes[i].offset = -(glm::dot(planes[i].normal, planes[i].normal + m_centre));
-	}
+	planes[0] = extentToPlane(m_xExtent);
+	planes[1] = extentToPlane(-m_xExtent);
+	planes[2] = extentToPlane(m_yExtent);
+	planes[3] = extentToPlane(-m_yExtent);
+
 	return std::make_tuple(planes[0], planes[1], planes[2], planes[3]);
 }
 
@@ -352,4 +364,12 @@ void OBox::transform(glm::mat3 transformation)
 	m_xExtent = (glm::vec2)boxComponents[0];
 	m_yExtent = (glm::vec2)boxComponents[1];
 	m_centre = (glm::vec2)boxComponents[2];
+}
+
+Plane OBox::extentToPlane(glm::vec2 extent)
+{
+	Plane plane;
+	plane.normal = glm::normalize(extent);
+	plane.offset = -(glm::dot(plane.normal, extent + m_centre));
+	return plane;
 }

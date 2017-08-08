@@ -48,3 +48,10 @@ glm::vec2 WeightedSteeringForce::getForce(Agent * agent)
 	}
 	return totalForce;
 }
+
+void WeightedSteeringForce::draw(Agent * agent, aie::Renderer2D * renderer)
+{
+	for (WeightedForce force : m_weightedList) {
+		force.first->draw(agent, renderer);
+	}
+}

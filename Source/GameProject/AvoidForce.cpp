@@ -8,9 +8,8 @@
 AvoidForce::AvoidForce()
 {
 	//HACK figure out best way to do these
-	m_rays.push_back(Ray({ 0,0 }, { 0,1 }, 200.f));
-	m_rays.push_back(Ray({ 0,0 }, { 0.2,1 }, 200.f));
-	m_rays.push_back(Ray({ 0,0 }, { -0.2,1 }, 200.f));
+	m_rays.push_back(Ray({ 0,0 }, { 0.2,1 }, 100.f));
+	m_rays.push_back(Ray({ 0,0 }, { -0.2,1 }, 100.f));
 }
 
 AvoidForce::~AvoidForce()
@@ -19,6 +18,7 @@ AvoidForce::~AvoidForce()
 
 glm::vec2 AvoidForce::getForce(Agent * agent)
 {
+	//TODO this destroys framerate, solve that
 	//TODO get colliders, find closest collision for rays, apply force based on these
 	EntityPtr entity(agent->getEntity());
 	GameProjectApp* app = entity->getApp();
@@ -42,7 +42,7 @@ glm::vec2 AvoidForce::getForce(Agent * agent)
 		}
 		//TODO apply force based on minimum distance found
 		if (distance > 0.f) {
-			force -= ray.getDirection();
+			force -= globalRay.getDirection();
 		}
 	}
 	if (force != glm::vec2(0)) {

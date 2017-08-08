@@ -23,6 +23,8 @@ public:
 
 	virtual glm::vec2 getForce(Agent* agent);
 
+	virtual void draw(Agent* agent, aie::Renderer2D* renderer);
+
 protected:
 	std::vector<WeightedForce> m_weightedList;
 };

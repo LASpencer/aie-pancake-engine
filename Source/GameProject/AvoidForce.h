@@ -12,6 +12,8 @@ public:
 
 	virtual void draw(Agent* agent, aie::Renderer2D* renderer);
 
+	//TODO set rays
+
 protected:
 	std::vector<Ray> m_rays;
 };

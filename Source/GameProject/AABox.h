@@ -47,7 +47,10 @@ public:
 	std::tuple<glm::vec2, glm::vec2, glm::vec2, glm::vec2> getCorners();
 
 	// Fit AABox around collision shapes given
-	void boundShapes(std::vector<CollisionShape> points);
+	void boundShapes(std::vector<CollisionShape> shapes);
+
+	// Fit AABox around points
+	void boundPoints(std::vector<glm::vec2> points);
 
 protected:
 	glm::vec2 m_min;		// Minimum corner of box

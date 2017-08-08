@@ -30,7 +30,7 @@ GameProjectApp::~GameProjectApp() {
 
 bool GameProjectApp::startup() {
 
-	m_showFPS = false;
+	m_showFPS = true;
 	m_2dRenderer = new aie::Renderer2D();
 	m_resourceManager = new ResourceManager();
 	m_entityFactory = new EntityFactory(this);
@@ -67,37 +67,38 @@ bool GameProjectApp::startup() {
 	/*playerAgent->addBehaviour(std::make_shared<PathfindingBehaviour>(&m_mapGraph, m_mapGraph.m_graph[0]));
 	playerAgent->setMaxVelocity(50.f);*/
 
-	EntityPtr car = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(800, 300)));
-	AgentPtr carAgent = std::dynamic_pointer_cast<Agent>(car->getComponent(Component::agent));
-	carAgent->setMaxVelocity(150.f);
+	//EntityPtr car = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(800, 300)));
+	//AgentPtr carAgent = std::dynamic_pointer_cast<Agent>(car->getComponent(Component::agent));
+	//carAgent->setMaxVelocity(150.f);
 	//carAgent->addBehaviour(std::make_shared<SteeringBehaviour>(std::make_shared<AvoidForce>()));
-	//HACK
-	BehaviourPtr stayinBounds = std::make_shared<SteeringBehaviour>(std::make_shared<BoundsForce>());
-	carAgent->addBehaviour(stayinBounds);
+	////HACK
+	//BehaviourPtr stayinBounds = std::make_shared<SteeringBehaviour>(std::make_shared<BoundsForce>());
+	//carAgent->addBehaviour(stayinBounds);
 
-	// guard car uses decision tree
-	
-	carAgent->addBehaviour(std::make_shared<GuardExerciseBehaviour>(std::make_shared<EntityTarget>(player)));
+	//// guard car uses decision tree
+	//
+	//carAgent->addBehaviour(std::make_shared<GuardExerciseBehaviour>(std::make_shared<EntityTarget>(player)));
 
 	m_entityFactory->createEntity(EntityFactory::block, glm::translate(glm::mat3(1), glm::vec2(300, 300)));
+	m_entityFactory->createEntity(EntityFactory::block, glm::translate(glm::mat3(1), glm::vec2(300, 200)));
+	m_entityFactory->createEntity(EntityFactory::block, glm::translate(glm::mat3(1), glm::vec2(300, 100)));
 
-	////set guard car agent's behaviour as fsm behaviour with guard state machine
-	//GuardStateMachine* guardMachine = new GuardStateMachine({ {80,80},{1000,100},{950,600},{200,650} }, player);
-	//guardMachine->forceState(GuardStateMachine::patrol, carAgent.get());
-	//std::shared_ptr<FSMBehaviour> guardBehaviour = std::make_shared<FSMBehaviour>(guardMachine);
-	//carAgent->addBehaviour(guardBehaviour);
+	m_entityFactory->createEntity(EntityFactory::block, glm::translate(glm::mat3(1), glm::vec2(450, 300)));
+	m_entityFactory->createEntity(EntityFactory::block, glm::translate(glm::mat3(1), glm::vec2(450, 200)));
+	m_entityFactory->createEntity(EntityFactory::block, glm::translate(glm::mat3(1), glm::vec2(450, 100)));
 
 	// Spawn a bunch of wandering cars
 
-	//for (int i = 0; i < 10; ++i) {
-	//	EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(640, 360)));
-	//	AgentPtr wanderAgent = std::dynamic_pointer_cast<Agent>(wanderer->getComponent(Component::agent));
-	//	wanderAgent->setMaxVelocity(50.f);
-	//	std::shared_ptr<WeightedSteeringForce> wanderInBounds = std::make_shared<WeightedSteeringForce>();
-	//	wanderInBounds->addForce(std::make_shared<BoundsForce>(), 1.f);
-	//	wanderInBounds->addForce(std::make_shared<WanderForce>(), 1.f);
-	//	wanderAgent->addBehaviour(std::make_shared<SteeringBehaviour>(wanderInBounds));
-	//}
+	for (int i = 0; i < 50; ++i) {
+		EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(640, 360)));
+		AgentPtr wanderAgent = std::dynamic_pointer_cast<Agent>(wanderer->getComponent(Component::agent));
+		wanderAgent->setMaxVelocity(50.f);
+		std::shared_ptr<WeightedSteeringForce> wanderInBounds = std::make_shared<WeightedSteeringForce>();
+		wanderInBounds->addForce(std::make_shared<BoundsForce>(), 1.f);
+		//wanderInBounds->addForce(std::make_shared<AvoidForce>(), 0.8f);
+		wanderInBounds->addForce(std::make_shared<WanderForce>(), 1.f);
+		wanderAgent->addBehaviour(std::make_shared<SteeringBehaviour>(wanderInBounds));
+	}
 	// Disable face culling, so sprites can be flipped
 	glDisable(GL_CULL_FACE);
 	return true;

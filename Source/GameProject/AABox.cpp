@@ -167,6 +167,13 @@ void AABox::transform(glm::mat3 transformation)
 {
 	//TODO AABox transformation
 	//TODO write bounding method, get each corner and transform, bound to transformed corners
+	glm::vec2 topLeft(m_min.x, m_max.y);
+	glm::vec2 bottomRight(m_max.x, m_min.y);
+	std::vector<glm::vec2> corners = { m_min, topLeft, m_max, bottomRight };
+	for (glm::vec2& corner : corners) {
+		corner = (glm::vec2)(transformation * glm::vec3(corner.x, corner.y, 1.f));
+	}
+	boundPoints(corners);
 }
 
 void AABox::setCorners(glm::vec2 a, glm::vec2 b)
@@ -183,4 +190,16 @@ std::tuple<glm::vec2, glm::vec2, glm::vec2, glm::vec2> AABox::getCorners()
 	glm::vec2 topLeft(m_min.x, m_max.y);
 	glm::vec2 bottomRight(m_max.x, m_min.y);
 	return std::make_tuple(m_min, topLeft, m_max, bottomRight);
+}
+
+void AABox::boundPoints(std::vector<glm::vec2> points)
+{
+	auto xLessThan = [](glm::vec2 a, glm::vec2 b) {return a.x < b.x; };
+	auto yLessThan = [](glm::vec2 a, glm::vec2 b) {return a.y < b.y; };
+	if (points.size() >= 2) {
+		m_min.x = (std::min_element(points.begin(), points.end(), xLessThan))->x;
+		m_min.y = (std::min_element(points.begin(), points.end(), yLessThan))->y;
+		m_max.x = (std::max_element(points.begin(), points.end(), xLessThan))->x;
+		m_max.y = (std::max_element(points.begin(), points.end(), yLessThan))->y;
+	}
 }

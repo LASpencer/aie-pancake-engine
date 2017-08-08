@@ -98,6 +98,7 @@ void Collider::draw(aie::Renderer2D * renderer)
 				break;
 			}
 			box->draw(renderer);
+			renderer->setRenderColour(0xffffffff);
 		}
 	}
 }
