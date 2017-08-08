@@ -5,7 +5,7 @@ SelectorBehaviour::SelectorBehaviour() : CompositeBehaviour()
 {
 }
 
-SelectorBehaviour::SelectorBehaviour(std::vector<BehaviourPtr> children) : SelectorBehaviour(children)
+SelectorBehaviour::SelectorBehaviour(std::vector<BehaviourPtr> children) : CompositeBehaviour(children)
 {
 }
 

@@ -1,15 +1,19 @@
 #pragma once
 #include "stdafx.h"
+#include "Collider.h"
 
 class CollisionShape;
 typedef std::shared_ptr<CollisionShape> CollisionShapePtr;
-
-enum BoxType;
 
 class AABox;
 class OBox;
 class CircleCollider;
 class Ray;
+
+struct Plane {
+	glm::vec2 normal;
+	float offset;
+};
 
 class CollisionShape {
 public:

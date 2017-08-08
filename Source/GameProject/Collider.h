@@ -6,6 +6,8 @@
 class CollisionShape;
 typedef std::shared_ptr<CollisionShape> CollisionShapePtr;
 
+class Ray;
+
 /* Enumeration of different types of hitboxes
 	Used to determine collision resolution*/
 enum BoxType {

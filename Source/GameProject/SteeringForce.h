@@ -13,6 +13,8 @@ public:
 
 	virtual glm::vec2 getForce(Agent* agent) = 0;
 
+	virtual void draw(Agent* agent, aie::Renderer2D* renderer) {};
+
 protected:
 	glm::vec2 seekPoint(Agent* agent, glm::vec2 target);
 

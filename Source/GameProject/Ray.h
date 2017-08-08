@@ -29,6 +29,8 @@ public:
 	// Returns closest point on ray to given point
 	glm::vec2 findClosestPoint(glm::vec2 point);
 
+	virtual void transform(glm::mat3 transformation);
+
 	void draw(aie::Renderer2D* renderer);
 
 	

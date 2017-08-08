@@ -2,7 +2,7 @@
 #include "Entity.h"
 #include "Component.h"
 
-Entity::Entity() : m_position(std::make_shared<SceneObject>()), m_componentMask(0)
+Entity::Entity(GameProjectApp* app) : m_position(std::make_shared<SceneObject>()), m_componentMask(0), m_app(app)
 {
 }
 

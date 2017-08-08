@@ -285,20 +285,32 @@ std::pair<bool, glm::vec2> OBox::doesCollide(CircleCollider * circle)
 float OBox::testRayCollision(Ray * ray)
 {
 	//TODO write test
-	glm::mat3 boxComponents(m_xExtent.x, m_xExtent.y, 0.f,
-							m_yExtent.x, m_yExtent.y, 0.f,
-							m_centre.x, m_centre.y, 1.f);
-	glm::mat3 inverseBox = glm::inverse(boxComponents);
-	glm::vec2 transformedOrigin = (glm::vec2)(inverseBox * glm::vec3(ray->getOrigin().x, ray->getOrigin().y, 1.f));
-	glm::vec2 transformedDirection = (glm::vec2)(inverseBox * glm::vec3(ray->getDirection().x, ray->getDirection().y, 0.f));
-	Ray transformedRay(transformedOrigin, transformedDirection);
-	float distance = AABox(glm::vec2(-1,-1), glm::vec2( 1,1)).testRayCollision(&transformedRay);
-	if (distance <= 0.f) {
-		return distance;
-	} else {
-		glm::vec2 transformedIntersection = transformedOrigin + distance * transformedDirection;
-		glm::vec2 realIntersection = (glm::vec2)(boxComponents * glm::vec3(transformedIntersection.x, transformedIntersection.y, 1.f));
-		return glm::length(realIntersection - ray->getOrigin());
+	std::tuple<Plane, Plane, Plane, Plane> planes = getPlanes();
+	Plane sides[4] = { std::get<0>(planes), std::get<1>(planes), std::get<2>(planes), std::get<3>(planes) };
+	float dEntry = 0.0f;
+	float dExit = ray->getLength();
+	float dHit1, dHit2, rate;
+	glm::vec2 rayDirection = ray->getDirection();
+	glm::vec2 rayOrigin = ray->getOrigin();
+	if (glm::dot(rayDirection, sides[0].normal) != 0.f) {
+		rate = 1.f / (glm::dot(rayDirection, sides[0].normal));
+		dHit1 = -(glm::dot(rayOrigin, sides[0].normal) + sides[0].offset) * rate;
+		dHit2 = (glm::dot(rayOrigin, sides[1].normal) + sides[1].offset) * rate;
+		dEntry = std::max(dEntry, std::min(dHit1, dHit2));
+		dExit = std::min(dExit, std::max(dHit1, dHit2));
+	}
+	if (glm::dot(rayDirection, sides[2].normal) != 0.f) {
+		rate = 1.f / (glm::dot(rayDirection, sides[2].normal));
+		dHit1 = -(glm::dot(rayOrigin, sides[2].normal) + sides[2].offset)* rate;
+		dHit2 = (glm::dot(rayOrigin, sides[3].normal) + sides[3].offset) * rate;
+		dEntry = std::max(dEntry, std::min(dHit1, dHit2));
+		dExit = std::min(dExit, std::max(dHit1, dHit2));
+	}
+	if (dEntry <= dExit) {
+		return dEntry;
+	}
+	else {
+		return -1;
 	}
 }
 
@@ -311,6 +323,19 @@ std::tuple<glm::vec2, glm::vec2, glm::vec2, glm::vec2> OBox::getCorners()
 	thisCorners[2] = m_centre - m_xExtent - m_yExtent;
 	thisCorners[3] = m_centre - m_xExtent + m_yExtent;
 	return std::make_tuple(thisCorners[0], thisCorners[1], thisCorners[2], thisCorners[3]);
+}
+
+std::tuple<Plane, Plane, Plane, Plane> OBox::getPlanes()
+{
+	Plane planes[4];
+	planes[0].normal = glm::normalize(m_xExtent);
+	planes[1].normal = -planes[0].normal;
+	planes[2].normal = glm::normalize(m_yExtent);
+	planes[3].normal = -planes[2].normal;
+	for (int i = 0; i < 4; ++i) {
+		planes[i].offset = -(glm::dot(planes[i].normal, planes[i].normal + m_centre));
+	}
+	return std::make_tuple(planes[0], planes[1], planes[2], planes[3]);
 }
 
 void OBox::transform(glm::mat3 transformation)

@@ -156,7 +156,7 @@ void GameProjectApp::draw() {
 
 void GameProjectApp::updateEntities(float deltaTime)
 {
-	//Update controller components
+	//Update agent components
 	std::vector<EntityPtr> entitiesWithComponent = Entity::getEntitiesWithComponent(Component::agent, m_entityList);
 	for (EntityPtr entity : entitiesWithComponent) {
 		entity->getComponent(Component::agent)->update(deltaTime);

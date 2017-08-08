@@ -4,6 +4,8 @@
 #include "Component.h"
 #include "SceneObject.h"
 
+class GameProjectApp;
+
 class Entity;
 typedef std::shared_ptr<Component> ComponentPtr;
 typedef std::shared_ptr<Entity> EntityPtr;
@@ -30,7 +32,7 @@ public:
 		door = 0x4		// Entity is a door
 	};
 
-	Entity();
+	Entity(GameProjectApp* app);
 	virtual ~Entity();
 
 	/** Adds a component to the entity
@@ -70,5 +72,6 @@ protected:
 	int m_componentMask;
 	int m_tagMask;
 	SceneObjectPtr m_position;
+	GameProjectApp* m_app;
 };
 

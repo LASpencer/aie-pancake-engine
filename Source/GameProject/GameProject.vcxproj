@@ -102,6 +102,7 @@
     <ClCompile Include="AABox.cpp" />
     <ClCompile Include="ArrivalForce.cpp" />
     <ClCompile Include="AttackTarget.cpp" />
+    <ClCompile Include="AvoidForce.cpp" />
     <ClCompile Include="BoundsForce.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ChaseyStateMachine.cpp" />
@@ -135,6 +136,7 @@
     <ClCompile Include="OBox.cpp" />
     <ClCompile Include="PathfindingBehaviour.cpp" />
     <ClCompile Include="PursueForce.cpp" />
+    <ClCompile Include="Ray.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SceneObject.cpp" />
     <ClCompile Include="SeekForce.cpp" />
@@ -166,6 +168,7 @@
     <ClInclude Include="AndCondition.h" />
     <ClInclude Include="ArrivalForce.h" />
     <ClInclude Include="AttackTarget.h" />
+    <ClInclude Include="AvoidForce.h" />
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="BinaryCondition.h" />
     <ClInclude Include="BoundsForce.h" />

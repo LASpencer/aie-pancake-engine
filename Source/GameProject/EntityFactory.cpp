@@ -52,7 +52,7 @@ void EntityFactory::loadResources()
 
 EntityPtr EntityFactory::createShip(glm::mat3 position, SceneObjectPtr parent)
 {
-	EntityPtr ship = std::make_shared<Entity>();
+	EntityPtr ship = std::make_shared<Entity>(m_app);
 	setEntityPosition(ship, position, parent);
 	// Add sprite
 	ship->addComponent(std::make_shared<Sprite>(m_app->getResourceManager()->getTexture(filepath::ship)));
@@ -66,7 +66,7 @@ EntityPtr EntityFactory::createShip(glm::mat3 position, SceneObjectPtr parent)
 
 EntityPtr EntityFactory::createCar(glm::mat3 position, SceneObjectPtr parent)
 {
-	EntityPtr car = std::make_shared<Entity>();
+	EntityPtr car = std::make_shared<Entity>(m_app);
 	setEntityPosition(car, position, parent);
 	// Add sprite
 	car->addComponent(std::make_shared<Sprite>(m_app->getResourceManager()->getTexture(filepath::car)));
