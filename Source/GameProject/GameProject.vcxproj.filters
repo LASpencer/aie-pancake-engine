@@ -294,6 +294,9 @@
     <ClCompile Include="AvoidForce.cpp">
       <Filter>Source Files\Entities\Behaviours\Steering</Filter>
     </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Source Files\Pathfinding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameProjectApp.h">
@@ -514,6 +517,9 @@
     </ClInclude>
     <ClInclude Include="AvoidForce.h">
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Header Files\Pathfinding</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

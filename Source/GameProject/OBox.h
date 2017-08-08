@@ -52,15 +52,10 @@ public:
 	// Returns all four corners of the OBox
 	std::tuple<glm::vec2, glm::vec2, glm::vec2, glm::vec2> getCorners();
 
-	// Get planes defining box, facing outward. First two and last two are opposite sides
-	std::tuple<Plane, Plane, Plane, Plane> getPlanes();
-
 	virtual void transform(glm::mat3 transformation);
 	
 protected:
 	glm::vec2 m_xExtent;
 	glm::vec2 m_yExtent;
 	glm::vec2 m_centre;
-
-	Plane extentToPlane(glm::vec2 extent);
 };

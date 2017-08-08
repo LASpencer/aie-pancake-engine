@@ -20,6 +20,9 @@
 
 #include "imgui.h"
 
+const glm::vec2 GameProjectApp::min_corner = glm::vec2(0);
+const glm::vec2 GameProjectApp::max_corner = glm::vec2(1280, 720);
+
 GameProjectApp::GameProjectApp() : m_entityList()
 {
 

@@ -10,6 +10,8 @@
 
 class GameProjectApp : public aie::Application {
 public:
+	static const glm::vec2 min_corner;
+	static const glm::vec2 max_corner;
 
 	GameProjectApp();
 	virtual ~GameProjectApp();

@@ -27,9 +27,8 @@ public:
 
 	//	Tags which can be added to an entity
 	enum ETag {
-		player = 0x1,	// Entity is the player
-		floor = 0x2,	// Entity can be walked on and support entities
-		door = 0x4		// Entity is a door
+		obstacle = 0x1,	// Entity is an obstacle
+		//0x2,0x4,0x8,0x10,0x20 etc
 	};
 
 	Entity(GameProjectApp* app);
