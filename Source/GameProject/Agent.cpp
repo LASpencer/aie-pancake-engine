@@ -61,6 +61,7 @@ void Agent::update(float deltaTime)
 	m_time += deltaTime;
 }
 
+
 Agent::Identifier Agent::getID()
 {
 	return agent;

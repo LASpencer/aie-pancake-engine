@@ -2,7 +2,7 @@
 #include "stdafx.h"
 #include"CollisionShape.h"
 
-class AABox : CollisionShape {
+class AABox : public CollisionShape {
 public:
 	AABox();
 	AABox(glm::vec2 cornerA, glm::vec2 cornerB, BoxType type = none);
@@ -26,6 +26,8 @@ public:
 	virtual std::pair<bool, glm::vec2> doesCollide(CircleCollider* circle);
 
 	virtual float testRayCollision(Ray* ray);
+
+	virtual void draw(aie::Renderer2D* renderer);
 
 	// Accessor and mutator methods
 	glm::vec2 getMinCorner() {

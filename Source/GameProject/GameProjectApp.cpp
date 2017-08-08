@@ -16,6 +16,7 @@
 #include "BoundsForce.h"
 #include "PathfindingBehaviour.h"
 #include "GuardExerciseBehaviour.h"
+#include "AvoidForce.h"
 
 #include "imgui.h"
 
@@ -58,7 +59,9 @@ bool GameProjectApp::startup() {
 
 	EntityPtr player = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(500,500)));
 	AgentPtr playerAgent = std::dynamic_pointer_cast<Agent>(player->getComponent(Component::agent));
+	playerAgent->addBehaviour(std::make_shared<SteeringBehaviour>(std::make_shared<AvoidForce>()));
 	playerAgent->addBehaviour(std::make_shared<KeyboardController>());
+
 
 	//pathfinding
 	/*playerAgent->addBehaviour(std::make_shared<PathfindingBehaviour>(&m_mapGraph, m_mapGraph.m_graph[0]));
@@ -67,7 +70,7 @@ bool GameProjectApp::startup() {
 	EntityPtr car = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(800, 300)));
 	AgentPtr carAgent = std::dynamic_pointer_cast<Agent>(car->getComponent(Component::agent));
 	carAgent->setMaxVelocity(150.f);
-
+	//carAgent->addBehaviour(std::make_shared<SteeringBehaviour>(std::make_shared<AvoidForce>()));
 	//HACK
 	BehaviourPtr stayinBounds = std::make_shared<SteeringBehaviour>(std::make_shared<BoundsForce>());
 	carAgent->addBehaviour(stayinBounds);
@@ -75,6 +78,8 @@ bool GameProjectApp::startup() {
 	// guard car uses decision tree
 	
 	carAgent->addBehaviour(std::make_shared<GuardExerciseBehaviour>(std::make_shared<EntityTarget>(player)));
+
+	m_entityFactory->createEntity(EntityFactory::block, glm::translate(glm::mat3(1), glm::vec2(300, 300)));
 
 	////set guard car agent's behaviour as fsm behaviour with guard state machine
 	//GuardStateMachine* guardMachine = new GuardStateMachine({ {80,80},{1000,100},{950,600},{200,650} }, player);
@@ -114,6 +119,9 @@ void GameProjectApp::update(float deltaTime) {
 	aie::Input* input = aie::Input::getInstance();
 	if (input->wasKeyPressed(aie::INPUT_KEY_F)) {
 		m_showFPS = !m_showFPS;
+	}
+	if (input->wasKeyPressed(aie::INPUT_KEY_GRAVE_ACCENT)) {
+		Collider::setDrawBoxes(!Collider::draw_boxes);
 	}
 	if (input->wasKeyPressed(aie::INPUT_KEY_ESCAPE)) {
 		quit();
@@ -189,6 +197,10 @@ void GameProjectApp::drawEntities()
 		for (EntityPtr entity : entitiesWithComponent) {
 			entity->getComponent(Component::collider)->draw(m_2dRenderer);
 		}
+	}
+	entitiesWithComponent = Entity::getEntitiesWithComponent(Component::agent, m_entityList);
+	for (EntityPtr entity : entitiesWithComponent) {
+		entity->getComponent(Component::agent)->draw(m_2dRenderer);
 	}
 }
 

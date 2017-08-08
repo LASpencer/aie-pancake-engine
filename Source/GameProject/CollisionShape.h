@@ -35,6 +35,8 @@ public:
 
 	virtual std::pair<bool, glm::vec2> doesCollide(CircleCollider* other) = 0;
 
+	virtual void draw(aie::Renderer2D* renderer) = 0;
+
 	virtual float testRayCollision(Ray* ray) = 0;
 
 	void setType(BoxType type) {

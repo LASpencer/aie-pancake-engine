@@ -27,7 +27,8 @@ public:
 	// Different entities which can be created
 	enum EntityType {
 		ship,
-		car
+		car,
+		block
 	};
 
 
@@ -57,6 +58,8 @@ private:
 	EntityPtr createShip(glm::mat3 position, SceneObjectPtr parent);
 
 	EntityPtr createCar(glm::mat3 position, SceneObjectPtr parent);
+
+	EntityPtr createBlock(glm::mat3 position, SceneObjectPtr parent);
 
 	// Sets entity's position, and place in scene graph
 	bool setEntityPosition(EntityPtr entity, glm::mat3 position, SceneObjectPtr parent);

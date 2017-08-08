@@ -87,6 +87,11 @@ SceneObjectPtr Entity::getPosition()
 	return m_position;
 }
 
+GameProjectApp * Entity::getApp()
+{
+	return m_app;
+}
+
 std::vector<EntityPtr> Entity::getEntitiesWithComponent(Component::Identifier component, std::vector<EntityPtr>&entities)
 {
 	// use find_if to fill new array with all entities with matching bitmask

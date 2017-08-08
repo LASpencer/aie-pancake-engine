@@ -29,6 +29,8 @@ public:
 
 	virtual void transform(glm::mat3 transformation);
 
+	virtual void draw(aie::Renderer2D* renderer);
+
 	glm::vec2 getCentre() {
 		return m_centre;
 	};

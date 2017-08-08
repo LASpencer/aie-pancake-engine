@@ -130,3 +130,8 @@ void CircleCollider::transform(glm::mat3 transformation)
 	// Radius scaled by longest axis
 	m_radius *= std::max(glm::length(transformation[0]), glm::length(transformation[1]));
 }
+
+void CircleCollider::draw(aie::Renderer2D * renderer)
+{
+	renderer->drawCircle(m_centre.x, m_centre.y, m_radius);
+}

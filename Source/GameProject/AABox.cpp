@@ -157,8 +157,16 @@ float AABox::testRayCollision(Ray * ray)
 	}
 }
 
+void AABox::draw(aie::Renderer2D * renderer)
+{
+	glm::vec2 center = 0.5f * (m_min + m_max);
+	renderer->drawBox(center.x, center.y, m_max.x - m_min.x, m_max.y - m_min.y);
+}
+
 void AABox::transform(glm::mat3 transformation)
 {
+	//TODO AABox transformation
+	//TODO write bounding method, get each corner and transform, bound to transformed corners
 }
 
 void AABox::setCorners(glm::vec2 a, glm::vec2 b)

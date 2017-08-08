@@ -24,3 +24,10 @@ void SimpleAgent::update(float deltaTime)
 	}
 	Agent::update(deltaTime);
 }
+
+void SimpleAgent::draw(aie::Renderer2D * renderer)
+{
+	for (auto it = m_behaviours.begin(); it != m_behaviours.end(); ++it) {
+		(*it)->draw(this, renderer);
+	}
+}

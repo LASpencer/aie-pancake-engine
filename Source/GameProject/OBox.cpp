@@ -314,6 +314,11 @@ float OBox::testRayCollision(Ray * ray)
 	}
 }
 
+void OBox::draw(aie::Renderer2D * renderer)
+{
+	//todo
+}
+
 std::tuple<glm::vec2, glm::vec2, glm::vec2, glm::vec2> OBox::getCorners()
 {
 

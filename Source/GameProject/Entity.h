@@ -60,6 +60,8 @@ public:
 
 	SceneObjectPtr getPosition();
 
+	GameProjectApp* getApp();
+
 	/** Returns array of entities with a particular type of component
 	*	@param component Identifier for component class to search for
 	*	@param entities Array containing entities to check

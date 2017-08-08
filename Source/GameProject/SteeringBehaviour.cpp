@@ -24,3 +24,8 @@ BehaviourResult SteeringBehaviour::update(Agent * entity, float deltaTime)
 
 	return success;
 }
+
+void SteeringBehaviour::draw(Agent * agent, aie::Renderer2D * renderer)
+{
+	m_force->draw(agent, renderer);
+}

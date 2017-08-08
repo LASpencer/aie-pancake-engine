@@ -78,28 +78,27 @@ void Collider::draw(aie::Renderer2D * renderer)
 	if (draw_boxes) {
 		//TODO: each shape has own draw method
 
-		//EntityPtr entity(m_entity);
-		//for (Box box : m_globalBoxes) {
-		//	// Calculate box's center and dimensions
-		//	glm::vec2 center = 0.5f * (box.corner1 + box.corner2);
-		//	float width = std::abs(box.corner1.x - box.corner2.x);
-		//	float height = std::abs(box.corner1.y - box.corner2.y);
-		//	// Set colour based on box type
-		//	switch (box.type) {
-		//	case(body):		//body is blue
-		//		renderer->setRenderColour(0x0000FF80);
-		//		break;
-		//	case(attack):	//attack is red
-		//		renderer->setRenderColour(0xFF000080);
-		//		break;
-		//	case(trigger):	//trigger is green
-		//		renderer->setRenderColour(0x00FF0080);
-		//		break;
-		//	default:
-		//		break;
-		//	}
-		//	renderer->drawBox(center.x, center.y, width, height);
-		//}
+		EntityPtr entity(m_entity);
+		for (CollisionShapePtr box : m_globalBoxes) {
+			// Set colour based on box type
+			switch (box->getType()) {
+			case(none):		//none is grey
+				renderer->setRenderColour(0x80808080);
+				break;
+			case(body):		//body is blue
+				renderer->setRenderColour(0x0000FF80);
+				break;
+			case(attack):	//attack is red
+				renderer->setRenderColour(0xFF000080);
+				break;
+			case(trigger):	//trigger is green
+				renderer->setRenderColour(0x00FF0080);
+				break;
+			default:
+				break;
+			}
+			box->draw(renderer);
+		}
 	}
 }
 

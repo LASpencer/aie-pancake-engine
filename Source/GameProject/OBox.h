@@ -27,6 +27,8 @@ public:
 
 	virtual float testRayCollision(Ray* ray);
 
+	virtual void draw(aie::Renderer2D* renderer);
+
 	// Accessor and mutator functions
 	glm::vec2 getXExtent() {
 		return m_xExtent;

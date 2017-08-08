@@ -17,5 +17,7 @@ public:
 
 	virtual BehaviourResult update(Agent* entity, float deltaTime);
 
+	virtual void draw(Agent* agent, aie::Renderer2D* renderer);
+
 	SteeringForcePtr m_force;
 };

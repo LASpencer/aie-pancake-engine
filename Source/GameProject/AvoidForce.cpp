@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "AvoidForce.h"
 #include "Entity.h"
+#include "GameProjectApp.h"
+#include "Collider.h"
+#include "CollisionShape.h"
 
 AvoidForce::AvoidForce()
 {
@@ -18,15 +21,37 @@ glm::vec2 AvoidForce::getForce(Agent * agent)
 {
 	//TODO get colliders, find closest collision for rays, apply force based on these
 	EntityPtr entity(agent->getEntity());
+	GameProjectApp* app = entity->getApp();
 	glm::vec2 force(0);
 	//TODO get all body colliders not belonging to this entity
+	std::vector<EntityPtr> entitiesWithCollider = Entity::getEntitiesWithComponent(Component::collider, app->getEntityList());
 	//TODO maybe have m_app build container of body colliders/owner, passed to this
 	for (Ray ray : m_rays) {
+		float distance = -1.f;
 		Ray globalRay = ray;
 		globalRay.transform(entity->getPosition()->getGlobalTransform());
-		
+		for (EntityPtr otherEntity : entitiesWithCollider) {
+			if (otherEntity.get() != entity.get()) {
+				std::vector<CollisionShapePtr> hitboxes = std::dynamic_pointer_cast<Collider>(otherEntity->getComponent(Component::collider))->getGlobalBoxes();
+				for (CollisionShapePtr box : hitboxes) {
+					if (box->getType() == BoxType::body) {
+						distance = std::max(distance, box->testRayCollision(&globalRay));
+					}
+				}
+			}
+		}
+		//TODO apply force based on minimum distance found
+		if (distance > 0.f) {
+			force -= ray.getDirection();
+		}
 	}
-	return glm::vec2();
+	if (force != glm::vec2(0)) {
+		//HACK write better way to figure out force
+		return agent->getMaxForce() * glm::normalize(force);
+	}
+	else {
+		return glm::vec2(0);
+	}
 }
 
 void AvoidForce::draw(Agent * agent, aie::Renderer2D * renderer)
