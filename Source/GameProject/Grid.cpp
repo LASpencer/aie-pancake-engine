@@ -16,7 +16,8 @@ Grid::Grid()
 	for (size_t i = 0; i < squaresWide; ++i) {
 		std::vector<GridSquarePtr> column;
 		for (size_t j = 0; j < squaresHigh; ++j) {
-			glm::vec2 position((0.5f + i)*square_size, (0.5f + j) * square_size);
+			glm::vec2 position(GameProjectApp::min_corner.x + (0.5f + i)*square_size,
+								GameProjectApp::min_corner.y + (0.5f + j) * square_size);
 			column.push_back(std::make_shared<GridSquare>(position, open));
 		}
 		m_squares.push_back(column);
@@ -27,8 +28,9 @@ Grid::Grid()
 
 GridSquarePtr Grid::getSquare(glm::vec2 position)
 {
-	//TODO based on position, return 
-	return GridSquarePtr();
+	size_t x = std::min((size_t)(std::max(0.f, position.x - GameProjectApp::min_corner.x) * (1.f / square_size)), m_squares.size());
+	size_t y = std::min((size_t)(std::max(0.f, position.y - GameProjectApp::min_corner.y) * (1.f / square_size)), m_squares[x].size());
+	return m_squares[x][y];
 }
 
 std::stack<glm::vec2> Grid::findPath(GridSquarePtr start, GridSquarePtr end, float(*heuristic)(GridSquare *, GridSquare *))

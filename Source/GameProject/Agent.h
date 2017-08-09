@@ -4,6 +4,7 @@
 
 class Agent;
 typedef std::shared_ptr<Agent> AgentPtr;
+typedef std::weak_ptr<Agent> AgentWeakPtr;
 
 class Agent 
 	: public Component {

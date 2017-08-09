@@ -74,6 +74,7 @@ EntityPtr EntityFactory::createCar(glm::mat3 position, SceneObjectPtr parent)
 {
 	EntityPtr car = std::make_shared<Entity>(m_app);
 	setEntityPosition(car, position, parent);
+	car->addTag(Entity::car);
 	// Add sprite
 	car->addComponent(std::make_shared<Sprite>(m_app->getResourceManager()->getTexture(filepath::car)));
 	// Add agent
@@ -90,6 +91,7 @@ EntityPtr EntityFactory::createBlock(glm::mat3 position, SceneObjectPtr parent)
 {
 	EntityPtr block = std::make_shared<Entity>(m_app);
 	setEntityPosition(block, position, parent);
+	block->addTag(Entity::obstacle);
 	// Add sprite
 	block->addComponent(std::make_shared<Sprite>(m_app->getResourceManager()->getTexture(filepath::block)));
 	// Add collider

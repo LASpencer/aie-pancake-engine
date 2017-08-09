@@ -142,6 +142,7 @@
     <ClCompile Include="SceneObject.cpp" />
     <ClCompile Include="SeekForce.cpp" />
     <ClCompile Include="SelectorBehaviour.cpp" />
+    <ClCompile Include="SeparationForce.cpp" />
     <ClCompile Include="SequenceBehaviour.cpp" />
     <ClCompile Include="SimpleAgent.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="EventBase.h" />
     <ClInclude Include="Filepaths.h" />
+    <ClInclude Include="Flocking.h" />
     <ClInclude Include="FSMAgent.h" />
     <ClInclude Include="FSMBehaviour.h" />
     <ClInclude Include="GameProjectApp.h" />
@@ -216,6 +218,7 @@
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="SeekForce.h" />
     <ClInclude Include="SelectorBehaviour.h" />
+    <ClInclude Include="SeparationForce.h" />
     <ClInclude Include="SequenceBehaviour.h" />
     <ClInclude Include="SimpleAgent.h" />
     <ClInclude Include="Sprite.h" />
