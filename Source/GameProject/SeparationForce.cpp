@@ -1,9 +1,13 @@
 #include "stdafx.h"
 #include "SeparationForce.h"
 
+SeparationForce::~SeparationForce()
+{
+}
+
 glm::vec2 SeparationForce::getForce(Agent * agent)
 {
-	//TODO update gets direction from each neighbor to self, divide by size of neighbourhood, use as target velocity
+	//gets direction from each neighbor to self, divide by size of neighbourhood, use as target velocity
 	glm::vec2 seperatingForce(0);
 	glm::vec2 position = agent->getPosition();
 	for (auto neighbour : m_neighbours) {

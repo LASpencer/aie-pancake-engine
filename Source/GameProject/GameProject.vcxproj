@@ -100,6 +100,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="AABox.cpp" />
+    <ClCompile Include="AlignmentForce.cpp" />
     <ClCompile Include="ArrivalForce.cpp" />
     <ClCompile Include="AttackTarget.cpp" />
     <ClCompile Include="AvoidForce.cpp" />
@@ -108,6 +109,7 @@
     <ClCompile Include="ChaseyStateMachine.cpp" />
     <ClCompile Include="ChaseyStates.cpp" />
     <ClCompile Include="CircleCollider.cpp" />
+    <ClCompile Include="CohesionForce.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionEvent.cpp" />
     <ClCompile Include="CollisionShape.cpp" />
@@ -167,6 +169,7 @@
     <ClInclude Include="..\dependencies\imgui\imgui.h" />
     <ClInclude Include="..\dependencies\imgui\imgui_internal.h" />
     <ClInclude Include="AABox.h" />
+    <ClInclude Include="AlignmentForce.h" />
     <ClInclude Include="AndCondition.h" />
     <ClInclude Include="ArrivalForce.h" />
     <ClInclude Include="AttackTarget.h" />
@@ -178,6 +181,7 @@
     <ClInclude Include="ChaseyStateMachine.h" />
     <ClInclude Include="ChaseyStates.h" />
     <ClInclude Include="CircleCollider.h" />
+    <ClInclude Include="CohesionForce.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionEvent.h" />
     <ClInclude Include="CollisionShape.h" />

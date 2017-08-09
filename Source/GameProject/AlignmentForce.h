@@ -1,10 +1,10 @@
 #pragma once
 #include "SteeringForce.h"
 
-class SeparationForce : public SteeringForce {
-	
-	SeparationForce();
-	virtual ~SeparationForce();
+class AlignmentForce : public SteeringForce {
+
+	AlignmentForce();
+	virtual ~AlignmentForce();
 
 	virtual glm::vec2 getForce(Agent* agent);
 	void setNeighbours(std::vector<AgentWeakPtr>& neighbours);
