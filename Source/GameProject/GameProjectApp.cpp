@@ -39,26 +39,7 @@ bool GameProjectApp::startup() {
 	m_entityFactory = new EntityFactory(this);
 	m_sceneRoot = std::make_shared<SceneObject>();
 
-	//HACK figure out a less ugly way to make graphs
-	m_mapGraph.addNode({ 200,600 });
-	m_mapGraph.addNode({ 400,600 });
-	m_mapGraph.addNode({ 400,450 });
-	m_mapGraph.addNode({ 400,300 });
-	m_mapGraph.addNode({ 300,150 });
-	m_mapGraph.addNode({ 200,300 });
-	m_mapGraph.addNode({600, 500});
-
-	m_mapGraph.addEdge(0, 1, 200);
-	m_mapGraph.addEdge(0, 5, 400);
-	m_mapGraph.addEdge(1, 2, 150);
-	m_mapGraph.addEdge(2, 0, 250);
-	m_mapGraph.addEdge(2, 3, 150);
-	m_mapGraph.addEdge(2, 6, 200);
-	m_mapGraph.addEdge(3, 4, 180);
-	m_mapGraph.addEdge(3, 5, 200);
-	m_mapGraph.addEdge(4, 0, 460);
-	m_mapGraph.addEdge(5, 4, 180);
-	m_mapGraph.addEdge(6, 3, 280);
+	m_mapGraph = Grid();
 
 	EntityPtr player = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(500,500)));
 	AgentPtr playerAgent = std::dynamic_pointer_cast<Agent>(player->getComponent(Component::agent));
@@ -153,6 +134,7 @@ void GameProjectApp::draw() {
 	m_2dRenderer->setUVRect(0, 0, 1, 1);
 
 	// Draw game
+	m_mapGraph.draw(m_2dRenderer);
 	drawEntities();
 
 	//fps info
@@ -186,12 +168,6 @@ void GameProjectApp::updateEntities(float deltaTime)
 
 void GameProjectApp::drawEntities()
 {
-	for (MapNode* node : m_mapGraph.m_graph) {
-		m_2dRenderer->drawCircle(node->position.x, node->position.y, 15);
-		for (MapEdge edge : node->connections) {
-			m_2dRenderer->drawLine(node->position.x, node->position.y, edge.target->position.x, edge.target->position.y, 3);
-		}
-	}
 	std::vector<EntityPtr> entitiesWithComponent = Entity::getEntitiesWithComponent(Component::sprite, m_entityList);
 	for (EntityPtr entity : entitiesWithComponent) {
 		entity->getComponent(Component::sprite)->draw(m_2dRenderer);
