@@ -1,6 +1,10 @@
 #include "stdafx.h"
 #include "SeparationForce.h"
 
+SeparationForce::SeparationForce()
+{
+}
+
 SeparationForce::~SeparationForce()
 {
 }

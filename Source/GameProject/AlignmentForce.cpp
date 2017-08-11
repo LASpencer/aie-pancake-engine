@@ -1,6 +1,10 @@
 #include "stdafx.h"
 #include "AlignmentForce.h"
 
+AlignmentForce::AlignmentForce()
+{
+}
+
 AlignmentForce::~AlignmentForce()
 {
 }

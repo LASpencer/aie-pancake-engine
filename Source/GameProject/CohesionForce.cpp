@@ -1,6 +1,10 @@
 #include "stdafx.h"
 #include "CohesionForce.h"
 
+CohesionForce::CohesionForce()
+{
+}
+
 CohesionForce::~CohesionForce()
 {
 }

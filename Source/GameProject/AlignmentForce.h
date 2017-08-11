@@ -2,7 +2,7 @@
 #include "SteeringForce.h"
 
 class AlignmentForce : public SteeringForce {
-
+public:
 	AlignmentForce();
 	virtual ~AlignmentForce();
 

@@ -2,7 +2,7 @@
 #include "SteeringForce.h"
 
 class SeparationForce : public SteeringForce {
-	
+public:
 	SeparationForce();
 	virtual ~SeparationForce();
 

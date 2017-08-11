@@ -306,6 +306,9 @@
     <ClCompile Include="Ray.cpp">
       <Filter>Source Files\Entities\Components\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="Flocking.cpp">
+      <Filter>Source Files\Entities\Behaviours</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameProjectApp.h">
