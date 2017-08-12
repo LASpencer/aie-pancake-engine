@@ -39,6 +39,14 @@ void Agent::update(float deltaTime)
 {
 	EntityPtr entity(m_entity);
 
+	// Clear forces
+	m_steeringForces.clear();
+	//TODO add default forces (stay in bounds, don't enter impassable terrain)
+	// Get additional forces and actions from behaviour
+	m_behaviour->update(this, deltaTime);
+
+	//TODO weighted truncated force combination
+
 	glm::vec2 displacement(0);
 
 	displacement += 0.5f * deltaTime * m_velocity;
@@ -89,13 +97,8 @@ glm::vec2 Agent::getPosition()
 	return glm::vec2(entity->getPosition()->getGlobalTransform()[2]);
 }
 
-void Agent::addBehaviour(BehaviourPtr behaviour)
+void Agent::setBehaviour(BehaviourPtr behaviour)
 {
-	m_behaviours.push_back(behaviour);
-}
-
-void Agent::setBehaviours(std::vector<BehaviourPtr> behaviours)
-{
-	m_behaviours = behaviours;
+	m_behaviour = behaviour;
 }
 

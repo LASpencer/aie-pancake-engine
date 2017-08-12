@@ -1,6 +1,8 @@
 #pragma once
 #include "SteeringForce.h"
 
+typedef std::shared_ptr<BoundsForce> BoundsForcePtr;
+
 class BoundsForce :
 	public SteeringForce
 {

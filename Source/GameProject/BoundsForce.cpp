@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "BoundsForce.h"
+#include "GameProjectApp.h"
 
-const float BoundsForce::def_max_x = 1280.f;
-const float BoundsForce::def_max_y = 720.f;
+const float BoundsForce::def_max_x = GameProjectApp::max_corner.x;
+const float BoundsForce::def_max_y = GameProjectApp::max_corner.y;
 
 BoundsForce::BoundsForce() : m_minX(0.f), m_minY(0.f), m_maxX(def_max_x), m_maxY(def_max_y)
 {

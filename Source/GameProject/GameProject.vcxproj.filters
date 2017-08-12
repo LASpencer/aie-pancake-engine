@@ -285,9 +285,6 @@
     <ClCompile Include="GuardExerciseBehaviour.cpp">
       <Filter>Source Files\Entities\Behaviours</Filter>
     </ClCompile>
-    <ClCompile Include="AvoidForce.cpp">
-      <Filter>Source Files\Entities\Behaviours\Steering</Filter>
-    </ClCompile>
     <ClCompile Include="Grid.cpp">
       <Filter>Source Files\Pathfinding</Filter>
     </ClCompile>
@@ -308,6 +305,9 @@
     </ClCompile>
     <ClCompile Include="Flocking.cpp">
       <Filter>Source Files\Entities\Behaviours</Filter>
+    </ClCompile>
+    <ClCompile Include="AvoidTerrainForce.cpp">
+      <Filter>Source Files\Entities\Behaviours\Steering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -527,9 +527,6 @@
     <ClInclude Include="Ray.h">
       <Filter>Header Files\Entities\Components\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="AvoidForce.h">
-      <Filter>Header Files\Entities\Behaviours\Steering</Filter>
-    </ClInclude>
     <ClInclude Include="Grid.h">
       <Filter>Header Files\Pathfinding</Filter>
     </ClInclude>
@@ -543,6 +540,9 @@
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
     <ClInclude Include="CohesionForce.h">
+      <Filter>Header Files\Entities\Behaviours\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="AvoidTerrainForce.h">
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
   </ItemGroup>

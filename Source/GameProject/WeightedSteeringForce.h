@@ -1,30 +1,30 @@
 #pragma once
 #include "SteeringForce.h"
 
-typedef std::pair<std::shared_ptr<SteeringForce>, float> WeightedForce;
+typedef std::pair<std::shared_ptr<SteeringForce>, float> ForceWeightPair;
 
 
 class WeightedSteeringForce : public SteeringForce
 {
 public:
 	WeightedSteeringForce();
-	WeightedSteeringForce(const std::vector<WeightedForce>& list);
+	WeightedSteeringForce(const std::vector<ForceWeightPair>& list);
 	//TODO copy, copy assign
 
 	virtual ~WeightedSteeringForce();
 
-	void setList(const std::vector<WeightedForce>& list);
+	void setList(const std::vector<ForceWeightPair>& list);
 
-	void addForce(WeightedForce force);
+	void addForce(ForceWeightPair force);
 
 	void addForce(std::shared_ptr<SteeringForce> force, float weight);
 
-	std::vector<WeightedForce>& getList();
+	std::vector<ForceWeightPair>& getList();
 
 	virtual glm::vec2 getForce(Agent* agent);
 
 	virtual void draw(Agent* agent, aie::Renderer2D* renderer);
 
 protected:
-	std::vector<WeightedForce> m_weightedList;
+	std::vector<ForceWeightPair> m_weightedList;
 };

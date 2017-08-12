@@ -1,10 +1,16 @@
 #pragma once
 #include "Component.h"
 #include "Behaviour.h"
+#include "SteeringForce.h"
 
 class Agent;
 typedef std::shared_ptr<Agent> AgentPtr;
 typedef std::weak_ptr<Agent> AgentWeakPtr;
+
+struct WeightedForce {
+	SteeringForcePtr force;
+	float weight;
+};
 
 class Agent 
 	: public Component {
@@ -44,13 +50,13 @@ public:
 
 	glm::vec2 getPosition();
 
-	virtual void addBehaviour(BehaviourPtr behaviour);
-
-	virtual void setBehaviours(std::vector<BehaviourPtr> behaviours);
+	virtual void setBehaviour(BehaviourPtr behaviour);
 
 protected:
-	std::vector<BehaviourPtr> m_behaviours;
+	BehaviourPtr m_behaviour;
+	std::vector<WeightedForce> m_steeringForces;
 	glm::vec2 m_velocity;
 	glm::vec2 m_force;
 	float m_maxVelocity, m_maxForce, m_time;
+	BoundsForcePtr m_stayInBounds;
 };

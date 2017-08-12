@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "AvoidForce.h"
+#include "AvoidTerrainForce.h"
 #include "Entity.h"
 #include "GameProjectApp.h"
 #include "Collider.h"

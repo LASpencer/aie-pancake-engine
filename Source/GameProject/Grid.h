@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "Renderer2D.h"
+#include "AABox.h"
 
 class Grid;
 class GridSquare;
@@ -40,6 +41,8 @@ public:
 
 	float getHScore();
 
+	std::shared_ptr<AABox> getCollider();
+
 	void draw(aie::Renderer2D* renderer);
 
 	void drawNodes(aie::Renderer2D* renderer);
@@ -47,6 +50,7 @@ public:
 private:
 	glm::vec2 m_position;
 	TileType m_type;
+	std::shared_ptr<AABox> m_collider;
 
 	float gScore;
 	float hScore;
@@ -54,6 +58,9 @@ private:
 	GridSquare* m_parent;
 
 	std::vector<GridEdge> m_connections;
+	std::vector<GridSquareWeakPtr> m_unreachableNeighbour;
+
+	void setPosition(glm::vec2 position);
 };
 
 class Grid {
@@ -67,6 +74,10 @@ public:
 	Grid();
 	
 	GridSquarePtr getSquare(glm::vec2 position);
+
+	std::vector<GridSquarePtr> getAdjacentSquares(glm::vec2 position);
+
+	std::vector<GridSquarePtr> getAdjacentSquares(GridSquarePtr square);
 
 	std::stack<glm::vec2> findPath(GridSquarePtr start, GridSquarePtr end, 
 		float(*heuristic)(GridSquare*, GridSquare*) = [](GridSquare* a, GridSquare* b) {return glm::length(a->getPosition() - b->getPosition()); });

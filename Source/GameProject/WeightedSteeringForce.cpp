@@ -6,7 +6,7 @@ WeightedSteeringForce::WeightedSteeringForce()
 {
 }
 
-WeightedSteeringForce::WeightedSteeringForce(const std::vector<WeightedForce>& list)
+WeightedSteeringForce::WeightedSteeringForce(const std::vector<ForceWeightPair>& list)
 {
 	m_weightedList = list;
 }
@@ -15,12 +15,12 @@ WeightedSteeringForce::~WeightedSteeringForce()
 {
 }
 
-void WeightedSteeringForce::setList(const std::vector<WeightedForce>& list)
+void WeightedSteeringForce::setList(const std::vector<ForceWeightPair>& list)
 {
 	m_weightedList = list;
 }
 
-void WeightedSteeringForce::addForce(WeightedForce force)
+void WeightedSteeringForce::addForce(ForceWeightPair force)
 {
 	m_weightedList.push_back(force);
 }
@@ -30,7 +30,7 @@ void WeightedSteeringForce::addForce(std::shared_ptr<SteeringForce> force, float
 	m_weightedList.push_back(std::make_pair(force, weight));
 }
 
-std::vector<WeightedForce>& WeightedSteeringForce::getList()
+std::vector<ForceWeightPair>& WeightedSteeringForce::getList()
 {
 	return m_weightedList;
 }
@@ -39,7 +39,7 @@ glm::vec2 WeightedSteeringForce::getForce(Agent * agent)
 {
 	float maxForce = agent->getMaxForce();
 	glm::vec2 totalForce(0);
-	for (WeightedForce force : m_weightedList) {
+	for (ForceWeightPair force : m_weightedList) {
 		totalForce += force.first->getForce(agent) * force.second;
 		if (glm::length(totalForce) > maxForce) {
 			utility::clamp(totalForce, maxForce);
@@ -51,7 +51,7 @@ glm::vec2 WeightedSteeringForce::getForce(Agent * agent)
 
 void WeightedSteeringForce::draw(Agent * agent, aie::Renderer2D * renderer)
 {
-	for (WeightedForce force : m_weightedList) {
+	for (ForceWeightPair force : m_weightedList) {
 		force.first->draw(agent, renderer);
 	}
 }

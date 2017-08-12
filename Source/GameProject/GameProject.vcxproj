@@ -103,7 +103,7 @@
     <ClCompile Include="AlignmentForce.cpp" />
     <ClCompile Include="ArrivalForce.cpp" />
     <ClCompile Include="AttackTarget.cpp" />
-    <ClCompile Include="AvoidForce.cpp" />
+    <ClCompile Include="AvoidTerrainForce.cpp" />
     <ClCompile Include="BoundsForce.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ChaseyStateMachine.cpp" />
@@ -174,7 +174,7 @@
     <ClInclude Include="AndCondition.h" />
     <ClInclude Include="ArrivalForce.h" />
     <ClInclude Include="AttackTarget.h" />
-    <ClInclude Include="AvoidForce.h" />
+    <ClInclude Include="AvoidTerrainForce.h" />
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="BinaryCondition.h" />
     <ClInclude Include="BoundsForce.h" />

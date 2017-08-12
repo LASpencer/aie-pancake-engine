@@ -26,11 +26,29 @@ Grid::Grid()
 	calculateEdges();
 }
 
+
 GridSquarePtr Grid::getSquare(glm::vec2 position)
 {
 	size_t x = std::min((size_t)(std::max(0.f, position.x - GameProjectApp::min_corner.x) * (1.f / square_size)), m_squares.size());
 	size_t y = std::min((size_t)(std::max(0.f, position.y - GameProjectApp::min_corner.y) * (1.f / square_size)), m_squares[x].size());
 	return m_squares[x][y];
+}
+
+std::vector<GridSquarePtr> Grid::getAdjacentSquares(glm::vec2 position)
+{
+	getAdjacentSquares(getSquare(position));
+}
+
+std::vector<GridSquarePtr> Grid::getAdjacentSquares(GridSquarePtr square)
+{
+	std::vector<GridSquarePtr> adjacentSquares;
+	for (GridSquareWeakPtr neigbour : square->m_unreachableNeighbour) {
+		adjacentSquares.push_back(GridSquarePtr(neigbour));
+	}
+	for (GridEdge edge : square->m_connections) {
+		adjacentSquares.push_back(GridSquarePtr(edge.target));
+	}
+	
 }
 
 std::stack<glm::vec2> Grid::findPath(GridSquarePtr start, GridSquarePtr end, float(*heuristic)(GridSquare *, GridSquare *))
@@ -139,14 +157,22 @@ void Grid::connectSquares(GridSquarePtr a, GridSquarePtr b)
 		a->m_connections.push_back({ GridSquareWeakPtr(b), totalCost });
 		b->m_connections.push_back({ GridSquareWeakPtr(a), totalCost });
 	}
+	else {
+		a->m_unreachableNeighbour.push_back(GridSquareWeakPtr(b));
+		b->m_unreachableNeighbour.push_back(GridSquareWeakPtr(a));
+	}
 }
 
 GridSquare::GridSquare() : m_position(glm::vec2(0)), m_type(open), gScore(0), fScore(0), hScore(0), m_parent(nullptr)
 {
+	glm::vec2 cornerExtent(Grid::square_size * 0.5f, Grid::square_size * 0.5f);
+	m_collider = std::make_shared<AABox>(m_position - cornerExtent, m_position + cornerExtent, BoxType::terrain);
 }
 
 GridSquare::GridSquare(glm::vec2 position, TileType type) : m_position(position), m_type(type), gScore(0), fScore(0), hScore(0), m_parent(nullptr)
 {
+	glm::vec2 cornerExtent(Grid::square_size * 0.5f, Grid::square_size * 0.5f);
+	m_collider = std::make_shared<AABox>(m_position - cornerExtent, m_position + cornerExtent, BoxType::terrain);
 }
 
 glm::vec2 GridSquare::getPosition()
@@ -192,6 +218,11 @@ float GridSquare::getHScore()
 	return hScore;
 }
 
+std::shared_ptr<AABox> GridSquare::getCollider()
+{
+	return m_collider;
+}
+
 void GridSquare::draw(aie::Renderer2D * renderer)
 {
 	//TODO based on type, draw sprite
@@ -204,4 +235,10 @@ void GridSquare::drawNodes(aie::Renderer2D * renderer)
 		GridSquarePtr target(edge.target);
 		renderer->drawLine(m_position.x, m_position.y, target->m_position.x, target->m_position.y, 2.f);
 	}
+}
+
+void GridSquare::setPosition(glm::vec2 position)
+{
+	m_position = position;
+	//TODO update position of collider
 }

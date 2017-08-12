@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "Agent.h"
 
+
 glm::vec2 SteeringForce::seekPoint(Agent * agent, glm::vec2 target)
 {
 	EntityPtr entity(agent->getEntity());

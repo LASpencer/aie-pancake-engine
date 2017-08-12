@@ -14,7 +14,8 @@ enum BoxType {
 	none,
 	body,		// Used for physical collisions
 	attack,		// Used for attack hitboxes
-	trigger		// Triggers some event when collided with
+	trigger,	// Triggers some event when collided with
+	terrain		// Used for grid squares
 };
 
 // A hitbox used for collision testing and resolution
