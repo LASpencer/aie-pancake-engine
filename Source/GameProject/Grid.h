@@ -35,6 +35,8 @@ public:
 
 	float getMoveCost();
 
+	float getSpeedFactor();
+
 	float getGScore();
 
 	float getFScore();
@@ -79,8 +81,11 @@ public:
 
 	std::vector<GridSquarePtr> getAdjacentSquares(GridSquarePtr square);
 
+	//TODO rewrite so it returns stack of gridsquareptrs
 	std::stack<glm::vec2> findPath(GridSquarePtr start, GridSquarePtr end, 
 		float(*heuristic)(GridSquare*, GridSquare*) = [](GridSquare* a, GridSquare* b) {return glm::length(a->getPosition() - b->getPosition()); });
+
+	GridSquarePtr getNearestOpenSquare(glm::vec2 position);
 
 	void draw(aie::Renderer2D* renderer);
 

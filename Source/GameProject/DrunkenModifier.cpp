@@ -13,7 +13,7 @@ DrunkenModifier::~DrunkenModifier()
 
 BehaviourResult DrunkenModifier::update(Agent* agent, float deltaTime)
 {
-	m_time += deltaTime;
+	/*m_time += deltaTime;
 
 	float magnitude = agent->getMaxForce() * 0.5f;
 
@@ -21,6 +21,6 @@ BehaviourResult DrunkenModifier::update(Agent* agent, float deltaTime)
 	force *= magnitude;
 
 	agent->addForce(force);
-
+*/
 	return success;
 }

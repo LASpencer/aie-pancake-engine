@@ -30,14 +30,15 @@ public:
 	EntityFactory* getEntityFactory();
 	SceneObjectPtr getSceneRoot();
 	std::vector<EntityPtr>& getEntityList();
+	Grid* getGrid();
 
 protected:
 	aie::Renderer2D*	m_2dRenderer;
-	ResourceManager*	m_resourceManager;
+	std::unique_ptr<ResourceManager>	m_resourceManager;
 	std::vector<EntityPtr>	m_entityList;	// Currently active entities in game
-	EntityFactory*		m_entityFactory;
+	std::unique_ptr<EntityFactory>		m_entityFactory;
 	SceneObjectPtr		m_sceneRoot;		// Root node of scene graph
-	Grid			m_mapGraph;
+	std::unique_ptr<Grid>				m_mapGraph;
 
 	bool m_showFPS;							// When true, displays fps in corner of screen
 };

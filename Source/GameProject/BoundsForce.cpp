@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "BoundsForce.h"
 #include "GameProjectApp.h"
+#include "Agent.h"
 
 const float BoundsForce::def_max_x = GameProjectApp::max_corner.x;
 const float BoundsForce::def_max_y = GameProjectApp::max_corner.y;

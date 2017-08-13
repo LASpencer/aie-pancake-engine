@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "AlignmentForce.h"
+#include "Agent.h"
 
 AlignmentForce::AlignmentForce()
 {

@@ -2,11 +2,11 @@
 #include "Wander.h"
 #include "imgui.h"
 
-Wander::Wander() : m_force()
+Wander::Wander() : m_force(std::make_shared<WanderForce>())
 {
 }
 
-Wander::Wander(float radius, float jitter, float distance) : m_force(radius, jitter, distance)
+Wander::Wander(float radius, float jitter, float distance) : m_force(std::make_shared<WanderForce>(radius, jitter, distance))
 {
 }
 
@@ -21,7 +21,7 @@ Behaviour * Wander::clone()
 
 BehaviourResult Wander::update(Agent * entity, float deltaTime)
 {
-	entity->addForce(m_force.getForce(entity));
+	entity->addForce(m_force, 1.f);
 	
 	ImGui::Text("Wander behaviour");
 
@@ -30,15 +30,15 @@ BehaviourResult Wander::update(Agent * entity, float deltaTime)
 
 void Wander::setRadius(float radius)
 {
-	m_force.setRadius(radius);
+	m_force->setRadius(radius);
 }
 
 void Wander::setJitter(float jitter)
 {
-	m_force.setJitter(jitter);
+	m_force->setJitter(jitter);
 }
 
 void Wander::setDistance(float distance)
 {
-	m_force.setDistance(distance);
+	m_force->setDistance(distance);
 }

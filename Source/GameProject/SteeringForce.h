@@ -1,6 +1,10 @@
 #pragma once
 #include "stdafx.h"
-#include "Agent.h"
+#include "Renderer2D.h"
+
+class Agent;
+typedef std::shared_ptr<Agent> AgentPtr;
+typedef std::weak_ptr<Agent> AgentWeakPtr;
 
 class SteeringForce;
 

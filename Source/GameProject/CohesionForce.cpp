@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CohesionForce.h"
+#include "Agent.h"
 
 CohesionForce::CohesionForce()
 {

@@ -47,7 +47,7 @@ namespace Catch {
 #endif
     }
 
-    void Timer::start() {
+	void Timer::start() {
         m_ticks = getCurrentTicks();
     }
     unsigned int Timer::getElapsedMicroseconds() const {

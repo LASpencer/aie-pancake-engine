@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "WeightedSteeringForce.h"
 #include "utility.h"
+#include "Agent.h"
 
 WeightedSteeringForce::WeightedSteeringForce()
 {

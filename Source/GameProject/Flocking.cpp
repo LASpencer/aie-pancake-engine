@@ -47,10 +47,10 @@ BehaviourResult Flocking::update(Agent * agent, float deltaTime)
 		m_alignment.setNeighbours(neighbours);
 		m_cohesion.setNeighbours(neighbours);
 		m_separation.setNeighbours(neighbours);
-		glm::vec2 force =	m_alignmentWeight * m_alignment.getForce(agent) +
-							m_cohesionWeight * m_cohesion.getForce(agent) +
-							m_separationWeight * m_separation.getForce(agent);
-		agent->addForce(force);
+		//TODO make these shared_ptrs instead
+		agent->addForce(m_alignment, m_alignmentWeight);
+		agent->addForce(m_cohesion, m_cohesionWeight);
+		agent->addForce(m_separation, m_separationWeight);
 	}
 	return BehaviourResult();
 }

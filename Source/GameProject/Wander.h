@@ -20,5 +20,5 @@ public:
 	void setDistance(float distance);
 
 protected:
-	WanderForce m_force;
+	std::shared_ptr<WanderForce> m_force;
 };

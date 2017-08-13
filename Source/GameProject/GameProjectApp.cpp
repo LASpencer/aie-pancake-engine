@@ -16,7 +16,7 @@
 #include "BoundsForce.h"
 #include "PathfindingBehaviour.h"
 #include "GuardExerciseBehaviour.h"
-#include "AvoidForce.h"
+#include "AvoidTerrainForce.h"
 #include "Flocking.h"
 
 #include "imgui.h"
@@ -36,16 +36,15 @@ bool GameProjectApp::startup() {
 
 	m_showFPS = true;
 	m_2dRenderer = new aie::Renderer2D();
-	m_resourceManager = new ResourceManager();
-	m_entityFactory = new EntityFactory(this);
+	m_resourceManager = std::make_unique<ResourceManager>();
+	m_entityFactory = std::make_unique<EntityFactory>(this);
 	m_sceneRoot = std::make_shared<SceneObject>();
 
-	m_mapGraph = Grid();
+	m_mapGraph = std::make_unique<Grid>();
 
 	EntityPtr player = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(500,500)));
 	AgentPtr playerAgent = std::dynamic_pointer_cast<Agent>(player->getComponent(Component::agent));
-	playerAgent->addBehaviour(std::make_shared<SteeringBehaviour>(std::make_shared<AvoidForce>()));
-	playerAgent->addBehaviour(std::make_shared<KeyboardController>());
+	playerAgent->setBehaviour(std::make_shared<KeyboardController>());
 
 
 	//pathfinding
@@ -70,10 +69,9 @@ bool GameProjectApp::startup() {
 		EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(100 + 30*i, 300 + 20*i)));
 		AgentPtr wanderAgent = std::dynamic_pointer_cast<Agent>(wanderer->getComponent(Component::agent));
 		//wanderAgent->setMaxVelocity(50.f);
-		wanderAgent->addBehaviour(std::make_shared<SteeringBehaviour>(std::make_shared<BoundsForce>()));
 		auto isCar = [](Agent* agent) {	EntityPtr entity(agent->getEntity());
 										return (bool)(entity->getTagMask() & Entity::ETag::car); };
-		wanderAgent->addBehaviour(std::make_shared<Flocking>(isCar));
+		wanderAgent->setBehaviour(std::make_shared<Flocking>(isCar));
 		//std::shared_ptr<WeightedSteeringForce> wanderInBounds = std::make_shared<WeightedSteeringForce>();
 		//wanderInBounds->addForce(std::make_shared<BoundsForce>(), 1.f);
 		////wanderInBounds->addForce(std::make_shared<AvoidForce>(), 0.8f);
@@ -90,8 +88,6 @@ void GameProjectApp::shutdown() {
 	// Release any surviving shared pointers
 	m_entityList.clear();
 	m_sceneRoot.reset();
-	delete m_entityFactory;
-	delete m_resourceManager;
 	delete m_2dRenderer;
 }
 
@@ -131,7 +127,7 @@ void GameProjectApp::draw() {
 	m_2dRenderer->setUVRect(0, 0, 1, 1);
 
 	// Draw game
-	m_mapGraph.draw(m_2dRenderer);
+	m_mapGraph->draw(m_2dRenderer);
 	drawEntities();
 
 	//fps info
@@ -151,6 +147,10 @@ void GameProjectApp::updateEntities(float deltaTime)
 	std::vector<EntityPtr> entitiesWithComponent = Entity::getEntitiesWithComponent(Component::agent, m_entityList);
 	for (EntityPtr entity : entitiesWithComponent) {
 		entity->getComponent(Component::agent)->update(deltaTime);
+	}
+	//Move the agents
+	for (EntityPtr entity : entitiesWithComponent) {
+		std::dynamic_pointer_cast<Agent>(entity->getComponent(Component::agent))->moveAgent(deltaTime);
 	}
 	// Update colliders and test collision
 	entitiesWithComponent = Entity::getEntitiesWithComponent(Component::collider, m_entityList);
@@ -183,12 +183,12 @@ void GameProjectApp::drawEntities()
 
 ResourceManager * GameProjectApp::getResourceManager()
 {
-	return m_resourceManager;
+	return m_resourceManager.get();
 }
 
 EntityFactory * GameProjectApp::getEntityFactory()
 {
-	return m_entityFactory;
+	return m_entityFactory.get();
 }
 
 SceneObjectPtr GameProjectApp::getSceneRoot()
@@ -199,5 +199,10 @@ SceneObjectPtr GameProjectApp::getSceneRoot()
 std::vector<EntityPtr>& GameProjectApp::getEntityList()
 {
 	return m_entityList;
+}
+
+Grid* GameProjectApp::getGrid()
+{
+	return m_mapGraph.get();
 }
 

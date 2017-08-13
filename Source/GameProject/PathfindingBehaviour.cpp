@@ -6,7 +6,8 @@
 PathfindingBehaviour::PathfindingBehaviour(MapGraph * map, MapNode * startingNode) : m_map(map), m_currentNode(startingNode)
 {
 	m_target = std::make_shared<PointTarget>(startingNode->position);
-	m_arrive.setTarget(m_target);
+	m_arrive = std::make_shared<ArrivalForce>();
+	m_arrive->setTarget(m_target);
 }
 
 PathfindingBehaviour::PathfindingBehaviour(const PathfindingBehaviour & other) : m_path(other.m_path), m_map(other.m_map), m_currentNode(other.m_currentNode), m_arrive(other.m_arrive)
@@ -41,7 +42,7 @@ BehaviourResult PathfindingBehaviour::update(Agent * agent, float deltaTime)
 		m_target->setTarget(m_path.top());
 		m_path.pop();
 	}
-	agent->addForce(m_arrive.getForce(agent));
+	agent->addForce(m_arrive, 1.f);
 
 	return success; //TODO return false if pathfinding fails?
 }

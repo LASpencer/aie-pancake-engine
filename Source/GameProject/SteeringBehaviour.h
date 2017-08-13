@@ -15,7 +15,7 @@ public:
 
 	virtual Behaviour* clone();
 
-	virtual BehaviourResult update(Agent* entity, float deltaTime);
+	virtual BehaviourResult update(Agent* agent, float deltaTime);
 
 	virtual void draw(Agent* agent, aie::Renderer2D* renderer);
 

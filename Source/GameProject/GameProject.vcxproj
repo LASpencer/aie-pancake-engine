@@ -127,6 +127,7 @@
     <ClCompile Include="FSMAgent.cpp" />
     <ClCompile Include="FSMBehaviour.cpp" />
     <ClCompile Include="GameProjectApp.cpp" />
+    <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="GuardExerciseBehaviour.cpp" />
     <ClCompile Include="GuardStateMachine.cpp" />
@@ -203,6 +204,7 @@
     <ClInclude Include="FSMAgent.h" />
     <ClInclude Include="FSMBehaviour.h" />
     <ClInclude Include="GameProjectApp.h" />
+    <ClInclude Include="GameTimer.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="GuardExerciseBehaviour.h" />
     <ClInclude Include="GuardStateMachine.h" />

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "SeparationForce.h"
+#include "Agent.h"
 
 SeparationForce::SeparationForce()
 {

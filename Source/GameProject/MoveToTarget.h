@@ -11,11 +11,11 @@ public:
 
 	virtual Behaviour* clone();
 
-	virtual BehaviourResult update(Agent* entity, float deltaTime);
+	virtual BehaviourResult update(Agent* agent, float deltaTime);
 
 	void setTarget(TargetPtr target);
 
 protected:
-	PursueForce m_force;
+	std::shared_ptr<PursueForce> m_force;
 
 };

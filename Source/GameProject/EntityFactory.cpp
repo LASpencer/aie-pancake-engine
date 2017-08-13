@@ -63,8 +63,8 @@ EntityPtr EntityFactory::createShip(glm::mat3 position, SceneObjectPtr parent)
 	// Add sprite
 	ship->addComponent(std::make_shared<Sprite>(m_app->getResourceManager()->getTexture(filepath::ship)));
 	// Add agent
-	std::shared_ptr<SimpleAgent> agent = std::make_shared<SimpleAgent>();
-	agent->addBehaviour(std::make_shared<KeyboardController>());
+	std::shared_ptr<Agent> agent = std::make_shared<Agent>();
+	agent->setBehaviour(std::make_shared<KeyboardController>());
 	ship->addComponent(agent);
 	
 	return ship;
@@ -78,7 +78,7 @@ EntityPtr EntityFactory::createCar(glm::mat3 position, SceneObjectPtr parent)
 	// Add sprite
 	car->addComponent(std::make_shared<Sprite>(m_app->getResourceManager()->getTexture(filepath::car)));
 	// Add agent
-	car->addComponent(std::make_shared<SimpleAgent>(100, 200));
+	car->addComponent(std::make_shared<Agent>(100, 200));
 	// Add collider
 	/*ColliderPtr collider = std::make_shared<Collider>();
 	std::shared_ptr<OBox> box = std::make_shared<OBox>(glm::vec2(18, 0), glm::vec2(0, 21), glm::vec2(0,0), BoxType::body);

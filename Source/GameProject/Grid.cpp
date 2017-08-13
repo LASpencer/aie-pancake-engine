@@ -36,7 +36,7 @@ GridSquarePtr Grid::getSquare(glm::vec2 position)
 
 std::vector<GridSquarePtr> Grid::getAdjacentSquares(glm::vec2 position)
 {
-	getAdjacentSquares(getSquare(position));
+	return getAdjacentSquares(getSquare(position));
 }
 
 std::vector<GridSquarePtr> Grid::getAdjacentSquares(GridSquarePtr square)
@@ -48,7 +48,7 @@ std::vector<GridSquarePtr> Grid::getAdjacentSquares(GridSquarePtr square)
 	for (GridEdge edge : square->m_connections) {
 		adjacentSquares.push_back(GridSquarePtr(edge.target));
 	}
-	
+	return adjacentSquares;
 }
 
 std::stack<glm::vec2> Grid::findPath(GridSquarePtr start, GridSquarePtr end, float(*heuristic)(GridSquare *, GridSquare *))
@@ -104,6 +104,49 @@ std::stack<glm::vec2> Grid::findPath(GridSquarePtr start, GridSquarePtr end, flo
 		}
 	}
 	return path;
+}
+
+GridSquarePtr Grid::getNearestOpenSquare(glm::vec2 position)
+{
+	typedef std::pair<GridSquarePtr, float> SquarePriority;
+	GridSquarePtr square = getSquare(position);
+	if (square->getType() != impassable) {
+		return square;
+	}
+	else {
+		auto fComp = [](GridSquarePtr lhs, GridSquarePtr rhs) {return lhs->getFScore() > rhs->getFScore(); };
+		std::priority_queue<GridSquarePtr, std::vector<GridSquarePtr>, decltype(fComp)> searchQueue(fComp);
+		std::set<GridSquarePtr> exploredSquares;
+		glm::vec2 displacement = square->getPosition() - position;
+		for (auto col : m_squares) {
+			for (GridSquarePtr square : col) {
+				square->gScore = INFINITY;
+				square->fScore = INFINITY;
+				square->hScore = INFINITY;
+				square->m_parent = nullptr;
+			}
+		}
+		square->fScore = glm::dot(displacement, displacement);
+		exploredSquares.insert(square);
+		
+		while (!searchQueue.empty()) {
+			GridSquarePtr current = searchQueue.top();
+			searchQueue.pop();
+			if (current->getType() != impassable) {
+				return current;
+			}
+			else {
+				for (GridSquarePtr neighbour : getAdjacentSquares(current)) {
+					if (exploredSquares.count(neighbour) == 0) {
+						exploredSquares.insert(neighbour);
+						displacement = neighbour->getPosition() - position;
+						neighbour->fScore = glm::dot(displacement, displacement);
+						searchQueue.push(neighbour);
+					}
+				}
+			}
+		}
+	}
 }
 
 void Grid::draw(aie::Renderer2D * renderer)
@@ -199,6 +242,24 @@ float GridSquare::getMoveCost()
 		break;
 	default:
 		return INFINITY;
+		break;
+	}
+}
+
+float GridSquare::getSpeedFactor()
+{
+	switch (m_type) {
+	case(open):
+		return 1.f;
+		break;
+	case(difficult):
+		return Grid::difficult_speed_factor;
+		break;
+	case(impassable):
+		return 1.f;
+		break;
+	default:
+		return 1.f;
 		break;
 	}
 }

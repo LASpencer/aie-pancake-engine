@@ -3,11 +3,11 @@
 #include "imgui.h"
 
 
-MoveToTarget::MoveToTarget() : m_force()
+MoveToTarget::MoveToTarget() : m_force(std::make_shared<PursueForce>())
 {
 }
 
-MoveToTarget::MoveToTarget(TargetPtr target) : m_force(target)
+MoveToTarget::MoveToTarget(TargetPtr target) : m_force(std::make_shared<PursueForce>(target))
 {
 }
 
@@ -20,9 +20,9 @@ Behaviour * MoveToTarget::clone()
 	return new MoveToTarget(*this);
 }
 
-BehaviourResult MoveToTarget::update(Agent * entity, float deltaTime)
+BehaviourResult MoveToTarget::update(Agent * agent, float deltaTime)
 {
-	entity->addForce(m_force.getForce(entity));
+	agent->addForce(m_force, 1.f);
 
 	ImGui::Text("Move To Target behaviour");
 
@@ -31,5 +31,5 @@ BehaviourResult MoveToTarget::update(Agent * entity, float deltaTime)
 
 void MoveToTarget::setTarget(TargetPtr target)
 {
-	m_force.setTarget(target);
+	m_force->setTarget(target);
 }

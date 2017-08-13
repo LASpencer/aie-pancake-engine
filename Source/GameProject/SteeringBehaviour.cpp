@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "SteeringBehaviour.h"
+#include "Agent.h"
 
 SteeringBehaviour::SteeringBehaviour()
 {
@@ -18,9 +19,9 @@ Behaviour * SteeringBehaviour::clone()
 	return new SteeringBehaviour(*this);
 }
 
-BehaviourResult SteeringBehaviour::update(Agent * entity, float deltaTime)
+BehaviourResult SteeringBehaviour::update(Agent * agent, float deltaTime)
 {
-	entity->addForce(m_force->getForce(entity));
+	agent->addForce(m_force, 1.f);
 
 	return success;
 }

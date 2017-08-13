@@ -16,6 +16,6 @@ public:
 	void setTarget(TargetPtr target);
 
 protected:
-	PursueForce m_force;
+	PursueForce m_force; //TODO make shared_ptr
 
 };

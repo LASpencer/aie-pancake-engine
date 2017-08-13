@@ -19,7 +19,7 @@ Behaviour * KeyboardController::clone()
 
 BehaviourResult KeyboardController::update(Agent* agent, float deltaTime)
 {
-	// HACK
+	// HACK move to keyboardController force instead
 	aie::Input* input = aie::Input::getInstance();
 
 	float magnitude = agent->getMaxForce();

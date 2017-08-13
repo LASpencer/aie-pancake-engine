@@ -16,5 +16,5 @@ TimerCondition::~TimerCondition()
 
 bool TimerCondition::test(Agent * agent)
 {
-	return agent->getTime() > m_time;
+	return agent->getTimer(Agent::idle).getTime() > m_time;
 }

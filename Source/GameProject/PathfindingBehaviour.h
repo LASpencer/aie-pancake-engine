@@ -23,5 +23,5 @@ private:
 	MapNode* m_currentNode;
 	PointTargetPtr m_target;
 
-	ArrivalForce m_arrive;
+	std::shared_ptr<ArrivalForce> m_arrive;
 };
