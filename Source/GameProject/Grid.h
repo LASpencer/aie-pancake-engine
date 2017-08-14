@@ -57,7 +57,7 @@ private:
 	float gScore;
 	float hScore;
 	float fScore;
-	GridSquare* m_parent;
+	GridSquareWeakPtr m_parent;
 
 	std::vector<GridEdge> m_connections;
 	std::vector<GridSquareWeakPtr> m_unreachableNeighbour;
@@ -84,8 +84,8 @@ public:
 	std::vector<GridSquarePtr> getAdjacentSquares(GridSquarePtr square);
 
 	//TODO rewrite so it returns stack of gridsquareptrs
-	std::stack<glm::vec2> findPath(GridSquarePtr start, GridSquarePtr end, 
-		float(*heuristic)(GridSquare*, GridSquare*) = [](GridSquare* a, GridSquare* b) {return glm::length(a->getPosition() - b->getPosition()); });
+	std::stack<GridSquarePtr> findPath(GridSquarePtr start, GridSquarePtr end, 
+		float(*heuristic)(GridSquarePtr, GridSquarePtr) = [](GridSquarePtr a, GridSquarePtr b) {return glm::length(a->getPosition() - b->getPosition()); });
 
 	GridSquarePtr getNearestOpenSquare(glm::vec2 position);
 
@@ -96,5 +96,5 @@ private:
 
 	void calculateEdges();
 
-	void connectSquares(GridSquarePtr a, GridSquarePtr b);
+	void connectSquares(GridSquarePtr a, GridSquarePtr b, bool reachable = true);
 };

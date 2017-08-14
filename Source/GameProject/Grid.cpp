@@ -66,44 +66,45 @@ std::vector<GridSquarePtr> Grid::getAdjacentSquares(GridSquarePtr square)
 	return adjacentSquares;
 }
 
-std::stack<glm::vec2> Grid::findPath(GridSquarePtr start, GridSquarePtr end, float(*heuristic)(GridSquare *, GridSquare *))
+std::stack<GridSquarePtr> Grid::findPath(GridSquarePtr start, GridSquarePtr end, float(*heuristic)(GridSquarePtr, GridSquarePtr))
 {
-	GridSquare* currentSquare;
-	auto fComp = [](GridSquare* lhs, GridSquare* rhs) {return lhs->getFScore() > rhs->getFScore(); };
-	std::priority_queue<GridSquare*, std::vector<GridSquare*>, decltype(fComp)> openNodes(fComp);
+	GridSquarePtr currentSquare;
+	auto fComp = [](GridSquarePtr lhs, GridSquarePtr rhs) {return lhs->getFScore() > rhs->getFScore(); };
+	std::priority_queue<GridSquarePtr, std::vector<GridSquarePtr>, decltype(fComp)> openNodes(fComp);
 	std::set<GridSquare*> closedNodes;
-	std::stack<glm::vec2> path;
+	std::stack<GridSquarePtr> path;
 
 	for (auto col : m_squares) {
 		for (GridSquarePtr square : col) {
 			square->gScore = INFINITY;
 			square->fScore = INFINITY;
 			square->hScore = INFINITY;
-			square->m_parent = nullptr;
+			square->m_parent.reset();
 		}
 	}
-	openNodes.push(start.get());
+	openNodes.push(start);
 	start->gScore = 0;
-	start->fScore = heuristic(start.get(), end.get());
+	start->fScore = heuristic(start, end);
 
 	while (!openNodes.empty()) {
 		currentSquare = openNodes.top();
 		openNodes.pop();
-		closedNodes.insert(currentSquare);
-		if (currentSquare = end.get()) {
+		closedNodes.insert(currentSquare.get());
+		if (currentSquare == end) {
 			break;
 		}
 		for (GridEdge edge : currentSquare->m_connections) {
-			GridSquare* targetSquare = edge.target.lock().get();
-			if (closedNodes.count(targetSquare) == 0)
+			GridSquarePtr targetSquare = edge.target.lock();
+			if (closedNodes.count(targetSquare.get()) == 0)
 			{
-				bool isNotInQueue = targetSquare->m_parent == nullptr;
-				if (targetSquare->hScore == INFINITY) {
-					targetSquare->hScore = heuristic(targetSquare, end.get());
-				}
+				bool isNotInQueue = targetSquare->m_parent.expired();
 				float cost = currentSquare->gScore + edge.cost;
 				if (cost < targetSquare->gScore) {
 					targetSquare->gScore = cost;
+					targetSquare->m_parent = currentSquare;
+				}
+				if (targetSquare->hScore == INFINITY) {
+					targetSquare->hScore = heuristic(targetSquare, end);
 					targetSquare->fScore = targetSquare->gScore + targetSquare->hScore;
 				}
 				if (isNotInQueue) {
@@ -112,10 +113,10 @@ std::stack<glm::vec2> Grid::findPath(GridSquarePtr start, GridSquarePtr end, flo
 			}
 		}
 	}
-	if (currentSquare == end.get()) {
-		while (currentSquare != nullptr) {
-			path.push(currentSquare->m_position);
-			currentSquare = currentSquare->m_parent;
+	if (currentSquare == end) {
+		while ((bool)currentSquare) {
+			path.push(currentSquare);
+			currentSquare = currentSquare->m_parent.lock();
 		}
 	}
 	return path;
@@ -138,7 +139,7 @@ GridSquarePtr Grid::getNearestOpenSquare(glm::vec2 position)
 				square->gScore = INFINITY;
 				square->fScore = INFINITY;
 				square->hScore = INFINITY;
-				square->m_parent = nullptr;
+				square->m_parent.reset();
 			}
 		}
 		square->fScore = glm::dot(displacement, displacement);
@@ -198,19 +199,21 @@ void Grid::calculateEdges()
 				connectSquares(m_squares[i][j], m_squares[i + 1][j]);
 				// Connect diagonally
 				if (!firstSquare) {
-					connectSquares(m_squares[i][j], m_squares[i + 1][j - 1]);
+					bool reachable = (m_squares[i + 1][j]->m_type != impassable && m_squares[i][j - 1]->m_type != impassable);
+					connectSquares(m_squares[i][j], m_squares[i + 1][j - 1], reachable);
 				}
 				if (!lastSquare) {
-					connectSquares(m_squares[i][j], m_squares[i + 1][j+1]);
+					bool reachable = (m_squares[i + 1][j]->m_type != impassable && m_squares[i][j + 1]->m_type != impassable);
+					connectSquares(m_squares[i][j], m_squares[i + 1][j + 1], reachable);
 				}
 			}
 		}
 	}
 }
 
-void Grid::connectSquares(GridSquarePtr a, GridSquarePtr b)
+void Grid::connectSquares(GridSquarePtr a, GridSquarePtr b, bool reachable)
 {
-	if (a->m_type != impassable && b->m_type != impassable) {
+	if (reachable && a->m_type != impassable && b->m_type != impassable) {
 		float moveCost = 0.5f * (a->getMoveCost() + b->getMoveCost());
 		float totalCost = moveCost * glm::length(a->m_position - b->m_position);
 		a->m_connections.push_back({ GridSquareWeakPtr(b), totalCost });
@@ -222,13 +225,13 @@ void Grid::connectSquares(GridSquarePtr a, GridSquarePtr b)
 	}
 }
 
-GridSquare::GridSquare() : m_position(glm::vec2(0)), m_type(open), gScore(0), fScore(0), hScore(0), m_parent(nullptr)
+GridSquare::GridSquare() : m_position(glm::vec2(0)), m_type(open), gScore(0), fScore(0), hScore(0), m_parent()
 {
 	glm::vec2 cornerExtent(Grid::square_size * 0.5f, Grid::square_size * 0.5f);
 	m_collider = std::make_shared<AABox>(m_position - cornerExtent, m_position + cornerExtent, BoxType::terrain);
 }
 
-GridSquare::GridSquare(glm::vec2 position, TileType type) : m_position(position), m_type(type), gScore(0), fScore(0), hScore(0), m_parent(nullptr)
+GridSquare::GridSquare(glm::vec2 position, TileType type) : m_position(position), m_type(type), gScore(0), fScore(0), hScore(0), m_parent()
 {
 	glm::vec2 cornerExtent(Grid::square_size * 0.5f, Grid::square_size * 0.5f);
 	m_collider = std::make_shared<AABox>(m_position - cornerExtent, m_position + cornerExtent, BoxType::terrain);

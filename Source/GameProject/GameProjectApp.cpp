@@ -115,6 +115,21 @@ void GameProjectApp::update(float deltaTime) {
 		quit();
 	}
 
+	//HACK for testing pathfinding
+	if (input->wasKeyPressed(aie::INPUT_KEY_R)) {
+		m_startPos.reset();
+		m_path = std::stack<GridSquarePtr>();
+	}
+	if (input->wasMouseButtonPressed(aie::INPUT_MOUSE_BUTTON_LEFT)) {
+		GridSquarePtr clickedSquare = m_mapGraph->getSquare(glm::vec2(input->getMouseX(), input->getMouseY()));
+		if (m_startPos) {
+			m_path = m_mapGraph->findPath(m_startPos, clickedSquare);
+		} else {
+			m_startPos = clickedSquare;
+		}
+	}
+	//
+
 	updateEntities(deltaTime);
 
 	//HACK
@@ -139,6 +154,24 @@ void GameProjectApp::draw() {
 	// Draw game
 	m_mapGraph->draw(m_2dRenderer);
 	drawEntities();
+
+	if (m_startPos) {
+		m_2dRenderer->setRenderColour(0x8000ffff);
+		glm::vec2 position = m_startPos->getPosition();
+		m_2dRenderer->drawCircle(position.x, position.y, 10.f);
+		if (!m_path.empty()) {
+			m_2dRenderer->setRenderColour(0x0000ffff);
+			glm::vec2 previous = position;
+			std::stack<GridSquarePtr> pathCopy = m_path;
+			while (!pathCopy.empty()) {
+				GridSquarePtr nextSquare = pathCopy.top();
+				pathCopy.pop();
+				glm::vec2 current = nextSquare->getPosition();
+				m_2dRenderer->drawLine(previous.x, previous.y, current.x, current.y, 5.f);
+				previous = current;
+			}
+		}
+	}
 
 	//fps info
 	if (m_showFPS) {

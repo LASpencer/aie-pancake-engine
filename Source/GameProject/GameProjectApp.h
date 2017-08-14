@@ -40,5 +40,9 @@ protected:
 	SceneObjectPtr		m_sceneRoot;		// Root node of scene graph
 	std::unique_ptr<Grid>				m_mapGraph;
 
+	//HACK for testing pathfinding
+	GridSquarePtr m_startPos;
+	std::stack<GridSquarePtr> m_path;
+
 	bool m_showFPS;							// When true, displays fps in corner of screen
 };
