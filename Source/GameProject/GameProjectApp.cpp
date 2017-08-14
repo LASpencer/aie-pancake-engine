@@ -40,7 +40,34 @@ bool GameProjectApp::startup() {
 	m_entityFactory = std::make_unique<EntityFactory>(this);
 	m_sceneRoot = std::make_shared<SceneObject>();
 
-	m_mapGraph = std::make_unique<Grid>();
+	std::vector<std::vector<int>> tileIDs =
+	{ {0,0,0,0,0,0,0,0,0},
+	{ 0,0,0,0,0,0,0,0,0 },
+	{ 2,2,2,1,1,1,2,2,2 },
+	{ 0,0,0,0,1,2,0,0,0 },
+	{ 0,0,0,1,2,0,0,0,0 },
+	{ 0,0,0,1,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0 } };
+
+	std::vector<std::vector<TileType>> tiles;
+	for (std::vector<int> column : tileIDs) {
+		std::vector<TileType> tileCol;
+		for (int id : column) {
+			tileCol.push_back(TileType(id));
+		}
+		tiles.push_back(tileCol);
+	}
+
+	m_mapGraph = std::make_unique<Grid>(tiles);
 
 	EntityPtr player = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(500,500)));
 	AgentPtr playerAgent = std::dynamic_pointer_cast<Agent>(player->getComponent(Component::agent));
@@ -51,18 +78,6 @@ bool GameProjectApp::startup() {
 	/*playerAgent->addBehaviour(std::make_shared<PathfindingBehaviour>(&m_mapGraph, m_mapGraph.m_graph[0]));
 	playerAgent->setMaxVelocity(50.f);*/
 
-	//EntityPtr car = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(800, 300)));
-	//AgentPtr carAgent = std::dynamic_pointer_cast<Agent>(car->getComponent(Component::agent));
-	//carAgent->setMaxVelocity(150.f);
-	//carAgent->addBehaviour(std::make_shared<SteeringBehaviour>(std::make_shared<AvoidForce>()));
-	////HACK
-	//BehaviourPtr stayinBounds = std::make_shared<SteeringBehaviour>(std::make_shared<BoundsForce>());
-	//carAgent->addBehaviour(stayinBounds);
-
-	//// guard car uses decision tree
-	//
-	//carAgent->addBehaviour(std::make_shared<GuardExerciseBehaviour>(std::make_shared<EntityTarget>(player)));
-
 	// Spawn a bunch of wandering cars
 
 	//for (int i = 0; i < 20; ++i) {
@@ -72,11 +87,6 @@ bool GameProjectApp::startup() {
 	//	auto isCar = [](Agent* agent) {	EntityPtr entity(agent->getEntity());
 	//									return (bool)(entity->getTagMask() & Entity::ETag::car); };
 	//	wanderAgent->setBehaviour(std::make_shared<Flocking>(isCar));
-	//	//std::shared_ptr<WeightedSteeringForce> wanderInBounds = std::make_shared<WeightedSteeringForce>();
-	//	//wanderInBounds->addForce(std::make_shared<BoundsForce>(), 1.f);
-	//	////wanderInBounds->addForce(std::make_shared<AvoidForce>(), 0.8f);
-	//	//wanderInBounds->addForce(std::make_shared<WanderForce>(), 1.f);
-	//	//wanderAgent->addBehaviour(std::make_shared<SteeringBehaviour>(wanderInBounds));
 	//}
 	// Disable face culling, so sprites can be flipped
 	glDisable(GL_CULL_FACE);

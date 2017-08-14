@@ -74,6 +74,8 @@ public:
 	static const float difficult_speed_factor;
 	
 	Grid();
+
+	Grid(std::vector<std::vector<TileType>> tiles);
 	
 	GridSquarePtr getSquare(glm::vec2 position);
 

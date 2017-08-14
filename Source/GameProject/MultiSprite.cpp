@@ -25,6 +25,7 @@ void MultiSprite::draw(aie::Renderer2D * renderer)
 {
 	EntityPtr entity(m_entity);
 	SceneObjectPtr position = entity->getPosition();
+	renderer->setRenderColour(0xffffffff);
 	renderer->setUVRect(m_uvx, m_uvy, m_uvw, m_uvh);
 	for (TexturePtr texture : m_textures) {
 		renderer->drawSpriteTransformed3x3(texture->get(), &position->getGlobalTransform()[0][0], m_width, m_height, 0, m_xOrigin, m_yOrigin);

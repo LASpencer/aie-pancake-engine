@@ -2,7 +2,7 @@
 #include "Grid.h"
 #include "GameProjectApp.h"
 
-const float Grid::square_size = 40.f;
+const float Grid::square_size = 80.f;
 
 const float Grid::difficult_move_cost = 2.f;
 const float Grid::difficult_speed_factor = 1.f/Grid::difficult_move_cost;
@@ -19,6 +19,21 @@ Grid::Grid()
 			glm::vec2 position(GameProjectApp::min_corner.x + (0.5f + i)*square_size,
 								GameProjectApp::min_corner.y + (0.5f + j) * square_size);
 			column.push_back(std::make_shared<GridSquare>(position, open));
+		}
+		m_squares.push_back(column);
+	}
+	// calculate connections for all squares
+	calculateEdges();
+}
+
+Grid::Grid(std::vector<std::vector<TileType>> tiles)
+{
+	for (size_t i = 0; i < tiles.size(); ++i) {
+		std::vector<GridSquarePtr> column;
+		for (size_t j = 0; j < tiles[i].size(); ++j) {
+			glm::vec2 position(GameProjectApp::min_corner.x + (0.5f + i)*square_size,
+				GameProjectApp::min_corner.y + (0.5f + j) * square_size);
+			column.push_back(std::make_shared<GridSquare>(position, tiles[i][j]));
 		}
 		m_squares.push_back(column);
 	}
@@ -288,10 +303,25 @@ std::shared_ptr<AABox> GridSquare::getCollider()
 void GridSquare::draw(aie::Renderer2D * renderer)
 {
 	//TODO based on type, draw sprite
+	switch (m_type) {
+	case(open):
+		renderer->setRenderColour(0x00ff00ff);
+		break;
+	case(difficult):
+		renderer->setRenderColour(0xffff00ff);
+		break;
+	case(impassable):
+		renderer->setRenderColour(0xff0000ff);
+		break;
+	default:
+		break;
+	}
+	renderer->drawBox(m_position.x, m_position.y, Grid::square_size, Grid::square_size);
 }
 
 void GridSquare::drawNodes(aie::Renderer2D * renderer)
 {
+	renderer->setRenderColour(0xffffffff);
 	renderer->drawCircle(m_position.x, m_position.y, Grid::square_size * 0.2f);
 	for (GridEdge edge : m_connections) {
 		GridSquarePtr target(edge.target);

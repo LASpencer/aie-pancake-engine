@@ -2,7 +2,7 @@
 #include "Flocking.h"
 #include "GameProjectApp.h"
 
-const float Flocking::def_separation_weight = 0.3f;
+const float Flocking::def_separation_weight = 0.5f;
 const float Flocking::def_alignment_weight = 1.f;
 const float Flocking::def_cohesion_weight = 0.3f;
 const float Flocking::def_range = 300.f;
@@ -54,9 +54,9 @@ BehaviourResult Flocking::update(Agent * agent, float deltaTime)
 		m_cohesion->setNeighbours(neighbours);
 		m_separation->setNeighbours(neighbours);
 		//TODO make these shared_ptrs instead
+		agent->addForce(std::dynamic_pointer_cast<SteeringForce>(m_separation), m_separationWeight);
 		agent->addForce(std::dynamic_pointer_cast<SteeringForce>(m_alignment), m_alignmentWeight);
 		agent->addForce(std::dynamic_pointer_cast<SteeringForce>(m_cohesion), m_cohesionWeight);
-		agent->addForce(std::dynamic_pointer_cast<SteeringForce>(m_separation), m_separationWeight);
 	}
 	return BehaviourResult();
 }
