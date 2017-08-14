@@ -1,6 +1,7 @@
 #pragma once
 #include "EventBase.h"
 #include "Collider.h"
+#include "Grid.h"
 
 class Entity;
 typedef std::weak_ptr<Entity> EntityWeakPtr;
@@ -33,6 +34,32 @@ protected:
 	BoxType m_otherType;					// Type of box collided with
 	glm::vec2 m_penetration;				// Penetration of other box into this
 
-	// True for collider id
+	// True for collision id
 	virtual bool isValidID(EventID id);	
+};
+
+class TerrainCollisionEvent
+	:public EventBase {
+public:
+	/** Constructor
+	*	@param square Grid square collided with
+	*	@param myType type of hitbox owned by this
+	*	@param penetration penetration of terrain into this*/
+	TerrainCollisionEvent(GridSquareWeakPtr square, BoxType myType, glm::vec2 penetration);
+
+	virtual ~TerrainCollisionEvent();
+
+	GridSquareWeakPtr getSquare();
+
+	BoxType getMyType();
+
+	glm::vec2 getPenetration();
+
+protected:
+	GridSquareWeakPtr m_square;
+	BoxType m_myType;
+	glm::vec2 m_penetration;
+
+	// True for terrain_collision id
+	virtual bool isValidID(EventID id);
 };

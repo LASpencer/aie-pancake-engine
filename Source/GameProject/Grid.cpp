@@ -195,12 +195,20 @@ std::vector<CollisionGroup> Grid::getCollisionGroups()
 			square->collisionsTested = true;
 			std::vector<EntityPtr> containedEntities;
 			std::vector<EntityPtr> neighbourEntities;
+			// Add self if impassable
+			if (square->m_type = impassable) {
+				group.impassableSquares.push_back(square);
+			}
+			// Add contained entities
 			for (EntityWeakPtr entity : square->getContents()) {
 				containedEntities.push_back(EntityPtr(entity));
 			}
-			// Add neighbouring entities
+			// Add neighbouring entities and impassable squares
 			for (GridEdge edge : square->m_connections) {
 				GridSquarePtr neighbour(edge.target);
+				if (neighbour->m_type = impassable) {
+					group.impassableSquares.push_back(square);
+				}
 				if (!neighbour->collisionsTested) {
 					for (EntityWeakPtr entity : neighbour->getContents()) {
 						neighbourEntities.push_back(EntityPtr(entity));
@@ -209,6 +217,9 @@ std::vector<CollisionGroup> Grid::getCollisionGroups()
 			}
 			for (GridSquareWeakPtr weakNeighbour : square->m_unreachableNeighbour) {
 				GridSquarePtr neighbour(weakNeighbour);
+				if (neighbour->m_type = impassable) {
+					group.impassableSquares.push_back(square);
+				}
 				if (!neighbour->collisionsTested) {
 					for (EntityWeakPtr entity : neighbour->getContents()) {
 						neighbourEntities.push_back(EntityPtr(entity));

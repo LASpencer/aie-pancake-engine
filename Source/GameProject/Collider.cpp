@@ -108,9 +108,10 @@ Collider::Identifier Collider::getID()
 	return collider;
 }
 
-void Collider::resolveCollisions(std::vector<std::shared_ptr<Collider>> colliders, std::vector<std::shared_ptr<Collider>> neighbourColliders)
+void Collider::resolveCollisions(std::vector<std::shared_ptr<Collider>> colliders, std::vector<std::shared_ptr<Collider>> neighbourColliders, std::vector<GridSquarePtr> terrain)
 {
 	std::vector<Collision> collisions{};		// Contains detected collisions
+	std::vector<TerrainCollision> terrainCollisions;
 	size_t numColliders = colliders.size();
 	// Get collisions between each pair
 	for (size_t i = 0; i < numColliders; ++i) {
@@ -124,6 +125,9 @@ void Collider::resolveCollisions(std::vector<std::shared_ptr<Collider>> collider
 			std::vector<Collision> currentCollisions = testCollision(colliders[i], neighbour);
 			collisions.insert(collisions.end(), currentCollisions.begin(), currentCollisions.end());
 		}
+		// Test main colliders vs terrain
+		std::vector<TerrainCollision> currentCollisions = testCollision(colliders[i], terrain);
+		terrainCollisions.insert(terrainCollisions.end(), currentCollisions.begin(), currentCollisions.end());
 	}
 	// For each collision, involved colliders notify observers
 	for (Collision c : collisions) {
@@ -131,6 +135,10 @@ void Collider::resolveCollisions(std::vector<std::shared_ptr<Collider>> collider
 		CollisionEvent event2(c.collider[0]->getEntity(), c.type[1], c.type[0], -(c.penetration));
 		c.collider[0]->notifyObservers(&event1);
 		c.collider[1]->notifyObservers(&event2);
+	}
+	for (TerrainCollision c : terrainCollisions) {
+		TerrainCollisionEvent event(c.square, c.type, c.penetration);
+		c.collider->notifyObservers(&event);
 	}
 }
 
@@ -144,6 +152,20 @@ std::vector<Collision> Collider::testCollision(ColliderPtr a, ColliderPtr b)
 			std::pair<bool, glm::vec2> didCollide = box1->doesCollide(box2.get());
 			if (didCollide.first) {
 				collisions.push_back({ { a,b },{ box1->getType(),box2->getType() },didCollide.second });
+			}
+		}
+	}
+	return collisions;
+}
+
+std::vector<TerrainCollision> Collider::testCollision(ColliderPtr collider, std::vector<GridSquarePtr> squares)
+{
+	std::vector<TerrainCollision> collisions;
+	for (CollisionShapePtr hitbox : collider->m_globalBoxes) {
+		for (GridSquarePtr square : squares) {
+			std::pair<bool, glm::vec2> didCollide = hitbox->doesCollide(square->getCollider().get());
+			if (didCollide.first) {
+				collisions.push_back({ collider, square, hitbox->getType(), didCollide.second });
 			}
 		}
 	}

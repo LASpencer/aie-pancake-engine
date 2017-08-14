@@ -14,7 +14,8 @@ public:
 		mouse_exit,			//The mouse cursor has left the subject
 		clicked,			//The subject was clicked
 		mouse_release,		//A mouse button was released
-		collision			//Collision occurred
+		collision,			//Collision occurred
+		terrain_collision	//Collision between entity and terrain
 
 	};
 

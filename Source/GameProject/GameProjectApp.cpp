@@ -79,14 +79,14 @@ bool GameProjectApp::startup() {
 
 	// Spawn a bunch of wandering cars
 
-	//for (int i = 0; i < 20; ++i) {
-	//	EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(100 + 30*i, 300 + 20*i)));
-	//	AgentPtr wanderAgent = std::dynamic_pointer_cast<Agent>(wanderer->getComponent(Component::agent));
-	//	//wanderAgent->setMaxVelocity(50.f);
-	//	auto isCar = [](Agent* agent) {	EntityPtr entity(agent->getEntity());
-	//									return (bool)(entity->getTagMask() & Entity::ETag::car); };
-	//	wanderAgent->setBehaviour(std::make_shared<Flocking>(isCar));
-	//}
+	for (int i = 0; i < 20; ++i) {
+		EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(100 + 30*i, 300 + 20*i)));
+		AgentPtr wanderAgent = std::dynamic_pointer_cast<Agent>(wanderer->getComponent(Component::agent));
+		//wanderAgent->setMaxVelocity(50.f);
+		auto isCar = [](Agent* agent) {	EntityPtr entity(agent->getEntity());
+										return (bool)(entity->getTagMask() & Entity::ETag::car); };
+		wanderAgent->setBehaviour(std::make_shared<Flocking>(isCar));
+	}
 	// Disable face culling, so sprites can be flipped
 	glDisable(GL_CULL_FACE);
 	return true;

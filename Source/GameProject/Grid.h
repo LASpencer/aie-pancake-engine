@@ -12,6 +12,7 @@ typedef std::weak_ptr<GridSquare> GridSquareWeakPtr;
 struct CollisionGroup {
 	std::vector<ColliderPtr> centralGroup;
 	std::vector<ColliderPtr> nearbyGroups;
+	std::vector<GridSquarePtr> impassableSquares;
 };
 
 struct GridEdge {

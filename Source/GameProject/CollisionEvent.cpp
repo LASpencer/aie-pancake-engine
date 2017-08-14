@@ -34,3 +34,32 @@ bool CollisionEvent::isValidID(EventID id)
 {
 	return id == collision;
 }
+
+TerrainCollisionEvent::TerrainCollisionEvent(GridSquareWeakPtr square, BoxType myType, glm::vec2 penetration)
+	:EventBase(EventBase::terrain_collision), m_square(square), m_myType(myType), m_penetration(penetration)
+{
+}
+
+TerrainCollisionEvent::~TerrainCollisionEvent()
+{
+}
+
+GridSquareWeakPtr TerrainCollisionEvent::getSquare()
+{
+	return m_square;
+}
+
+BoxType TerrainCollisionEvent::getMyType()
+{
+	return m_myType;
+}
+
+glm::vec2 TerrainCollisionEvent::getPenetration()
+{
+	return m_penetration;
+}
+
+bool TerrainCollisionEvent::isValidID(EventID id)
+{
+	return id = terrain_collision;
+}

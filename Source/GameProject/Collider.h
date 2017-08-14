@@ -39,6 +39,14 @@ struct Collision {
 	glm::vec2	penetration;		// Penetration of second box into first
 };
 
+// Contains data representing a collision between a collider and terrain
+struct TerrainCollision {
+	ColliderPtr		collider;
+	GridSquarePtr	square;
+	BoxType			type;
+	glm::vec2		penetration;
+};
+
 /*	Component containing hitboxes, allowing entity to collide with other entities
 	Collider is also a Subject, producing CollisionEvents when a collision occurs
 	informing the Observers to respond appropriately.
@@ -78,11 +86,13 @@ public:
 
 	/**	Tests for collisions and has colliders involved produce collision events
 	*	@param colliders Colliders being checked for collision*/
-	static void resolveCollisions(std::vector <std::shared_ptr<Collider>> colliders, std::vector<std::shared_ptr<Collider>> neighbourColliders = {});
-
+	static void resolveCollisions(std::vector <std::shared_ptr<Collider>> colliders, std::vector<std::shared_ptr<Collider>> neighbourColliders = {}, std::vector<GridSquarePtr> terrain = {});
 
 	// Tests for collisions between two colliders
 	static std::vector<Collision> testCollision(ColliderPtr a, ColliderPtr b);
+
+	// Tests collision between collider and terrain
+	static std::vector<TerrainCollision> testCollision(ColliderPtr collider, std::vector<GridSquarePtr> squares);
 
 	static void setDrawBoxes(bool shouldDraw);
 
