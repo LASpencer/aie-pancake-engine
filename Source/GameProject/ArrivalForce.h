@@ -2,6 +2,9 @@
 #include "SteeringForce.h"
 #include "Target.h"
 
+class ArrivalForce;
+typedef std::shared_ptr<ArrivalForce> ArrivalForcePtr;
+
 class ArrivalForce :
 	public SteeringForce
 {

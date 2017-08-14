@@ -166,6 +166,68 @@ GridSquarePtr Grid::getNearestOpenSquare(glm::vec2 position)
 	}
 }
 
+void Grid::placeEntities(std::vector<EntityPtr> entities)
+{
+	// Empty squares
+	for (auto col : m_squares) {
+		for (GridSquarePtr square : col) {
+			square->m_contents.clear();
+		}
+	}
+	for (EntityPtr entity : entities) {
+		glm::vec2 position(entity->getPosition()->getGlobalTransform()[2]);
+		GridSquarePtr square = getSquare(position);
+		square->m_contents.push_back(EntityWeakPtr(entity));
+	}
+}
+
+std::vector<CollisionGroup> Grid::getCollisionGroups()
+{
+	std::vector<CollisionGroup> groups;
+	for (std::vector<GridSquarePtr> col : m_squares) {
+		for (GridSquarePtr square : col) {
+			square->collisionsTested = false;
+		}
+	}
+	for (std::vector<GridSquarePtr> col : m_squares) {
+		for (GridSquarePtr square : col) {
+			CollisionGroup group;
+			square->collisionsTested = true;
+			std::vector<EntityPtr> containedEntities;
+			std::vector<EntityPtr> neighbourEntities;
+			for (EntityWeakPtr entity : square->getContents()) {
+				containedEntities.push_back(EntityPtr(entity));
+			}
+			// Add neighbouring entities
+			for (GridEdge edge : square->m_connections) {
+				GridSquarePtr neighbour(edge.target);
+				if (!neighbour->collisionsTested) {
+					for (EntityWeakPtr entity : neighbour->getContents()) {
+						neighbourEntities.push_back(EntityPtr(entity));
+					}
+				}
+			}
+			for (GridSquareWeakPtr weakNeighbour : square->m_unreachableNeighbour) {
+				GridSquarePtr neighbour(weakNeighbour);
+				if (!neighbour->collisionsTested) {
+					for (EntityWeakPtr entity : neighbour->getContents()) {
+						neighbourEntities.push_back(EntityPtr(entity));
+					}
+				}
+			}
+			// Get only entities with colliders for group
+			for (EntityPtr entity : Entity::getEntitiesWithComponent(Component::collider, containedEntities)) {
+				group.centralGroup.push_back(std::dynamic_pointer_cast<Collider>(entity->getComponent(Component::collider)));
+			}
+			for (EntityPtr entity : Entity::getEntitiesWithComponent(Component::collider, neighbourEntities)) {
+				group.nearbyGroups.push_back(std::dynamic_pointer_cast<Collider>(entity->getComponent(Component::collider)));
+			}
+			groups.push_back(group);
+		}
+	}
+	return groups;
+}
+
 void Grid::draw(aie::Renderer2D * renderer)
 {
 	for (auto col : m_squares) {
@@ -332,8 +394,15 @@ void GridSquare::drawNodes(aie::Renderer2D * renderer)
 	}
 }
 
+std::vector<EntityWeakPtr>& GridSquare::getContents()
+{
+	return m_contents;
+}
+
+
 void GridSquare::setPosition(glm::vec2 position)
 {
 	m_position = position;
-	//TODO update position of collider
+	glm::vec2 cornerExtent(Grid::square_size * 0.5f, Grid::square_size * 0.5f);
+	m_collider = std::make_shared<AABox>(m_position - cornerExtent, m_position + cornerExtent, BoxType::terrain);
 }

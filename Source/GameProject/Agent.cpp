@@ -5,7 +5,9 @@
 #include "GameProjectApp.h"
 #include "BoundsForce.h"
 #include "AvoidTerrainForce.h"
-
+#include "ArrivalForce.h"
+#include "SeekForce.h"
+#include "Target.h"
 
 const float Agent::def_max_velocity = 500.f;
 const float Agent::def_max_force = 100.f;
@@ -129,5 +131,59 @@ GridSquarePtr Agent::getSquare()
 void Agent::setBehaviour(BehaviourPtr behaviour)
 {
 	m_behaviour = behaviour;
+}
+
+bool Agent::setGoal(glm::vec2 goal)
+{
+	EntityPtr entity(m_entity);
+	Grid* grid = entity->getApp()->getGrid();
+	GridSquarePtr endSquare = grid->getSquare(goal);
+	std::stack<GridSquarePtr> path = grid->findPath(m_square, endSquare);
+	// Check if path was found
+	if (path.empty()) {
+		return false;
+	} else {
+		m_goal = goal;
+		m_path = path;
+		return true;
+	}
+}
+
+void Agent::followPath(float weight)
+{
+	EntityPtr entity(m_entity);
+	Grid* grid = entity->getApp()->getGrid();
+	GridSquarePtr endSquare = grid->getSquare(m_goal);
+	PointTarget currentTarget;
+	SteeringForcePtr force;
+
+	if (m_square == endSquare) {
+		currentTarget.setTarget(m_goal);
+		ArrivalForcePtr arrive(std::make_shared<ArrivalForce>(TargetPtr(currentTarget.clone())));
+		force = std::dynamic_pointer_cast<SteeringForce>(arrive);
+		m_steeringForces.push_back({ force, weight });
+	} else if (!m_path.empty()) {
+		currentTarget.setTarget(m_path.top()->getPosition());
+		SeekForcePtr seek(std::make_shared<SeekForce>(TargetPtr(currentTarget.clone())));
+		force = std::dynamic_pointer_cast<SteeringForce>(seek);
+		m_steeringForces.push_back({ force, weight });
+		if (m_path.top() == m_square) {
+			m_path.pop();
+		}
+	}
+}
+
+void Agent::notify(Subject * subject, EventBase * event)
+{
+	//TODO if terrain collision, or body collided with other body, apply impulse for collision
+}
+
+bool Agent::addSubject(Subject * subject)
+{
+	return true;
+}
+
+void Agent::removeSubject(Subject * subject)
+{
 }
 

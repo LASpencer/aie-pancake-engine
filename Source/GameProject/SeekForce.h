@@ -3,6 +3,9 @@
 #include "SteeringForce.h"
 #include "Target.h"
 
+class SeekForce;
+typedef std::shared_ptr<SeekForce> SeekForcePtr;
+
 class SeekForce :
 	public SteeringForce
 {

@@ -27,7 +27,7 @@ public:
 
 	//	Tags which can be added to an entity
 	enum ETag {
-		obstacle = 0x1,	// Entity is an obstacle
+		immobile = 0x1,	// Entity does not move
 		car = 0x2		// Is a car
 		//0x2,0x4,0x8,0x10,0x20 etc
 	};

@@ -108,7 +108,7 @@ Collider::Identifier Collider::getID()
 	return collider;
 }
 
-void Collider::resolveCollisions(std::vector<std::shared_ptr<Collider>> colliders)
+void Collider::resolveCollisions(std::vector<std::shared_ptr<Collider>> colliders, std::vector<std::shared_ptr<Collider>> neighbourColliders)
 {
 	std::vector<Collision> collisions{};		// Contains detected collisions
 	size_t numColliders = colliders.size();
@@ -116,14 +116,13 @@ void Collider::resolveCollisions(std::vector<std::shared_ptr<Collider>> collider
 	for (size_t i = 0; i < numColliders; ++i) {
 		for (size_t j = i+1; j < numColliders; ++j) {
 			//Test collision between boxes
-			for (CollisionShapePtr box1 : colliders[i]->m_globalBoxes) {
-				for (CollisionShapePtr box2 : colliders[j]->m_globalBoxes) {
-					std::pair<bool, glm::vec2> didCollide = box1->doesCollide(box2.get());
-					if (didCollide.first) {
-						collisions.push_back({ {colliders[i],colliders[j]},{box1->getType(),box2->getType()},didCollide.second });
-					}
-				}
-			}
+			std::vector<Collision> currentCollisions = testCollision(colliders[i], colliders[j]);
+			collisions.insert(collisions.end(), currentCollisions.begin(), currentCollisions.end());
+		}
+		// Test main colliders vs neighbours
+		for (ColliderPtr neighbour : neighbourColliders) {
+			std::vector<Collision> currentCollisions = testCollision(colliders[i], neighbour);
+			collisions.insert(collisions.end(), currentCollisions.begin(), currentCollisions.end());
 		}
 	}
 	// For each collision, involved colliders notify observers
@@ -135,43 +134,20 @@ void Collider::resolveCollisions(std::vector<std::shared_ptr<Collider>> collider
 	}
 }
 
-std::pair<bool, glm::vec2> Collider::testCollision(Box box1, Box box2)
+
+
+std::vector<Collision> Collider::testCollision(ColliderPtr a, ColliderPtr b)
 {
-	float minX[2] = { std::min(box1.corner1.x, box1.corner2.x), std::min(box2.corner1.x, box2.corner2.x) };
-	float maxX[2] = { std::max(box1.corner1.x, box1.corner2.x), std::max(box2.corner1.x, box2.corner2.x) };
-	float minY[2] = { std::min(box1.corner1.y, box1.corner2.y), std::min(box2.corner1.y, box2.corner2.y) };
-	float maxY[2] = { std::max(box1.corner1.y, box1.corner2.y), std::max(box2.corner1.y, box2.corner2.y) };
-	//Check for overlap
-	if (minX[0] >= maxX[1] ||
-		minX[1] >= maxX[0] ||
-		minY[0] >= maxY[1] ||
-		minY[1] >= maxY[0]) {
-		return std::make_pair(false, glm::vec2(0));
-	} else {
-		// Calculate penetration
-		glm::vec2 penetration;
-		float x, y;
-		if (abs(maxX[1] - minX[0]) < abs(maxX[0] - minX[1])) {
-			// box1 is on right
-			x = maxX[1] - minX[0];
-		} else {
-			//box1 is on left
-			x = minX[1] - maxX[0];
+	std::vector<Collision> collisions;
+	for (CollisionShapePtr box1 : a->m_globalBoxes) {
+		for (CollisionShapePtr box2 : b->m_globalBoxes) {
+			std::pair<bool, glm::vec2> didCollide = box1->doesCollide(box2.get());
+			if (didCollide.first) {
+				collisions.push_back({ { a,b },{ box1->getType(),box2->getType() },didCollide.second });
+			}
 		}
-		if (abs(maxY[1] - minY[0]) < abs(maxY[0] - minY[1])) {
-			//box1 is above
-			y = maxY[1] - minY[0];
-		} else {
-			//box1 is below
-			y = minY[1] - maxY[0];
-		}
-		if (abs(x) < abs(y)) {
-			penetration = { x,0 };
-		} else {
-			penetration = { 0, y };
-		}
-		return std::make_pair(true, penetration);
 	}
+	return collisions;
 }
 
 void Collider::setDrawBoxes(bool shouldDraw)

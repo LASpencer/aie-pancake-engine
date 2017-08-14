@@ -91,7 +91,7 @@ EntityPtr EntityFactory::createBlock(glm::mat3 position, SceneObjectPtr parent)
 {
 	EntityPtr block = std::make_shared<Entity>(m_app);
 	setEntityPosition(block, position, parent);
-	block->addTag(Entity::obstacle);
+	block->addTag(Entity::immobile);
 	// Add sprite
 	block->addComponent(std::make_shared<Sprite>(m_app->getResourceManager()->getTexture(filepath::block)));
 	// Add collider

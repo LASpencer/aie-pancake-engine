@@ -41,22 +41,22 @@ bool GameProjectApp::startup() {
 	m_sceneRoot = std::make_shared<SceneObject>();
 
 	std::vector<std::vector<int>> tileIDs =
-	{ {0,0,0,0,0,0,0,0,0},
-	{ 0,0,0,0,0,0,0,0,0 },
+	{ {0,2,0,0,0,2,0,0,0},
+	{ 0,0,0,2,0,0,0,2,0 },
 	{ 2,2,2,1,1,1,2,2,2 },
 	{ 0,0,0,0,1,2,0,0,0 },
-	{ 0,0,0,1,2,0,0,0,0 },
-	{ 0,0,0,1,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0 } };
+	{ 2,0,0,1,2,0,0,2,0 },
+	{ 0,2,2,1,0,0,0,2,0 },
+	{ 0,0,0,2,0,0,2,0,0 },
+	{ 0,0,1,1,2,2,0,0,0 },
+	{ 1,1,1,1,0,0,2,2,0 },
+	{ 0,0,0,0,0,2,0,0,0 },
+	{ 0,0,0,2,2,2,0,0,0 },
+	{ 0,0,1,0,0,2,0,0,0 },
+	{ 2,2,2,0,0,0,0,2,0 },
+	{ 0,0,1,0,2,2,2,0,0 },
+	{ 0,1,1,1,0,0,0,0,2 },
+	{ 0,0,0,0,1,2,2,0,0 } };
 
 	std::vector<std::vector<TileType>> tiles;
 	for (std::vector<int> column : tileIDs) {
@@ -71,12 +71,11 @@ bool GameProjectApp::startup() {
 
 	EntityPtr player = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(500,500)));
 	AgentPtr playerAgent = std::dynamic_pointer_cast<Agent>(player->getComponent(Component::agent));
-	playerAgent->setBehaviour(std::make_shared<KeyboardController>());
-
+	//playerAgent->setBehaviour(std::make_shared<KeyboardController>());
 
 	//pathfinding
-	/*playerAgent->addBehaviour(std::make_shared<PathfindingBehaviour>(&m_mapGraph, m_mapGraph.m_graph[0]));
-	playerAgent->setMaxVelocity(50.f);*/
+	playerAgent->setBehaviour(std::make_shared<PathfindingBehaviour>());
+	//playerAgent->setMaxVelocity(50.f);
 
 	// Spawn a bunch of wandering cars
 
@@ -195,15 +194,22 @@ void GameProjectApp::updateEntities(float deltaTime)
 	for (EntityPtr entity : entitiesWithComponent) {
 		std::dynamic_pointer_cast<Agent>(entity->getComponent(Component::agent))->moveAgent(deltaTime);
 	}
-	// Update colliders and test collision
+
+	// Assign entities to grid squares
+	m_mapGraph->placeEntities(m_entityList);
+
+	// Update colliders
 	entitiesWithComponent = Entity::getEntitiesWithComponent(Component::collider, m_entityList);
-	std::vector<std::shared_ptr<Collider>> colliders;
 	for (EntityPtr entity : entitiesWithComponent) {
 		std::shared_ptr<Collider> collider = std::dynamic_pointer_cast<Collider>(entity->getComponent(Component::collider));
 		collider->update(deltaTime);
-		colliders.push_back(collider);
 	}
-	Collider::resolveCollisions(colliders);
+	// Get groups of entities which might collide and test collisions
+	std::vector<CollisionGroup> collisionGroups = m_mapGraph->getCollisionGroups();
+	for (CollisionGroup group : collisionGroups) {
+		Collider::resolveCollisions(group.centralGroup, group.nearbyGroups);
+	}
+	//TODO test collisions vs terrain
 }
 
 void GameProjectApp::drawEntities()

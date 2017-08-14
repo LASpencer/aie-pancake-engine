@@ -9,6 +9,11 @@ class GridSquare;
 typedef std::shared_ptr<GridSquare> GridSquarePtr;
 typedef std::weak_ptr<GridSquare> GridSquareWeakPtr;
 
+struct CollisionGroup {
+	std::vector<ColliderPtr> centralGroup;
+	std::vector<ColliderPtr> nearbyGroups;
+};
+
 struct GridEdge {
 	GridSquareWeakPtr target;
 	float cost;
@@ -49,6 +54,9 @@ public:
 
 	void drawNodes(aie::Renderer2D* renderer);
 
+	std::vector<EntityWeakPtr>& getContents();
+
+
 private:
 	glm::vec2 m_position;
 	TileType m_type;
@@ -61,6 +69,9 @@ private:
 
 	std::vector<GridEdge> m_connections;
 	std::vector<GridSquareWeakPtr> m_unreachableNeighbour;
+
+	std::vector<EntityWeakPtr> m_contents;
+	bool collisionsTested;		// Flag indicating if contained entities already placed in a collision group
 
 	void setPosition(glm::vec2 position);
 };
@@ -88,6 +99,12 @@ public:
 		float(*heuristic)(GridSquarePtr, GridSquarePtr) = [](GridSquarePtr a, GridSquarePtr b) {return glm::length(a->getPosition() - b->getPosition()); });
 
 	GridSquarePtr getNearestOpenSquare(glm::vec2 position);
+
+	// Places entities as contents of appropriate grid square
+	void placeEntities(std::vector<EntityPtr> entities);
+
+
+	std::vector<CollisionGroup> getCollisionGroups();
 
 	void draw(aie::Renderer2D* renderer);
 

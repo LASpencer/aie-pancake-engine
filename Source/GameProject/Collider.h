@@ -78,13 +78,11 @@ public:
 
 	/**	Tests for collisions and has colliders involved produce collision events
 	*	@param colliders Colliders being checked for collision*/
-	static void resolveCollisions(std::vector <std::shared_ptr<Collider>> colliders);
+	static void resolveCollisions(std::vector <std::shared_ptr<Collider>> colliders, std::vector<std::shared_ptr<Collider>> neighbourColliders = {});
 
-	/** Tests whether boxes collide
-	*	@param box1 first hitbox
-	*	@param box2 second hitbox
-	*	@return pair of whether collision occured and if so penetration of box2 into box1*/
-	static std::pair<bool,glm::vec2> testCollision(Box box1, Box box2);
+
+	// Tests for collisions between two colliders
+	static std::vector<Collision> testCollision(ColliderPtr a, ColliderPtr b);
 
 	static void setDrawBoxes(bool shouldDraw);
 

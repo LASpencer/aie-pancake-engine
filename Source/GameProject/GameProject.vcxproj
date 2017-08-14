@@ -245,6 +245,7 @@
     <ClInclude Include="TimerCondition.h" />
     <ClInclude Include="Transition.h" />
     <ClInclude Include="utility.h" />
+    <ClInclude Include="VehicleAgent.h" />
     <ClInclude Include="Wander.h" />
     <ClInclude Include="WanderForce.h" />
     <ClInclude Include="WeightedSteeringForce.h" />

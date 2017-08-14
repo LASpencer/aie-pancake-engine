@@ -557,5 +557,8 @@
     <ClInclude Include="KeyboardControlForce.h">
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
+    <ClInclude Include="VehicleAgent.h">
+      <Filter>Source Files\Entities\Components\Agents</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
