@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "CollisionEvent.h"
 #include "CollisionShape.h"
+#include "Grid.h"
 
 bool Collider::draw_boxes = false;
 
@@ -108,7 +109,7 @@ Collider::Identifier Collider::getID()
 	return collider;
 }
 
-void Collider::resolveCollisions(std::vector<std::shared_ptr<Collider>> colliders, std::vector<std::shared_ptr<Collider>> neighbourColliders, std::vector<GridSquarePtr> terrain)
+void Collider::resolveCollisions(std::vector<std::shared_ptr<Collider>>& colliders, std::vector<GridSquarePtr>& terrain)
 {
 	std::vector<Collision> collisions{};		// Contains detected collisions
 	std::vector<TerrainCollision> terrainCollisions;
@@ -120,12 +121,7 @@ void Collider::resolveCollisions(std::vector<std::shared_ptr<Collider>> collider
 			std::vector<Collision> currentCollisions = testCollision(colliders[i], colliders[j]);
 			collisions.insert(collisions.end(), currentCollisions.begin(), currentCollisions.end());
 		}
-		// Test main colliders vs neighbours
-		for (ColliderPtr neighbour : neighbourColliders) {
-			std::vector<Collision> currentCollisions = testCollision(colliders[i], neighbour);
-			collisions.insert(collisions.end(), currentCollisions.begin(), currentCollisions.end());
-		}
-		// Test main colliders vs terrain
+		// Test colliders vs terrain
 		std::vector<TerrainCollision> currentCollisions = testCollision(colliders[i], terrain);
 		terrainCollisions.insert(terrainCollisions.end(), currentCollisions.begin(), currentCollisions.end());
 	}
@@ -158,7 +154,7 @@ std::vector<Collision> Collider::testCollision(ColliderPtr a, ColliderPtr b)
 	return collisions;
 }
 
-std::vector<TerrainCollision> Collider::testCollision(ColliderPtr collider, std::vector<GridSquarePtr> squares)
+std::vector<TerrainCollision> Collider::testCollision(ColliderPtr collider, std::vector<GridSquarePtr>& squares)
 {
 	std::vector<TerrainCollision> collisions;
 	for (CollisionShapePtr hitbox : collider->m_globalBoxes) {

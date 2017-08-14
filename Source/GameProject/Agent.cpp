@@ -8,6 +8,7 @@
 #include "ArrivalForce.h"
 #include "SeekForce.h"
 #include "Target.h"
+#include "CollisionEvent.h"
 
 const float Agent::def_max_velocity = 500.f;
 const float Agent::def_max_force = 100.f;
@@ -176,6 +177,22 @@ void Agent::followPath(float weight)
 void Agent::notify(Subject * subject, EventBase * event)
 {
 	//TODO if terrain collision, or body collided with other body, apply impulse for collision
+	EventBase::EventID id = event->getEventID();
+	if (id == EventBase::collision) {
+		CollisionEvent* collisionEvent = dynamic_cast<CollisionEvent*>(event);
+		//TODO check subject is collider, if body-body impulse away
+		if (collisionEvent->getMyType() == body && collisionEvent->getOtherType() == body) {
+			applyImpulse(collisionEvent->getPenetration() * 0.5f);
+		}
+	}
+	else if (id == EventBase::terrain_collision) {
+		TerrainCollisionEvent* collisionEvent = dynamic_cast<TerrainCollisionEvent*>(event);
+		//TODO check subject is collider, square isn't expired
+		if (collisionEvent->getMyType() == body &&
+			collisionEvent->getSquare().lock()->getType() == impassable) {
+			applyImpulse(collisionEvent->getPenetration());
+		}
+	}
 }
 
 bool Agent::addSubject(Subject * subject)

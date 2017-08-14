@@ -69,6 +69,8 @@ bool GameProjectApp::startup() {
 
 	m_mapGraph = std::make_unique<Grid>(tiles);
 
+	m_impassableSquares = m_mapGraph->getImpassableSquares();
+
 	EntityPtr player = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(500,500)));
 	AgentPtr playerAgent = std::dynamic_pointer_cast<Agent>(player->getComponent(Component::agent));
 	//playerAgent->setBehaviour(std::make_shared<KeyboardController>());
@@ -79,7 +81,7 @@ bool GameProjectApp::startup() {
 
 	// Spawn a bunch of wandering cars
 
-	for (int i = 0; i < 20; ++i) {
+	for (int i = 0; i < 10; ++i) {
 		EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(100 + 30*i, 300 + 20*i)));
 		AgentPtr wanderAgent = std::dynamic_pointer_cast<Agent>(wanderer->getComponent(Component::agent));
 		//wanderAgent->setMaxVelocity(50.f);
@@ -200,15 +202,14 @@ void GameProjectApp::updateEntities(float deltaTime)
 
 	// Update colliders
 	entitiesWithComponent = Entity::getEntitiesWithComponent(Component::collider, m_entityList);
+	std::vector<ColliderPtr> colliders;
 	for (EntityPtr entity : entitiesWithComponent) {
 		std::shared_ptr<Collider> collider = std::dynamic_pointer_cast<Collider>(entity->getComponent(Component::collider));
 		collider->update(deltaTime);
+		colliders.push_back(collider);
 	}
-	// Get groups of entities which might collide and test collisions
-	std::vector<CollisionGroup> collisionGroups = m_mapGraph->getCollisionGroups();
-	for (CollisionGroup group : collisionGroups) {
-		Collider::resolveCollisions(group.centralGroup, group.nearbyGroups);
-	}
+	// Resolve collisions
+	Collider::resolveCollisions(colliders, m_impassableSquares);
 	//TODO test collisions vs terrain
 }
 

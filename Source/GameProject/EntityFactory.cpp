@@ -78,12 +78,15 @@ EntityPtr EntityFactory::createCar(glm::mat3 position, SceneObjectPtr parent)
 	// Add sprite
 	car->addComponent(std::make_shared<Sprite>(m_app->getResourceManager()->getTexture(filepath::car)));
 	// Add agent
-	car->addComponent(std::make_shared<Agent>(100, 200));
+	AgentPtr agent = std::make_shared<Agent>(100, 200);
+	car->addComponent(agent);
 	// Add collider
 	ColliderPtr collider = std::make_shared<Collider>();
-	std::shared_ptr<OBox> box = std::make_shared<OBox>(glm::vec2(18, 0), glm::vec2(0, 21), glm::vec2(0,0), BoxType::body);
+	std::shared_ptr<AABox> box = std::make_shared<AABox>(glm::vec2(-18, -21), glm::vec2(18, 21), BoxType::body);
 	collider->addBox(std::static_pointer_cast<CollisionShape>(box));
 	car->addComponent(collider);
+	// Agent observes collider
+	collider->addObserver(agent);
 	return car;
 }
 

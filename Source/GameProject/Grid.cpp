@@ -181,62 +181,17 @@ void Grid::placeEntities(std::vector<EntityPtr> entities)
 	}
 }
 
-std::vector<CollisionGroup> Grid::getCollisionGroups()
+std::vector<GridSquarePtr> Grid::getImpassableSquares()
 {
-	std::vector<CollisionGroup> groups;
+	std::vector<GridSquarePtr> impassableSquares;
 	for (std::vector<GridSquarePtr> col : m_squares) {
 		for (GridSquarePtr square : col) {
-			square->collisionsTested = false;
+			if (square->m_type == impassable) {
+				impassableSquares.push_back(square);
+			}
 		}
 	}
-	for (std::vector<GridSquarePtr> col : m_squares) {
-		for (GridSquarePtr square : col) {
-			CollisionGroup group;
-			square->collisionsTested = true;
-			std::vector<EntityPtr> containedEntities;
-			std::vector<EntityPtr> neighbourEntities;
-			// Add self if impassable
-			if (square->m_type = impassable) {
-				group.impassableSquares.push_back(square);
-			}
-			// Add contained entities
-			for (EntityWeakPtr entity : square->getContents()) {
-				containedEntities.push_back(EntityPtr(entity));
-			}
-			// Add neighbouring entities and impassable squares
-			for (GridEdge edge : square->m_connections) {
-				GridSquarePtr neighbour(edge.target);
-				if (neighbour->m_type = impassable) {
-					group.impassableSquares.push_back(square);
-				}
-				if (!neighbour->collisionsTested) {
-					for (EntityWeakPtr entity : neighbour->getContents()) {
-						neighbourEntities.push_back(EntityPtr(entity));
-					}
-				}
-			}
-			for (GridSquareWeakPtr weakNeighbour : square->m_unreachableNeighbour) {
-				GridSquarePtr neighbour(weakNeighbour);
-				if (neighbour->m_type = impassable) {
-					group.impassableSquares.push_back(square);
-				}
-				if (!neighbour->collisionsTested) {
-					for (EntityWeakPtr entity : neighbour->getContents()) {
-						neighbourEntities.push_back(EntityPtr(entity));
-					}
-				}
-			}
-			// Get only entities with colliders for group
-			for (EntityPtr entity : Entity::getEntitiesWithComponent(Component::collider, containedEntities)) {
-				group.centralGroup.push_back(std::dynamic_pointer_cast<Collider>(entity->getComponent(Component::collider)));
-			}
-			for (EntityPtr entity : Entity::getEntitiesWithComponent(Component::collider, neighbourEntities)) {
-				group.nearbyGroups.push_back(std::dynamic_pointer_cast<Collider>(entity->getComponent(Component::collider)));
-			}
-			groups.push_back(group);
-		}
-	}
-	return groups;
+	return impassableSquares;
 }
 
 void Grid::draw(aie::Renderer2D * renderer)

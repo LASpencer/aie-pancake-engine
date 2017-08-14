@@ -9,11 +9,6 @@ class GridSquare;
 typedef std::shared_ptr<GridSquare> GridSquarePtr;
 typedef std::weak_ptr<GridSquare> GridSquareWeakPtr;
 
-struct CollisionGroup {
-	std::vector<ColliderPtr> centralGroup;
-	std::vector<ColliderPtr> nearbyGroups;
-	std::vector<GridSquarePtr> impassableSquares;
-};
 
 struct GridEdge {
 	GridSquareWeakPtr target;
@@ -72,7 +67,6 @@ private:
 	std::vector<GridSquareWeakPtr> m_unreachableNeighbour;
 
 	std::vector<EntityWeakPtr> m_contents;
-	bool collisionsTested;		// Flag indicating if contained entities already placed in a collision group
 
 	void setPosition(glm::vec2 position);
 };
@@ -104,8 +98,7 @@ public:
 	// Places entities as contents of appropriate grid square
 	void placeEntities(std::vector<EntityPtr> entities);
 
-
-	std::vector<CollisionGroup> getCollisionGroups();
+	std::vector<GridSquarePtr> getImpassableSquares();
 
 	void draw(aie::Renderer2D* renderer);
 

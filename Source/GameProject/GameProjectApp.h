@@ -39,6 +39,7 @@ protected:
 	std::unique_ptr<EntityFactory>		m_entityFactory;
 	SceneObjectPtr		m_sceneRoot;		// Root node of scene graph
 	std::unique_ptr<Grid>				m_mapGraph;
+	std::vector<GridSquarePtr>			m_impassableSquares;
 
 	//HACK for testing pathfinding
 	GridSquarePtr m_startPos;

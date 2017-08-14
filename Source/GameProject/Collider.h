@@ -3,8 +3,14 @@
 #include "Subject.h"
 #include "EventManager.h"
 
+
 class CollisionShape;
 typedef std::shared_ptr<CollisionShape> CollisionShapePtr;
+
+class GridSquare;
+
+typedef std::shared_ptr<GridSquare> GridSquarePtr;
+typedef std::weak_ptr<GridSquare> GridSquareWeakPtr;
 
 class Ray;
 
@@ -86,13 +92,13 @@ public:
 
 	/**	Tests for collisions and has colliders involved produce collision events
 	*	@param colliders Colliders being checked for collision*/
-	static void resolveCollisions(std::vector <std::shared_ptr<Collider>> colliders, std::vector<std::shared_ptr<Collider>> neighbourColliders = {}, std::vector<GridSquarePtr> terrain = {});
+	static void resolveCollisions(std::vector <std::shared_ptr<Collider>>& colliders, std::vector<GridSquarePtr>& terrain);
 
 	// Tests for collisions between two colliders
 	static std::vector<Collision> testCollision(ColliderPtr a, ColliderPtr b);
 
 	// Tests collision between collider and terrain
-	static std::vector<TerrainCollision> testCollision(ColliderPtr collider, std::vector<GridSquarePtr> squares);
+	static std::vector<TerrainCollision> testCollision(ColliderPtr collider, std::vector<GridSquarePtr>& squares);
 
 	static void setDrawBoxes(bool shouldDraw);
 
