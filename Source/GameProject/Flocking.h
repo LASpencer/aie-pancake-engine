@@ -28,8 +28,8 @@ public:
 	float m_separationWeight, m_alignmentWeight, m_cohesionWeight;
 	float m_range;
 protected:
-	AlignmentForce m_alignment;
-	CohesionForce m_cohesion;
-	SeparationForce m_separation;
+	std::shared_ptr<AlignmentForce> m_alignment;
+	std::shared_ptr<CohesionForce> m_cohesion;
+	std::shared_ptr<SeparationForce> m_separation;
 	bool(*isBoidRule)(Agent*);
 };

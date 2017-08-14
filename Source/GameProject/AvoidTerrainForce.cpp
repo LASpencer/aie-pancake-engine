@@ -38,31 +38,34 @@ glm::vec2 AvoidTerrainForce::getForce(Agent * agent)
 		std::vector<GridSquarePtr> neighbours = grid->getAdjacentSquares(square);
 		Ray futurePath(agent->getPosition(), agent->getVelocity(), glm::length(agent->getVelocity()) * 0.5f);
 		for (GridSquarePtr neighbour : neighbours) {
-			std::shared_ptr<AABox> collider = neighbour->getCollider();
-			float collisionDistance = collider->testRayCollision(&futurePath);
-			if (collisionDistance >= 0.f) {
-				glm::vec2 collisionPoint = futurePath.getOrigin() + futurePath.getDirection() * collisionDistance;
-				glm::vec2 displacement = collisionPoint - neighbour->getPosition();
-				if (abs(displacement.x) > abs(displacement.y)) {
-					if (displacement.x > 0.f) {
-						force = glm::vec2(1, 0);
+			if (neighbour->getType() == impassable) {
+				std::shared_ptr<AABox> collider = neighbour->getCollider();
+				float collisionDistance = collider->testRayCollision(&futurePath);
+				if (collisionDistance >= 0.f) {
+					glm::vec2 collisionPoint = futurePath.getOrigin() + futurePath.getDirection() * collisionDistance;
+					glm::vec2 displacement = collisionPoint - neighbour->getPosition();
+					if (abs(displacement.x) > abs(displacement.y)) {
+						if (displacement.x > 0.f) {
+							force = glm::vec2(1, 0);
+						}
+						else {
+							force = glm::vec2(-1, 0);
+						}
 					}
 					else {
-						force = glm::vec2(-1, 0);
+						if (displacement.y > 0.f) {
+							force = glm::vec2(0, 1);
+						}
+						else {
+							force = glm::vec2(0, -1);
+						}
 					}
+					return force * agent->getMaxForce();
 				}
-				else {
-					if (displacement.y > 0.f) {
-						force = glm::vec2(0,1);
-					}
-					else {
-						force = glm::vec2(0,-1);
-					}
-				}
-				return force * agent->getMaxForce();
 			}
 		}
 	}
+	return glm::vec2(0);
 	////TODO get all body colliders not belonging to this entity
 	//std::vector<EntityPtr> entitiesWithCollider = Entity::getEntitiesWithComponent(Component::collider, app->getEntityList());
 	////TODO maybe have m_app build container of body colliders/owner, passed to this

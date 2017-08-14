@@ -3,16 +3,23 @@
 #include "Entity.h"
 #include "utility.h"
 #include "GameProjectApp.h"
+#include "BoundsForce.h"
+#include "AvoidTerrainForce.h"
+
 
 const float Agent::def_max_velocity = 500.f;
 const float Agent::def_max_force = 100.f;
 
 Agent::Agent() : Component(), m_maxVelocity(def_max_velocity), m_maxForce(def_max_force), m_velocity(0), m_force(0)
 {
+	m_stayInBounds = std::make_shared<BoundsForce>();
+	m_avoidImpassableTerrain = std::make_shared<AvoidTerrainForce>();
 }
 
 Agent::Agent(float maxVelocity, float maxForce) : Component(), m_maxVelocity(maxVelocity), m_maxForce(maxForce), m_velocity(0), m_force(0)
 {
+	m_stayInBounds = std::make_shared<BoundsForce>();
+	m_avoidImpassableTerrain = std::make_shared<AvoidTerrainForce>();
 }
 
 Agent::~Agent()
@@ -57,7 +64,8 @@ void Agent::update(float deltaTime)
 			break;
 		}
 	}
-	
+	m_force = totalForce;
+
 	// Update timers
 	for (auto timer : m_timers) {
 		timer.second.update(deltaTime);

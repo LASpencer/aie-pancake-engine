@@ -9,12 +9,18 @@ const float Flocking::def_range = 300.f;
 
 Flocking::Flocking() : m_alignmentWeight(def_alignment_weight), m_cohesionWeight(def_cohesion_weight), m_separationWeight(def_separation_weight), m_range(def_range)
 {
+	m_alignment = std::make_shared<AlignmentForce>();
+	m_cohesion = std::make_shared<CohesionForce>();
+	m_separation = std::make_shared<SeparationForce>();
 	isBoidRule = [](Agent* a) {return true; };
 }
 
 Flocking::Flocking(bool(*boidRule)(Agent *), float separationWeight, float alignmentWeight, float cohesionWeight, float range)
 	: m_alignmentWeight(alignmentWeight), m_cohesionWeight(cohesionWeight), m_separationWeight(separationWeight), m_range(range), isBoidRule(boidRule)
 {
+	m_alignment = std::make_shared<AlignmentForce>();
+	m_cohesion = std::make_shared<CohesionForce>();
+	m_separation = std::make_shared<SeparationForce>();
 }
 
 Flocking::~Flocking()
@@ -44,13 +50,13 @@ BehaviourResult Flocking::update(Agent * agent, float deltaTime)
 		return failure;
 	}
 	else {
-		m_alignment.setNeighbours(neighbours);
-		m_cohesion.setNeighbours(neighbours);
-		m_separation.setNeighbours(neighbours);
+		m_alignment->setNeighbours(neighbours);
+		m_cohesion->setNeighbours(neighbours);
+		m_separation->setNeighbours(neighbours);
 		//TODO make these shared_ptrs instead
-		agent->addForce(m_alignment, m_alignmentWeight);
-		agent->addForce(m_cohesion, m_cohesionWeight);
-		agent->addForce(m_separation, m_separationWeight);
+		agent->addForce(std::dynamic_pointer_cast<SteeringForce>(m_alignment), m_alignmentWeight);
+		agent->addForce(std::dynamic_pointer_cast<SteeringForce>(m_cohesion), m_cohesionWeight);
+		agent->addForce(std::dynamic_pointer_cast<SteeringForce>(m_separation), m_separationWeight);
 	}
 	return BehaviourResult();
 }

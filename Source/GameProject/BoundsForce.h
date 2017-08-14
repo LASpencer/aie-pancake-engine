@@ -8,9 +8,6 @@ class BoundsForce :
 	public SteeringForce
 {
 public:
-	static const float def_max_x;
-	static const float def_max_y;
-
 	BoundsForce();
 
 	BoundsForce(float minX, float maxX, float minY, float maxY);

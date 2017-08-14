@@ -2,8 +2,9 @@
 #include "KeyboardController.h"
 #include "Entity.h"
 #include "Agent.h"
+#include "KeyboardControlForce.h"
 
-KeyboardController::KeyboardController()
+KeyboardController::KeyboardController() : m_keyboardControl(std::make_shared<KeyboardControlForce>())
 {
 }
 
@@ -19,29 +20,6 @@ Behaviour * KeyboardController::clone()
 
 BehaviourResult KeyboardController::update(Agent* agent, float deltaTime)
 {
-	// HACK move to keyboardController force instead
-	aie::Input* input = aie::Input::getInstance();
-
-	float magnitude = agent->getMaxForce();
-	glm::vec2 force(0);
-
-	if (input->isKeyDown(aie::INPUT_KEY_W)) {
-		force += glm::vec2(0, magnitude);
-	} else if (input->isKeyDown(aie::INPUT_KEY_S)) {
-		force += glm::vec2(0, -magnitude);
-	}
-	
-	if (input->isKeyDown(aie::INPUT_KEY_D)) {
-		force += glm::vec2(magnitude,0 );
-	} else if (input->isKeyDown(aie::INPUT_KEY_A)) {
-		force += glm::vec2(-magnitude, 0);
-	}
-
-	if (input->isKeyDown(aie::INPUT_KEY_LEFT_CONTROL)) {
-		force = -agent->getVelocity();
-	}
-
-	agent->addForce(force);
-
+	agent->addForce(std::dynamic_pointer_cast<SteeringForce>(m_keyboardControl), 1.f);
 	return success;
 }

@@ -16,6 +16,6 @@ public:
 	void setTarget(TargetPtr target);
 
 protected:
-	PursueForce m_force; //TODO make shared_ptr
+	std::shared_ptr<PursueForce> m_force; //TODO make shared_ptr
 
 };

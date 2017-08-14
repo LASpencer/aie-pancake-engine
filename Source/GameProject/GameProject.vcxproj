@@ -133,6 +133,7 @@
     <ClCompile Include="GuardStateMachine.cpp" />
     <ClCompile Include="GuardStates.cpp" />
     <ClCompile Include="InputEvent.cpp" />
+    <ClCompile Include="KeyboardControlForce.cpp" />
     <ClCompile Include="KeyboardController.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapGraph.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="GuardStateMachine.h" />
     <ClInclude Include="GuardStates.h" />
     <ClInclude Include="InputEvent.h" />
+    <ClInclude Include="KeyboardControlForce.h" />
     <ClInclude Include="KeyboardController.h" />
     <ClInclude Include="MapGraph.h" />
     <ClInclude Include="MoveToTarget.h" />

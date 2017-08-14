@@ -2,11 +2,11 @@
 #include "AttackTarget.h"
 #include "imgui.h"
 
-AttackTarget::AttackTarget() : m_force()
+AttackTarget::AttackTarget() : m_force(std::make_shared<PursueForce>())
 {
 }
 
-AttackTarget::AttackTarget(TargetPtr target) : m_force(target)
+AttackTarget::AttackTarget(TargetPtr target) : m_force(std::make_shared<PursueForce>(target))
 {
 }
 
@@ -21,7 +21,7 @@ Behaviour * AttackTarget::clone()
 
 BehaviourResult AttackTarget::update(Agent * entity, float deltaTime)
 {
-	entity->addForce(m_force.getForce(entity));
+	entity->addForce(std::dynamic_pointer_cast<SteeringForce>(m_force),1.f);
 
 	ImGui::Text("Attack Target behaviour");
 
@@ -30,5 +30,5 @@ BehaviourResult AttackTarget::update(Agent * entity, float deltaTime)
 
 void AttackTarget::setTarget(TargetPtr target)
 {
-	m_force.setTarget(target);
+	m_force->setTarget(target);
 }
