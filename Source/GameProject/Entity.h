@@ -28,7 +28,11 @@ public:
 	//	Tags which can be added to an entity
 	enum ETag {
 		immobile = 0x1,	// Entity does not move
-		car = 0x2		// Is a car
+		car = 0x2,		// Is a car
+		tank = 0x4,
+		base = 0x8,
+		red_team = 0x10,
+		blue_team = 0x20
 		//0x2,0x4,0x8,0x10,0x20 etc
 	};
 

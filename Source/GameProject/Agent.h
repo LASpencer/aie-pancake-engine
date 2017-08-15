@@ -56,7 +56,7 @@ public:
 	// Applies force to velocity and moves agent
 	virtual void moveAgent(float deltaTime);
 
-	// Returns Controller identifier
+	// Returns Agent identifier
 	virtual Identifier getID();
 
 	void setMaxVelocity(float maxVelocity);
@@ -95,18 +95,23 @@ public:
 	// Perform any cleanup needed when removing subject
 	virtual void removeSubject(Subject* subject);
 
+	bool canMove();
+
 protected:
 	BehaviourPtr m_behaviour;
 	std::vector<WeightedForce> m_steeringForces;
 	std::map<TimerID, GameTimer> m_timers;
 	GridSquarePtr m_square;
+
 	glm::vec2 m_velocity;
 	glm::vec2 m_force;
 	float m_maxVelocity, m_adjustedMaxVelocity, m_maxForce;
+	bool m_canMove;
+
 	BoundsForcePtr m_stayInBounds;
 	AvoidTerrainForcePtr m_avoidImpassableTerrain;
 	
 	std::stack<GridSquarePtr> m_path;	// Squares forming path to goal position
 	glm::vec2 m_goal;
-
+	AgentPtr m_target;
 };

@@ -7,6 +7,7 @@
 #include "Entity.h"
 #include "EntityFactory.h"
 #include "Grid.h"
+#include "Agent.h"
 
 class GameProjectApp : public aie::Application {
 public:
@@ -31,6 +32,14 @@ public:
 	SceneObjectPtr getSceneRoot();
 	std::vector<EntityPtr>& getEntityList();
 	Grid* getGrid();
+	
+	std::vector<VehiclePtr>& getBlueTeam();
+
+	std::vector<VehiclePtr>& getRedTeam();
+
+	EntityPtr getBlueBase();
+
+	EntityPtr getRedBase();
 
 protected:
 	aie::Renderer2D*	m_2dRenderer;
@@ -40,6 +49,10 @@ protected:
 	SceneObjectPtr		m_sceneRoot;		// Root node of scene graph
 	std::unique_ptr<Grid>				m_mapGraph;
 	std::vector<GridSquarePtr>			m_impassableSquares;
+	std::vector<VehiclePtr>				m_blueTeam;
+	std::vector<VehiclePtr>				m_redTeam;
+	EntityPtr							m_blueBase;
+	EntityPtr							m_redBase;
 
 	//HACK for testing pathfinding
 	GridSquarePtr m_startPos;

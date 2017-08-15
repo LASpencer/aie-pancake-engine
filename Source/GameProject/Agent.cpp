@@ -13,13 +13,13 @@
 const float Agent::def_max_velocity = 500.f;
 const float Agent::def_max_force = 100.f;
 
-Agent::Agent() : Component(), m_maxVelocity(def_max_velocity), m_maxForce(def_max_force), m_velocity(0), m_force(0)
+Agent::Agent() : Component(), m_maxVelocity(def_max_velocity), m_maxForce(def_max_force), m_velocity(0), m_force(0), m_canMove(true)
 {
 	m_stayInBounds = std::make_shared<BoundsForce>();
 	m_avoidImpassableTerrain = std::make_shared<AvoidTerrainForce>();
 }
 
-Agent::Agent(float maxVelocity, float maxForce) : Component(), m_maxVelocity(maxVelocity), m_maxForce(maxForce), m_velocity(0), m_force(0)
+Agent::Agent(float maxVelocity, float maxForce) : Component(), m_maxVelocity(maxVelocity), m_maxForce(maxForce), m_velocity(0), m_force(0), m_canMove(true)
 {
 	m_stayInBounds = std::make_shared<BoundsForce>();
 	m_avoidImpassableTerrain = std::make_shared<AvoidTerrainForce>();
@@ -49,7 +49,11 @@ void Agent::update(float deltaTime)
 	EntityPtr entity(m_entity);
 	// Get current square and adjust maximum speed for terrain
 	m_square = entity->getApp()->getGrid()->getSquare(getPosition());
-	m_adjustedMaxVelocity = m_maxVelocity * m_square->getSpeedFactor();
+	if (m_canMove) {
+		m_adjustedMaxVelocity = m_maxVelocity * m_square->getSpeedFactor();
+	} else {
+		m_adjustedMaxVelocity = 0.f;
+	}
 	// Clear forces
 	m_steeringForces.clear();
 	// Add default forces
@@ -202,5 +206,10 @@ bool Agent::addSubject(Subject * subject)
 
 void Agent::removeSubject(Subject * subject)
 {
+}
+
+bool Agent::canMove()
+{
+	return  m_canMove;
 }
 

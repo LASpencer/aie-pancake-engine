@@ -3,7 +3,7 @@
 #include "Entity.h"
 #include "Agent.h"
 
-//TODO target can give its shape
+//TODO get rid of this, rewrite relevant forces with different point/agent versions
 
 class Target {
 public:

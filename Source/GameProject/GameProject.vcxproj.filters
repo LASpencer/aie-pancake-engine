@@ -315,6 +315,12 @@
     <ClCompile Include="KeyboardControlForce.cpp">
       <Filter>Source Files\Entities\Behaviours\Steering</Filter>
     </ClCompile>
+    <ClCompile Include="VehicleAgent.cpp">
+      <Filter>Source Files\Entities\Components\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="AgentIsTankQuestion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameProjectApp.h">
@@ -558,7 +564,10 @@
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
     <ClInclude Include="VehicleAgent.h">
-      <Filter>Source Files\Entities\Components\Agents</Filter>
+      <Filter>Header Files\Entities\Components\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="AgentIsTankQuestion.h">
+      <Filter>Header Files\Entities\Behaviours\Question Behaviours</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

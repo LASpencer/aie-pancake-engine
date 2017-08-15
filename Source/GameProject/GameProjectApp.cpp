@@ -42,20 +42,20 @@ bool GameProjectApp::startup() {
 
 	std::vector<std::vector<int>> tileIDs =
 	{ {0,2,0,0,0,2,0,0,0},
-	{ 0,0,0,2,0,0,0,2,0 },
-	{ 2,2,2,1,1,1,2,2,2 },
+	{ 0,0,0,2,0,0,0,0,0 },
+	{ 2,0,0,1,1,1,2,1,2 },
 	{ 0,0,0,0,1,2,0,0,0 },
-	{ 2,0,0,1,2,0,0,2,0 },
+	{ 2,0,0,1,1,0,0,2,0 },
 	{ 0,2,2,1,0,0,0,2,0 },
 	{ 0,0,0,2,0,0,2,0,0 },
-	{ 0,0,1,1,2,2,0,0,0 },
-	{ 1,1,1,1,0,0,2,2,0 },
-	{ 0,0,0,0,0,2,0,0,0 },
+	{ 0,0,1,1,2,1,0,0,0 },
+	{ 1,1,1,1,1,1,1,2,0 },
+	{ 0,0,0,0,0,1,1,0,0 },
 	{ 0,0,0,2,2,2,0,0,0 },
 	{ 0,0,1,0,0,2,0,0,0 },
 	{ 2,2,2,0,0,0,0,2,0 },
-	{ 0,0,1,0,2,2,2,0,0 },
-	{ 0,1,1,1,0,0,0,0,2 },
+	{ 0,0,1,0,1,1,2,0,0 },
+	{ 0,1,1,1,1,0,0,0,2 },
 	{ 0,0,0,0,1,2,2,0,0 } };
 
 	std::vector<std::vector<TileType>> tiles;
@@ -71,7 +71,7 @@ bool GameProjectApp::startup() {
 
 	m_impassableSquares = m_mapGraph->getImpassableSquares();
 
-	EntityPtr player = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(500,500)));
+	EntityPtr player = m_entityFactory->createEntity(EntityFactory::blue_tank, glm::translate(glm::mat3(1), glm::vec2(500,500)));
 	AgentPtr playerAgent = std::dynamic_pointer_cast<Agent>(player->getComponent(Component::agent));
 	//playerAgent->setBehaviour(std::make_shared<KeyboardController>());
 
@@ -82,7 +82,7 @@ bool GameProjectApp::startup() {
 	// Spawn a bunch of wandering cars
 
 	for (int i = 0; i < 10; ++i) {
-		EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::car, glm::translate(glm::mat3(1), glm::vec2(100 + 30*i, 300 + 20*i)));
+		EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::red_tank, glm::translate(glm::mat3(1), glm::vec2(100 + 30*i, 300 + 20*i)));
 		AgentPtr wanderAgent = std::dynamic_pointer_cast<Agent>(wanderer->getComponent(Component::agent));
 		//wanderAgent->setMaxVelocity(50.f);
 		auto isCar = [](Agent* agent) {	EntityPtr entity(agent->getEntity());
@@ -254,5 +254,25 @@ std::vector<EntityPtr>& GameProjectApp::getEntityList()
 Grid* GameProjectApp::getGrid()
 {
 	return m_mapGraph.get();
+}
+
+std::vector<AgentPtr>& GameProjectApp::getBlueTeam()
+{
+	return m_blueTeam;
+}
+
+std::vector<AgentPtr>& GameProjectApp::getRedTeam()
+{
+	return m_redTeam;
+}
+
+EntityPtr GameProjectApp::getBlueBase()
+{
+	return m_blueBase;
+}
+
+EntityPtr GameProjectApp::getRedBase()
+{
+	return m_redBase;
 }
 

@@ -8,6 +8,7 @@
 #include <stdexcept>
 #include <memory>
 #include <string>
+#include <ctime>
 
 #include <vector>
 #include <map>
