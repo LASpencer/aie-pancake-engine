@@ -256,12 +256,12 @@ Grid* GameProjectApp::getGrid()
 	return m_mapGraph.get();
 }
 
-std::vector<AgentPtr>& GameProjectApp::getBlueTeam()
+std::vector<VehiclePtr>& GameProjectApp::getBlueTeam()
 {
 	return m_blueTeam;
 }
 
-std::vector<AgentPtr>& GameProjectApp::getRedTeam()
+std::vector<VehiclePtr>& GameProjectApp::getRedTeam()
 {
 	return m_redTeam;
 }

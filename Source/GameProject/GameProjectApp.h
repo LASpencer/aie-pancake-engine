@@ -8,6 +8,7 @@
 #include "EntityFactory.h"
 #include "Grid.h"
 #include "Agent.h"
+#include "VehicleAgent.h"
 
 class GameProjectApp : public aie::Application {
 public:

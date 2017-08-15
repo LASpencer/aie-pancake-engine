@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "VehicleAgent.h"
+#include "SpriteBase.h"
+#include "Entity.h"
 
 const float VehicleAgent::def_max_fuel = 100.f;
 const float VehicleAgent::def_attack_range = 50.f;
@@ -7,13 +9,21 @@ const float VehicleAgent::idling_speed = 0.4f;
 const float VehicleAgent::cruise_fuel_rate = 2.f;
 const float VehicleAgent::idle_fuel_rate = 0.5f;
 const float VehicleAgent::def_firing_rate = 1.f;
+const float VehicleAgent::tank_uvh = 1.f;
+const float VehicleAgent::tank_uvw = 0.25f;
+const float VehicleAgent::tank_default_uvx = 0.f;
+const float VehicleAgent::tank_shooting_uvx = 0.25f;
+const float VehicleAgent::tank_damaged_uvx = 0.5f;
+const float VehicleAgent::tank_destroyed_uvx = 0.75f;
 
 VehicleAgent::VehicleAgent() : Agent(), m_maxFuel(def_max_fuel), m_attackRange(def_attack_range), m_team(blue), m_alive(true), m_engineOK(true), m_canShoot(true), m_attackCD(0.f)
 {
+	m_fuel = m_maxFuel;
 }
 
 VehicleAgent::VehicleAgent(Team team, float attackRange, float maxFuel, float maxVelocity, float maxForce) : Agent(maxVelocity, maxForce), m_attackRange(attackRange), m_maxFuel(maxFuel), m_team(team), m_alive(true), m_engineOK(true), m_canShoot(true), m_attackCD(0.f)
 {
+	m_fuel = m_maxFuel;
 }
 
 VehicleAgent::~VehicleAgent()
@@ -22,6 +32,17 @@ VehicleAgent::~VehicleAgent()
 
 void VehicleAgent::update(float deltaTime)
 {
+	if (m_alive) {
+		if (m_engineOK && m_canShoot) {
+			setAnimationFrame(default);
+		}
+		else {
+			setAnimationFrame(damaged);
+		}
+	}
+	else {
+		setAnimationFrame(destroyed);
+	}
 	Agent::update(deltaTime);
 	if (m_attackCD > 0.f) {
 		m_attackCD -= deltaTime;
@@ -98,7 +119,36 @@ void VehicleAgent::attack(VehiclePtr target)
 			if (hitRoll >= 0.8f) {
 				target->m_alive = false;
 			}
+			//Set attacking sprite
+			// TODO maybe start countdown which, while on, shows attacking sprite?
+			setAnimationFrame(shooting);
 		}
 	}
 	//TODO set uvrect of sprite for damage sustained, shooting
+}
+
+void VehicleAgent::setAnimationFrame(TankAnimationFrame frame)
+{
+	float uvx = 0.f;
+	switch (frame) {
+	case(default):
+		uvx = tank_default_uvx;
+		break;
+	case(shooting):
+		uvx = tank_shooting_uvx;
+		break;
+	case(damaged):
+		uvx = tank_damaged_uvx;
+		break;
+	case(destroyed):
+		uvx = tank_destroyed_uvx;
+		break;
+	default:
+		break;
+	}
+	EntityPtr entity(m_entity);
+	SpriteBase* sprite = dynamic_cast<SpriteBase*>(entity->getComponent(Component::sprite).get());
+	if (sprite != nullptr) {
+		sprite->setUVRect(uvx, 0.f, tank_uvw, tank_uvh);
+	}
 }

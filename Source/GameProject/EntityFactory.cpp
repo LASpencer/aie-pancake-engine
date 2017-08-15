@@ -117,28 +117,31 @@ EntityPtr EntityFactory::createTank(glm::mat3 position, SceneObjectPtr parent, b
 {
 	EntityPtr tank = std::make_shared<Entity>(m_app);
 	TexturePtr sprite;
+	Team team;
 	setEntityPosition(tank, position, parent);
 	tank->addTag(Entity::tank);
 	if (isBlueTeam) {
 		tank->addTag(Entity::blue_team);
+		team = blue;
 		sprite = m_app->getResourceManager()->getTexture(filepath::blue_tank);
 	} else {
 		tank->addTag(Entity::red_team);
+		team = red;
 		sprite = m_app->getResourceManager()->getTexture(filepath::red_tank);
 	}
 	// Add sprite
-	tank->addComponent(std::make_shared<Sprite>(sprite));
+	tank->addComponent(std::make_shared<Sprite>(sprite, 60, 100));
 	// Add collider
 	ColliderPtr collider = std::make_shared<Collider>();
 	//std::shared_ptr<AABox> box = std::make_shared<AABox>(glm::vec2(-18, -21), glm::vec2(18, 21), BoxType::body);
 	//TODO set size based on sprite picked
-	std::shared_ptr<OBox> box = std::make_shared<OBox>(glm::vec2(18, 0), glm::vec2(0, 21), glm::vec2(0, 0), BoxType::body);
+	std::shared_ptr<OBox> box = std::make_shared<OBox>(glm::vec2(20, 0), glm::vec2(0, 26), glm::vec2(0, -5), BoxType::body);
 	collider->addBox(std::static_pointer_cast<CollisionShape>(box));
 	tank->addComponent(collider);
 	// Add agent
 	//TODO change to VehicleAgent when done
 	//TODO create and add behaviour tree as suitable
-	VehiclePtr agent = std::make_shared<VehicleAgent>(100, 200);
+	VehiclePtr agent = std::make_shared<VehicleAgent>(team, 50, 100, 100, 200);
 	tank->addComponent(agent);
 	if (isBlueTeam) {
 		m_app->getBlueTeam().push_back(agent);
