@@ -23,6 +23,8 @@
 
 const glm::vec2 GameProjectApp::min_corner = glm::vec2(0);
 const glm::vec2 GameProjectApp::max_corner = glm::vec2(1280, 720);
+const glm::vec2 GameProjectApp::red_base_pos = glm::vec2(1180, 600);
+const glm::vec2 GameProjectApp::blue_base_pos = glm::vec2(140, 120);
 
 GameProjectApp::GameProjectApp() : m_entityList()
 {
@@ -71,6 +73,11 @@ bool GameProjectApp::startup() {
 
 	m_impassableSquares = m_mapGraph->getImpassableSquares();
 
+	// Place bases
+	m_redBase = m_entityFactory->createEntity(EntityFactory::red_base, glm::translate(glm::mat3(1), red_base_pos));
+	m_blueBase = m_entityFactory->createEntity(EntityFactory::blue_base, glm::translate(glm::mat3(1), blue_base_pos));
+
+
 	EntityPtr player = m_entityFactory->createEntity(EntityFactory::blue_tank, glm::translate(glm::mat3(1), glm::vec2(500,500)));
 	AgentPtr playerAgent = std::dynamic_pointer_cast<Agent>(player->getComponent(Component::agent));
 	//playerAgent->setBehaviour(std::make_shared<KeyboardController>());
@@ -87,8 +94,10 @@ bool GameProjectApp::startup() {
 		//wanderAgent->setMaxVelocity(50.f);
 		auto isCar = [](Agent* agent) {	EntityPtr entity(agent->getEntity());
 										return (bool)(entity->getTagMask() & Entity::ETag::car); };
-		wanderAgent->setBehaviour(std::make_shared<Flocking>(isCar));
+		wanderAgent->setBehaviour(std::make_shared<Wander>());
 	}
+
+	
 	// Disable face culling, so sprites can be flipped
 	glDisable(GL_CULL_FACE);
 	return true;
@@ -256,23 +265,24 @@ Grid* GameProjectApp::getGrid()
 	return m_mapGraph.get();
 }
 
-std::vector<VehiclePtr>& GameProjectApp::getBlueTeam()
+std::vector<VehiclePtr>& GameProjectApp::getTeam(Team team)
 {
-	return m_blueTeam;
+	if (team == red) {
+		return m_redTeam;
+	}
+	else {
+		return m_blueTeam;
+	}
 }
 
-std::vector<VehiclePtr>& GameProjectApp::getRedTeam()
+EntityPtr GameProjectApp::getBase(Team team)
 {
-	return m_redTeam;
+	if (team == red) {
+		return m_redBase;
+	}
+	else {
+		return m_blueBase;
+	}
 }
 
-EntityPtr GameProjectApp::getBlueBase()
-{
-	return m_blueBase;
-}
-
-EntityPtr GameProjectApp::getRedBase()
-{
-	return m_redBase;
-}
 

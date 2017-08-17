@@ -133,6 +133,16 @@ GridSquarePtr Agent::getSquare()
 	return m_square;
 }
 
+void Agent::setTarget(AgentPtr target)
+{
+	m_target = target;
+}
+
+AgentPtr Agent::getTarget()
+{
+	return m_target;
+}
+
 void Agent::setBehaviour(BehaviourPtr behaviour)
 {
 	m_behaviour = behaviour;

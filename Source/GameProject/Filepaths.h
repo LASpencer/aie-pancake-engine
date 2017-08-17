@@ -15,5 +15,8 @@ namespace filepath {
 	const std::string block = "./textures/tankBeige.png";
 	const std::string red_tank = "./textures/RedTank.png";
 	const std::string blue_tank = "./textures/BlueTank.png";
+	const std::string red_base = "./textures/RedBase.png";
+	const std::string blue_base = "./textures/BlueBase.png";
+	const std::string fuel_depot = "./textures/FuelDepot.png";
 	// TODO pick actual tank sprites
 }

@@ -20,6 +20,7 @@ class VehicleAgent : public Agent {
 public:
 	static const float def_max_fuel;
 	static const float def_attack_range;
+	static const float neighbour_range;
 	static const float idling_speed;
 	static const float cruise_fuel_rate;
 	static const float idle_fuel_rate;
@@ -40,6 +41,10 @@ public:
 	virtual void update(float deltaTime);
 
 	Team getTeam();
+
+	std::vector<VehicleAgent*>& getNeighbours();
+
+	std::vector<VehicleAgent*>& getEnemyNeighbours();
 
 	float getMaxFuel();
 
@@ -64,4 +69,6 @@ protected:
 	float m_fuel, m_maxFuel, m_attackRange, m_attackCD;
 	bool m_alive, m_engineOK, m_canShoot;
 	Team m_team;
+	std::vector<VehicleAgent*> m_neighbours;
+	std::vector<VehicleAgent*> m_enemyNeighbours;
 };

@@ -14,6 +14,8 @@ class GameProjectApp : public aie::Application {
 public:
 	static const glm::vec2 min_corner;
 	static const glm::vec2 max_corner;
+	static const glm::vec2 red_base_pos;
+	static const glm::vec2 blue_base_pos;
 
 	GameProjectApp();
 	virtual ~GameProjectApp();
@@ -34,13 +36,9 @@ public:
 	std::vector<EntityPtr>& getEntityList();
 	Grid* getGrid();
 	
-	std::vector<VehiclePtr>& getBlueTeam();
+	std::vector<VehiclePtr>& getTeam(Team team);
 
-	std::vector<VehiclePtr>& getRedTeam();
-
-	EntityPtr getBlueBase();
-
-	EntityPtr getRedBase();
+	EntityPtr getBase(Team team);
 
 protected:
 	aie::Renderer2D*	m_2dRenderer;

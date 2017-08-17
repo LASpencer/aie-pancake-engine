@@ -321,6 +321,15 @@
     <ClCompile Include="AgentIsTankQuestion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="NotBehaviour.cpp">
+      <Filter>Source Files\Entities\Behaviours\Composite Behaviours</Filter>
+    </ClCompile>
+    <ClCompile Include="IsDeadQuestion.cpp">
+      <Filter>Source Files\Entities\Behaviours\Question Behaviours</Filter>
+    </ClCompile>
+    <ClCompile Include="OutnumberedQuestion.cpp">
+      <Filter>Source Files\Entities\Behaviours\Question Behaviours</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameProjectApp.h">
@@ -567,6 +576,15 @@
       <Filter>Header Files\Entities\Components\Agents</Filter>
     </ClInclude>
     <ClInclude Include="AgentIsTankQuestion.h">
+      <Filter>Header Files\Entities\Behaviours\Question Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="IsDeadQuestion.h">
+      <Filter>Header Files\Entities\Behaviours\Question Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="NotBehaviour.h">
+      <Filter>Header Files\Entities\Behaviours\Composite Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="OutnumberedQuestion.h">
       <Filter>Header Files\Entities\Behaviours\Question Behaviours</Filter>
     </ClInclude>
   </ItemGroup>

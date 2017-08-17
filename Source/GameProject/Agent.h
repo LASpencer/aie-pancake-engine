@@ -72,6 +72,10 @@ public:
 
 	GridSquarePtr getSquare();
 
+	void setTarget(AgentPtr target);
+
+	AgentPtr getTarget();
+
 	virtual void setBehaviour(BehaviourPtr behaviour);
 
 	/** Sets goal position and calculates path to reach it

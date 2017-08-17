@@ -2,9 +2,11 @@
 #include "VehicleAgent.h"
 #include "SpriteBase.h"
 #include "Entity.h"
+#include "GameProjectApp.h"
 
 const float VehicleAgent::def_max_fuel = 100.f;
 const float VehicleAgent::def_attack_range = 50.f;
+const float VehicleAgent::neighbour_range = 300.f;
 const float VehicleAgent::idling_speed = 0.4f;
 const float VehicleAgent::cruise_fuel_rate = 2.f;
 const float VehicleAgent::idle_fuel_rate = 0.5f;
@@ -32,6 +34,24 @@ VehicleAgent::~VehicleAgent()
 
 void VehicleAgent::update(float deltaTime)
 {
+	// Get neighbours from app
+	EntityPtr entity(m_entity);
+	GameProjectApp* app = entity->getApp();
+	for (VehiclePtr vehicle : app->getTeam(m_team)) {
+		if (vehicle.get() != this) {
+			glm::vec2 displacement = vehicle->getPosition() - getPosition();
+			if (glm::dot(displacement, displacement) > neighbour_range * neighbour_range) {
+				m_neighbours.push_back(vehicle.get());
+			}
+		}
+	}
+	for (VehiclePtr vehicle : app->getTeam((m_team == red) ? blue : red)) {
+		glm::vec2 displacement = vehicle->getPosition() - getPosition();
+		if (glm::dot(displacement, displacement) > neighbour_range * neighbour_range) {
+			m_enemyNeighbours.push_back(vehicle.get());
+		}
+	}
+
 	if (m_alive) {
 		if (m_engineOK && m_canShoot) {
 			setAnimationFrame(default);
@@ -61,12 +81,25 @@ void VehicleAgent::update(float deltaTime)
 	} else {
 		m_canMove = false;
 	}
-	
+
+	// Clear neighbours
+	m_neighbours.clear();
+	m_enemyNeighbours.clear();
 }
 
 Team VehicleAgent::getTeam()
 {
 	return m_team;
+}
+
+std::vector<VehicleAgent*>& VehicleAgent::getNeighbours()
+{
+	return m_neighbours;
+}
+
+std::vector<VehicleAgent*>& VehicleAgent::getEnemyNeighbours()
+{
+	return m_enemyNeighbours;
 }
 
 float VehicleAgent::getMaxFuel()

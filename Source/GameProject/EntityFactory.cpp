@@ -46,6 +46,12 @@ EntityPtr EntityFactory::createEntity(EntityType type, glm::mat3 position, Scene
 	case(blue_tank):
 		entity = createTank(position, parent, true);
 		break;
+	case(blue_base):
+		entity = createBase(position, parent, true);
+	break;
+	case(red_base):
+		entity = createBase(position, parent, false);
+	break;
 	default:
 		break;
 	}
@@ -141,17 +147,36 @@ EntityPtr EntityFactory::createTank(glm::mat3 position, SceneObjectPtr parent, b
 	// Add agent
 	//TODO change to VehicleAgent when done
 	//TODO create and add behaviour tree as suitable
-	VehiclePtr agent = std::make_shared<VehicleAgent>(team, 50, 100, 100, 200);
+	VehiclePtr agent = std::make_shared<VehicleAgent>(team, 100, 100, 100, 200);
 	tank->addComponent(agent);
 	if (isBlueTeam) {
-		m_app->getBlueTeam().push_back(agent);
+		m_app->getTeam(blue).push_back(agent);
 	} else {
-		m_app->getRedTeam().push_back(agent);
+		m_app->getTeam(red).push_back(agent);
 	}
 	// Agent observes collider
 	collider->addObserver(agent);
 
 	return tank;
+}
+
+EntityPtr EntityFactory::createBase(glm::mat3 position, SceneObjectPtr parent, bool isBlueTeam)
+{
+	EntityPtr base = std::make_shared<Entity>(m_app);
+	TexturePtr sprite;
+	setEntityPosition(base, position, parent);
+	base->addTag(Entity::base);
+	if (isBlueTeam) {
+		base->addTag(Entity::blue_team);
+		sprite = m_app->getResourceManager()->getTexture(filepath::blue_base);
+	}
+	else {
+		base->addTag(Entity::red_team);
+		sprite = m_app->getResourceManager()->getTexture(filepath::red_base);
+	}
+	//Add sprite
+	base->addComponent(std::make_shared<Sprite>(sprite));
+	return base;
 }
 
 bool EntityFactory::setEntityPosition(EntityPtr entity, glm::mat3 position, SceneObjectPtr parent)
