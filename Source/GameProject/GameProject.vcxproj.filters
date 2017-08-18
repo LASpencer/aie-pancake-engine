@@ -330,6 +330,12 @@
     <ClCompile Include="OutnumberedQuestion.cpp">
       <Filter>Source Files\Entities\Behaviours\Question Behaviours</Filter>
     </ClCompile>
+    <ClCompile Include="DeathBehaviour.cpp">
+      <Filter>Source Files\Entities\Behaviours</Filter>
+    </ClCompile>
+    <ClCompile Include="FleeDanger.cpp">
+      <Filter>Source Files\Entities\Behaviours</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameProjectApp.h">
@@ -586,6 +592,12 @@
     </ClInclude>
     <ClInclude Include="OutnumberedQuestion.h">
       <Filter>Header Files\Entities\Behaviours\Question Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="DeathBehaviour.h">
+      <Filter>Header Files\Entities\Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="FleeDanger.h">
+      <Filter>Header Files\Entities\Behaviours</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

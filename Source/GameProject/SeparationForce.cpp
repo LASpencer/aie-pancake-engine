@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "SeparationForce.h"
 #include "Agent.h"
+#include "VehicleAgent.h"
 
-SeparationForce::SeparationForce()
+SeparationForce::SeparationForce(bool fleeEnemies) : m_fleeEnemies(fleeEnemies)
 {
 }
 
@@ -12,17 +13,21 @@ SeparationForce::~SeparationForce()
 
 glm::vec2 SeparationForce::getForce(Agent * agent)
 {
-	//gets direction from each neighbor to self, divide by size of neighbourhood, use as target velocity
 	glm::vec2 seperatingForce(0);
-	glm::vec2 position = agent->getPosition();
-	for (auto neighbour : m_neighbours) {
-		seperatingForce += position - neighbour.lock()->getPosition();
+	VehicleAgent* vehicle = dynamic_cast<VehicleAgent*>(agent);
+	if (vehicle != nullptr) {
+		glm::vec2 position = agent->getPosition();
+		std::vector<VehicleAgent*>& neighbours = (m_fleeEnemies? vehicle->getEnemyNeighbours() : vehicle->getNeighbours());
+		for (auto neighbour : neighbours) {
+			seperatingForce += position - neighbour->getPosition();
+		}
+		seperatingForce *= 1.f / neighbours.size();
 	}
-	seperatingForce *= 1.f / m_neighbours.size();
+	//gets direction from each neighbor to self, divide by size of neighbourhood, use as target velocity
 	return seperatingForce - agent->getVelocity();
 }
 
-void SeparationForce::setNeighbours(std::vector<AgentWeakPtr>& neighbours)
+void SeparationForce::setFleeEnemies(bool fleeEnemies)
 {
-	m_neighbours = neighbours;
+	m_fleeEnemies = fleeEnemies;
 }

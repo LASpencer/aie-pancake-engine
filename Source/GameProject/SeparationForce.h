@@ -3,12 +3,13 @@
 
 class SeparationForce : public SteeringForce {
 public:
-	SeparationForce();
+	SeparationForce(bool fleeEnemies = false);
 	virtual ~SeparationForce();
 
 	virtual glm::vec2 getForce(Agent* agent);
-	void setNeighbours(std::vector<AgentWeakPtr>& neighbours);
+
+	void setFleeEnemies(bool fleeEnemies);
 
 protected:
-	std::vector<AgentWeakPtr> m_neighbours;
+	bool m_fleeEnemies;
 };
