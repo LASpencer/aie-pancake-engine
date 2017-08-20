@@ -13,7 +13,6 @@ public:
 	virtual Behaviour* clone();
 
 
-
 	//Try in order until success
 	virtual BehaviourResult update(Agent* agent, float deltaTime);
 };

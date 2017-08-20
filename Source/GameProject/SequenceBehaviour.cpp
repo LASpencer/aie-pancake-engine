@@ -15,7 +15,26 @@ SequenceBehaviour::~SequenceBehaviour()
 
 Behaviour * SequenceBehaviour::clone()
 {
-	return new SequenceBehaviour(*this);
+	std::vector<BehaviourPtr> clonedChildren;
+	Behaviour* ongoingChild;
+	for (BehaviourPtr child : m_children) {
+		BehaviourPtr childClone(child->clone());
+		clonedChildren.push_back(childClone);
+		if (m_ongoingBehaviour->get() == child.get()) {
+			ongoingChild = childClone.get();
+		}
+	}
+	SequenceBehaviour* cloned = new SequenceBehaviour(clonedChildren);
+	if (m_running) {
+		cloned->m_running = true;
+		for (std::vector<BehaviourPtr>::iterator it = cloned->m_children.begin(); it != cloned->m_children.end(); ++it) {
+			if (it->get() == ongoingChild) {
+				cloned->m_ongoingBehaviour = it;
+				break;
+			}
+		}
+	}
+	return cloned;
 }
 
 

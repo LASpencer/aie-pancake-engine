@@ -40,15 +40,22 @@ void VehicleAgent::update(float deltaTime)
 	for (VehiclePtr vehicle : app->getTeam(m_team)) {
 		if (vehicle.get() != this) {
 			glm::vec2 displacement = vehicle->getPosition() - getPosition();
-			if (glm::dot(displacement, displacement) > neighbour_range * neighbour_range) {
+			if (glm::dot(displacement, displacement) < neighbour_range * neighbour_range) {
 				m_neighbours.push_back(vehicle.get());
 			}
 		}
 	}
+	float nearestEnemyDistance = INFINITY;
 	for (VehiclePtr vehicle : app->getTeam((m_team == red) ? blue : red)) {
 		glm::vec2 displacement = vehicle->getPosition() - getPosition();
-		if (glm::dot(displacement, displacement) > neighbour_range * neighbour_range) {
+		float distance = glm::dot(displacement, displacement);
+		if (distance < neighbour_range * neighbour_range) {
 			m_enemyNeighbours.push_back(vehicle.get());
+		}
+		// Set nearest enemy as target
+		if (distance < nearestEnemyDistance) {
+			nearestEnemyDistance = distance;
+			m_target = std::dynamic_pointer_cast<AgentPtr>(vehicle);
 		}
 	}
 

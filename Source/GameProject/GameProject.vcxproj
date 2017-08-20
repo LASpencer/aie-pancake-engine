@@ -139,6 +139,7 @@
     <ClCompile Include="IsDeadQuestion.cpp" />
     <ClCompile Include="KeyboardControlForce.cpp" />
     <ClCompile Include="KeyboardController.cpp" />
+    <ClCompile Include="LogBehaviour.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapGraph.cpp" />
     <ClCompile Include="MoveToTarget.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="IsDeadQuestion.h" />
     <ClInclude Include="KeyboardControlForce.h" />
     <ClInclude Include="KeyboardController.h" />
+    <ClInclude Include="LogBehaviour.h" />
     <ClInclude Include="MapGraph.h" />
     <ClInclude Include="MoveToTarget.h" />
     <ClInclude Include="MultiSprite.h" />

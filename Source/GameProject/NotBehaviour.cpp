@@ -15,7 +15,10 @@ NotBehaviour::~NotBehaviour()
 
 Behaviour * NotBehaviour::clone()
 {
-	return new NotBehaviour(*this);
+	BehaviourPtr clonedBehaviour(m_behaviour->clone());
+
+	return new NotBehaviour(clonedBehaviour);
+
 }
 
 BehaviourResult NotBehaviour::update(Agent * agent, float deltaTime)

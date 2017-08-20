@@ -1,12 +1,13 @@
 #pragma once
+#pragma once
 #include "Behaviour.h"
 
-class NotBehaviour : public Behaviour {
-	NotBehaviour();
+class LogBehaviour : public Behaviour {
+	LogBehaviour();
 
-	NotBehaviour(BehaviourPtr behaviour);
+	LogBehaviour(BehaviourPtr behaviour, std::string message);
 
-	virtual ~NotBehaviour();
+	virtual ~LogBehaviour();
 
 	virtual Behaviour* clone();
 
@@ -16,6 +17,9 @@ class NotBehaviour : public Behaviour {
 
 	BehaviourPtr getBehaviour();
 
+	void setMessage(std::string message);
+
 protected:
 	BehaviourPtr m_behaviour;
+	std::string m_message;
 };

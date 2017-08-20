@@ -318,9 +318,6 @@
     <ClCompile Include="VehicleAgent.cpp">
       <Filter>Source Files\Entities\Components\Agents</Filter>
     </ClCompile>
-    <ClCompile Include="AgentIsTankQuestion.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="NotBehaviour.cpp">
       <Filter>Source Files\Entities\Behaviours\Composite Behaviours</Filter>
     </ClCompile>
@@ -335,6 +332,12 @@
     </ClCompile>
     <ClCompile Include="FleeDanger.cpp">
       <Filter>Source Files\Entities\Behaviours</Filter>
+    </ClCompile>
+    <ClCompile Include="AgentIsTankQuestion.cpp">
+      <Filter>Source Files\Entities\Behaviours\Question Behaviours</Filter>
+    </ClCompile>
+    <ClCompile Include="LogBehaviour.cpp">
+      <Filter>Source Files\Entities\Behaviours\Composite Behaviours</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -598,6 +601,9 @@
     </ClInclude>
     <ClInclude Include="FleeDanger.h">
       <Filter>Header Files\Entities\Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="LogBehaviour.h">
+      <Filter>Header Files\Entities\Behaviours\Composite Behaviours</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
