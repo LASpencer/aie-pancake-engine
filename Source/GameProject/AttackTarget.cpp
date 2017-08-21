@@ -29,9 +29,6 @@ BehaviourResult AttackTarget::update(Agent * agent, float deltaTime)
 			return failure;
 		} else if (tank->attack(target)) {
 			ImGui::Text("Attack Target behaviour");
-		} else if (tank->pursueTarget()){
-			ImGui::Text("Attack Target behaviour: move closer");
-
 		} else{
 			return failure;
 		}

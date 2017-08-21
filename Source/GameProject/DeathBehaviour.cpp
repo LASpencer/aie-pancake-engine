@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "DeathBehaviour.h"
 #include "imgui.h"
+#include "Agent.h"
+#include "VehicleAgent.h"
 
 DeathBehaviour::DeathBehaviour()
 {
@@ -17,7 +19,13 @@ Behaviour * DeathBehaviour::clone()
 
 BehaviourResult DeathBehaviour::update(Agent * agent, float deltaTime)
 {
-	ImGui::Text("Death behaviour");
-	//TODO running until countdown to respawn finishes? Or just be dead
+	// Respawn if dead for long enough
+	
+	if (agent->getTimer(Agent::dead).getTime() > 3.f) {
+		VehicleAgent* tank = dynamic_cast<VehicleAgent*>(agent);
+		if (tank != nullptr) {
+			tank->respawn();
+		}
+	}
 	return success;
 }

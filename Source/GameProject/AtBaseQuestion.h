@@ -2,7 +2,7 @@
 #include "Behaviour.h"
 #include "VehicleAgent.h"
 
-class AtBaseQuestion : Behaviour {
+class AtBaseQuestion : public Behaviour {
 public:
 	static const float base_size;
 

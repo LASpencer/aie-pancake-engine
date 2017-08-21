@@ -26,6 +26,7 @@ public:
 	static const float cruise_fuel_rate;
 	static const float idle_fuel_rate;
 	static const float def_firing_rate;
+	static const float shoot_time;
 
 	static const float tank_uvh;
 	static const float tank_uvw;
@@ -64,10 +65,14 @@ public:
 	// If target is in range, and 
 	bool attack(VehiclePtr target);
 
+	void kill();
+
+	void respawn();
+
 	void setAnimationFrame(TankAnimationFrame frame);
 
 protected:
-	float m_fuel, m_maxFuel, m_attackRange, m_attackCD;
+	float m_fuel, m_maxFuel, m_attackRange, m_attackCD, m_shootTime;
 	bool m_alive, m_engineOK, m_canShoot;
 	Team m_team;
 	PursueForcePtr m_pursueForce;

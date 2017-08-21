@@ -52,11 +52,11 @@ bool GameProjectApp::startup() {
 	{ 0,0,0,0,1,2,0,0,0 },
 	{ 2,0,0,1,1,0,0,2,0 },
 	{ 0,2,2,1,0,0,0,2,0 },
-	{ 0,0,0,2,0,0,2,0,0 },
-	{ 0,0,1,1,2,1,0,0,0 },
+	{ 0,0,0,1,0,0,2,0,0 },
+	{ 0,0,1,1,1,1,0,0,0 },
 	{ 1,1,1,1,1,1,1,2,0 },
 	{ 0,0,0,0,0,1,1,0,0 },
-	{ 0,0,0,2,2,2,0,0,0 },
+	{ 0,0,0,2,0,0,0,0,0 },
 	{ 0,0,1,0,0,2,0,0,0 },
 	{ 2,2,2,0,0,0,0,2,0 },
 	{ 0,0,1,0,1,1,2,0,0 },
@@ -85,28 +85,39 @@ bool GameProjectApp::startup() {
 	std::shared_ptr<SequenceBehaviour> attackSequence(new SequenceBehaviour());
 	std::shared_ptr<SequenceBehaviour> refuelSequence(new SequenceBehaviour());
 	std::shared_ptr<SelectorBehaviour> getFuel(new SelectorBehaviour());
+	std::shared_ptr<SequenceBehaviour> refuelAtBaseSequence(new SequenceBehaviour());
 	BehaviourPtr isDead(new IsDeadQuestion());
 	BehaviourPtr deathBehaviour(new DeathBehaviour());
 	BehaviourPtr isInDanger(new OutnumberedQuestion());
 	BehaviourPtr fleeDanger(new FleeDanger());
-	BehaviourPtr canAttack(new TargetInRangeQuestion(100.f));	//TODO add also a question checking if it can shoot
+	BehaviourPtr canAttack(new TargetInRangeQuestion(50.f));	//TODO move out to a chase target behaviour
 	BehaviourPtr attackEnemy(new AttackTarget());
 	BehaviourPtr isFuelLow(new FuelTooLowQuestion());
 	BehaviourPtr refuel(new RefuelBehaviour());
+	BehaviourPtr isAtBase(new AtBaseQuestion());
 	BehaviourPtr goToBase(new GoToBase());
 	BehaviourPtr wander(new Wander());
 
 	std::shared_ptr<LogBehaviour> loggedTankBehaviour(new LogBehaviour(BehaviourPtr(tankBehaviour->clone()), "Tank Behaviour"));
-	std::shared_ptr<LogBehaviour> loggedisTank(new LogBehaviour(BehaviourPtr(isTank->clone()), "Is tank?"));
+	std::shared_ptr<LogBehaviour> loggedIsTank(new LogBehaviour(BehaviourPtr(isTank->clone()), "Is tank?"));
 	std::shared_ptr<LogBehaviour> loggedPickBehaviour(new LogBehaviour(BehaviourPtr(pickTankBehaviour->clone()), "Select Tank Behaviour"));
 	std::shared_ptr<LogBehaviour> loggedDeathSequence(new LogBehaviour(BehaviourPtr(deathSequence->clone()), "Death Sequence"));
 	std::shared_ptr<LogBehaviour> loggedFleeDangerSequence(new LogBehaviour(BehaviourPtr(fleeDangerSequence->clone()), "Flee Danger Sequence"));
 	std::shared_ptr<LogBehaviour> loggedAttackSequence(new LogBehaviour(BehaviourPtr(attackSequence->clone()), "Attack Sequence"));
 	std::shared_ptr<LogBehaviour> loggedRefuelSequence(new LogBehaviour(BehaviourPtr(refuelSequence->clone()), "Refuel Sequence"));
 	std::shared_ptr<LogBehaviour> loggedGetFuel(new LogBehaviour(BehaviourPtr(getFuel->clone()), "Get Fuel"));
+	std::shared_ptr<LogBehaviour> loggedRefuelAtBase(new LogBehaviour(BehaviourPtr(refuelAtBaseSequence->clone()), "Get fuel from base"));
 	std::shared_ptr<LogBehaviour> loggedIsDead(new LogBehaviour(BehaviourPtr(isDead->clone()), "Am I dead?"));
 	std::shared_ptr<LogBehaviour> loggedDeathBehaviour(new LogBehaviour(BehaviourPtr(deathBehaviour->clone()), "Death Behaviour"));
 	std::shared_ptr<LogBehaviour> loggedIsInDanger(new LogBehaviour(BehaviourPtr(isInDanger->clone()), "Am I outnumbered?"));
+	std::shared_ptr<LogBehaviour> loggedFleeDanger(new LogBehaviour(BehaviourPtr(fleeDanger->clone()), "Flee Danger"));
+	std::shared_ptr<LogBehaviour> loggedCanAttack(new LogBehaviour(BehaviourPtr(canAttack->clone()), "Is target close enough?"));
+	std::shared_ptr<LogBehaviour> loggedAttackEnemy(new LogBehaviour(BehaviourPtr(attackEnemy->clone()), "Attacking Enemy"));
+	std::shared_ptr<LogBehaviour> loggedIsFuelLow(new LogBehaviour(BehaviourPtr(isFuelLow->clone()), "Is fuel too low?"));
+	std::shared_ptr<LogBehaviour> loggedRefuel(new LogBehaviour(BehaviourPtr(refuel->clone()), "Refuelling"));
+	std::shared_ptr<LogBehaviour> loggedIsAtBase(new LogBehaviour(BehaviourPtr(isAtBase->clone()), "Am I at my base?"));
+	std::shared_ptr<LogBehaviour> loggedGoToBase(new LogBehaviour(BehaviourPtr(goToBase->clone()), "Go to base"));
+	std::shared_ptr<LogBehaviour> loggedWander(new LogBehaviour(BehaviourPtr(wander->clone()), "Wander"));
 	//TODO finish off
 
 	deathSequence->addChild(isDead);
@@ -116,7 +127,9 @@ bool GameProjectApp::startup() {
 	attackSequence->addChild(canAttack);
 	attackSequence->addChild(attackEnemy);
 	refuelSequence->addChild(isFuelLow);
-	getFuel->addChild(refuel);
+	refuelAtBaseSequence->addChild(isAtBase);
+	refuelAtBaseSequence->addChild(refuel);
+	getFuel->addChild(refuelAtBaseSequence);
 	getFuel->addChild(goToBase);
 	refuelSequence->addChild(getFuel);
 
@@ -130,7 +143,33 @@ bool GameProjectApp::startup() {
 	tankBehaviour->addChild(pickTankBehaviour);
 
 	//TODO logged version of this
-	
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedDeathSequence->getBehaviour())->addChild(loggedIsDead);
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedDeathSequence->getBehaviour())->addChild(loggedDeathBehaviour);
+
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedFleeDangerSequence->getBehaviour())->addChild(loggedIsInDanger);
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedFleeDangerSequence->getBehaviour())->addChild(loggedFleeDanger);
+
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedAttackSequence->getBehaviour())->addChild(loggedCanAttack);
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedAttackSequence->getBehaviour())->addChild(loggedAttackEnemy);
+
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedRefuelSequence->getBehaviour())->addChild(loggedIsFuelLow);
+
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedRefuelAtBase->getBehaviour())->addChild(loggedIsAtBase);
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedRefuelAtBase->getBehaviour())->addChild(loggedRefuel);
+
+	std::dynamic_pointer_cast<SelectorBehaviour>(loggedGetFuel->getBehaviour())->addChild(loggedRefuelAtBase);
+	std::dynamic_pointer_cast<SelectorBehaviour>(loggedGetFuel->getBehaviour())->addChild(loggedGoToBase);
+
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedRefuelSequence->getBehaviour())->addChild(loggedGetFuel);
+
+	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedDeathSequence);
+	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedFleeDangerSequence);
+	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedAttackSequence);
+	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedRefuelSequence);
+	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedWander);
+
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedTankBehaviour->getBehaviour())->addChild(loggedIsTank);
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedTankBehaviour->getBehaviour())->addChild(loggedPickBehaviour);
 
 	// Place bases
 	m_redBase = m_entityFactory->createEntity(EntityFactory::red_base, glm::translate(glm::mat3(1), red_base_pos));
@@ -148,7 +187,7 @@ bool GameProjectApp::startup() {
 	// Spawn a bunch of wandering cars
 
 	for (int i = 0; i < 10; ++i) {
-		EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::red_tank, glm::translate(glm::mat3(1), glm::vec2(100 + 30*i, 300 + 20*i)));
+		EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::blue_tank, glm::translate(glm::mat3(1), glm::vec2(200,50*i)));
 		AgentPtr wanderAgent = std::dynamic_pointer_cast<Agent>(wanderer->getComponent(Component::agent));
 		//wanderAgent->setMaxVelocity(50.f);
 		auto isCar = [](Agent* agent) {	EntityPtr entity(agent->getEntity());
@@ -156,6 +195,21 @@ bool GameProjectApp::startup() {
 		wanderAgent->setBehaviour(BehaviourPtr(tankBehaviour->clone()));
 	}
 
+	for (int i = 0; i < 10; ++i) {
+		EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::red_tank, glm::translate(glm::mat3(1), glm::vec2(1000 , 700 - 50 * i)));
+		AgentPtr wanderAgent = std::dynamic_pointer_cast<Agent>(wanderer->getComponent(Component::agent));
+		//wanderAgent->setMaxVelocity(50.f);
+		auto isCar = [](Agent* agent) {	EntityPtr entity(agent->getEntity());
+		return (bool)(entity->getTagMask() & Entity::ETag::car); };
+		wanderAgent->setBehaviour(BehaviourPtr(tankBehaviour->clone()));
+	}
+
+	EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::blue_tank, glm::translate(glm::mat3(1), glm::vec2(400 , 200)));
+	AgentPtr wanderAgent = std::dynamic_pointer_cast<Agent>(wanderer->getComponent(Component::agent));
+	//wanderAgent->setMaxVelocity(50.f);
+	auto isCar = [](Agent* agent) {	EntityPtr entity(agent->getEntity());
+	return (bool)(entity->getTagMask() & Entity::ETag::car); };
+	wanderAgent->setBehaviour(BehaviourPtr(loggedTankBehaviour->clone()));
 	
 	// Disable face culling, so sprites can be flipped
 	glDisable(GL_CULL_FACE);

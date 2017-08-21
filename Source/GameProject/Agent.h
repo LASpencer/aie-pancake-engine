@@ -35,8 +35,9 @@ public:
 	static const float def_max_force;
 
 	enum TimerID {
-		stuck_in_terrain,
-		idle
+		idle,
+		immobile,
+		dead
 	};
 
 	Agent();
@@ -91,7 +92,9 @@ public:
 	// Make agent follow its path to the goal
 	virtual void followPath(float weight = 1.f);
 
-	bool pursueTarget();
+	bool pursueTarget(float weight = 1.f);
+
+	void stop(float weight = 1.f);
 
 	// Observer methods
 	// Inform observer of event that occurred
@@ -121,6 +124,7 @@ protected:
 	PursueForcePtr m_pursueTarget;
 	
 	std::stack<GridSquarePtr> m_path;	// Squares forming path to goal position
+	GridSquarePtr m_goalSquare;
 	glm::vec2 m_goal;
 	AgentPtr m_target;
 };

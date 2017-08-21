@@ -21,10 +21,11 @@ BehaviourResult RefuelBehaviour::update(Agent * agent, float deltaTime)
 	VehicleAgent* tank = dynamic_cast<VehicleAgent*>(agent);
 	if (tank == nullptr) {
 		return failure;
-	} else if(tank->getFuel() == tank->getMaxFuel()){
+	} else if(tank->getFuel() > tank->getMaxFuel() * 0.95f){
 		return success;
 	} else{
 		tank->addFuel(refuel_rate * deltaTime);
+		tank->stop();
 		return running;
 	}
 }

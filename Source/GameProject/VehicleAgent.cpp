@@ -11,6 +11,7 @@ const float VehicleAgent::idling_speed = 0.4f;
 const float VehicleAgent::cruise_fuel_rate = 2.f;
 const float VehicleAgent::idle_fuel_rate = 0.5f;
 const float VehicleAgent::def_firing_rate = 1.f;
+const float VehicleAgent::shoot_time = 0.2f;
 const float VehicleAgent::tank_uvh = 1.f;
 const float VehicleAgent::tank_uvw = 0.25f;
 const float VehicleAgent::tank_default_uvx = 0.f;
@@ -18,12 +19,12 @@ const float VehicleAgent::tank_shooting_uvx = 0.25f;
 const float VehicleAgent::tank_damaged_uvx = 0.5f;
 const float VehicleAgent::tank_destroyed_uvx = 0.75f;
 
-VehicleAgent::VehicleAgent() : Agent(), m_maxFuel(def_max_fuel), m_attackRange(def_attack_range), m_team(blue), m_alive(true), m_engineOK(true), m_canShoot(true), m_attackCD(0.f)
+VehicleAgent::VehicleAgent() : Agent(), m_maxFuel(def_max_fuel), m_attackRange(def_attack_range), m_team(blue), m_alive(true), m_engineOK(true), m_canShoot(true), m_attackCD(0.f), m_shootTime(0.f)
 {
 	m_fuel = m_maxFuel;
 }
 
-VehicleAgent::VehicleAgent(Team team, float attackRange, float maxFuel, float maxVelocity, float maxForce) : Agent(maxVelocity, maxForce), m_attackRange(attackRange), m_maxFuel(maxFuel), m_team(team), m_alive(true), m_engineOK(true), m_canShoot(true), m_attackCD(0.f)
+VehicleAgent::VehicleAgent(Team team, float attackRange, float maxFuel, float maxVelocity, float maxForce) : Agent(maxVelocity, maxForce), m_attackRange(attackRange), m_maxFuel(maxFuel), m_team(team), m_alive(true), m_engineOK(true), m_canShoot(true), m_attackCD(0.f), m_shootTime(0.f)
 {
 	m_fuel = m_maxFuel;
 }
@@ -60,8 +61,13 @@ void VehicleAgent::update(float deltaTime)
 	}
 
 	if (m_alive) {
-		if (m_engineOK && m_canShoot) {
-			setAnimationFrame(default);
+		if (m_engineOK) {
+			if (m_shootTime > 0.f) {
+				setAnimationFrame(shooting);
+			}
+			else {
+				setAnimationFrame(default);
+			}
 		}
 		else {
 			setAnimationFrame(damaged);
@@ -74,6 +80,9 @@ void VehicleAgent::update(float deltaTime)
 	if (m_attackCD > 0.f) {
 		m_attackCD -= deltaTime;
 	}
+	if (m_shootTime > 0.f) {
+		m_shootTime -= deltaTime;
+	}
 
 	if (m_engineOK) {
 		if (glm::dot(m_velocity, m_velocity) > idling_speed * m_adjustedMaxVelocity) {
@@ -85,8 +94,19 @@ void VehicleAgent::update(float deltaTime)
 	}
 	if (m_fuel > 0 && m_engineOK) {
 		m_canMove = true;
+		m_timers[immobile].reset();
+		m_timers[immobile].pause();
 	} else {
 		m_canMove = false;
+		m_timers[immobile].start();
+		// Kill if immobile too long
+		if (m_timers[immobile].getTime() > 5.f) {
+			kill();
+		}
+	}
+	if (m_alive) {
+		m_timers[dead].reset();
+		m_timers[dead].pause();
 	}
 
 	// Clear neighbours
@@ -131,7 +151,7 @@ void VehicleAgent::addFuel(float fuel)
 
 bool VehicleAgent::isAlive()
 {
-	return false;
+	return m_alive;
 }
 
 bool VehicleAgent::isEngineOK()
@@ -157,16 +177,38 @@ bool VehicleAgent::attack(VehiclePtr target)
 
 			float hitRoll = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 			if (hitRoll >= 0.8f) {
-				target->m_alive = false;
+				target->kill();
 			}
 			//Set attacking sprite
 			// TODO maybe start countdown which, while on, shows attacking sprite?
-			setAnimationFrame(shooting);
+			m_shootTime = shoot_time;
 			return true;
 		}
 	}
 	//TODO set uvrect of sprite for damage sustained, shooting
 	return false;
+}
+
+void VehicleAgent::kill()
+{
+	if (m_alive) {
+		m_alive = false;
+		m_engineOK = false;
+		m_canShoot = false;
+		m_timers[dead].start();
+	}
+}
+
+void VehicleAgent::respawn()
+{
+	m_alive = true;
+	m_engineOK = true;
+	m_canShoot = true;
+	m_fuel = m_maxFuel;
+	EntityPtr entity(m_entity);
+	EntityPtr base = entity->getApp()->getBase(m_team);
+	glm::vec2 basePos(base->getPosition()->getGlobalTransform()[2]);
+	entity->getPosition()->globalTranslate(basePos - getPosition());
 }
 
 

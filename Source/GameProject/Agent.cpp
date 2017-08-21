@@ -78,7 +78,7 @@ void Agent::update(float deltaTime)
 
 	// Update timers
 	for (auto timer : m_timers) {
-		timer.second.update(deltaTime);
+		m_timers[timer.first].update(deltaTime);
 	}
 }
 
@@ -153,18 +153,25 @@ void Agent::setBehaviour(BehaviourPtr behaviour)
 
 bool Agent::setGoal(glm::vec2 goal)
 {
+	bool success = false;
 	EntityPtr entity(m_entity);
 	Grid* grid = entity->getApp()->getGrid();
 	GridSquarePtr endSquare = grid->getSquare(goal);
-	std::stack<GridSquarePtr> path = grid->findPath(m_square, endSquare);
-	// Check if path was found
-	if (path.empty()) {
-		return false;
-	} else {
+	if (endSquare == m_goalSquare) {
 		m_goal = goal;
-		m_path = path;
-		return true;
+		success = true;
 	}
+	else {
+		std::stack<GridSquarePtr> path = grid->findPath(m_square, endSquare);
+		// Check if path was found
+		if (!path.empty()) {
+			m_goal = goal;
+			m_path = path;
+			m_goalSquare = endSquare;
+			success = true;
+		}
+	}
+	return success;
 }
 
 void Agent::followPath(float weight)
@@ -191,10 +198,16 @@ void Agent::followPath(float weight)
 	}
 }
 
-bool Agent::pursueTarget()
+void Agent::stop(float weight)
+{
+	//TODO use a force to gradually slow down
+	m_velocity = glm::vec2(0);
+}
+
+bool Agent::pursueTarget(float weight)
 {
 	if (canMove()) {
-		m_steeringForces.push_back({ std::dynamic_pointer_cast<SteeringForce>(m_pursueTarget), 1.f });
+		m_steeringForces.push_back({ std::dynamic_pointer_cast<SteeringForce>(m_pursueTarget), weight });
 	}
 	return false;
 }
