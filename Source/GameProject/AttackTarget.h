@@ -6,16 +6,12 @@
 class AttackTarget : public Behaviour {
 public:
 	AttackTarget();
-	AttackTarget(TargetPtr target);
 	virtual ~AttackTarget();
 
 	virtual Behaviour* clone();
 
-	virtual BehaviourResult update(Agent* entity, float deltaTime);
-
-	void setTarget(TargetPtr target);
+	virtual BehaviourResult update(Agent* agent, float deltaTime);
 
 protected:
 	std::shared_ptr<PursueForce> m_force; //TODO make shared_ptr
-
 };

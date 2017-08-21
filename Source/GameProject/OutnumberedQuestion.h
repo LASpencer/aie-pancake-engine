@@ -4,6 +4,7 @@
 
 // Returns success if friends outnumbered by enemies
 class OutnumberedQuestion : public Behaviour {
+public:
 	OutnumberedQuestion();
 
 	virtual ~OutnumberedQuestion();

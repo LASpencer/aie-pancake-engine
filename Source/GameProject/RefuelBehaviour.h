@@ -2,7 +2,7 @@
 #include "Behaviour.h"
 #include "VehicleAgent.h"
 
-class RefuelBehaviour : Behaviour {
+class RefuelBehaviour : public Behaviour {
 public:
 	static const float refuel_rate;
 

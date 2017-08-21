@@ -20,7 +20,7 @@ Behaviour * SequenceBehaviour::clone()
 	for (BehaviourPtr child : m_children) {
 		BehaviourPtr childClone(child->clone());
 		clonedChildren.push_back(childClone);
-		if (m_ongoingBehaviour->get() == child.get()) {
+		if (m_ongoingBehaviour != m_children.end() && m_ongoingBehaviour->get() == child.get()) {
 			ongoingChild = childClone.get();
 		}
 	}
@@ -46,6 +46,7 @@ BehaviourResult SequenceBehaviour::update(Agent * agent, float deltaTime)
 	}
 	else {
 		child = m_children.begin();
+		m_ongoingBehaviour = m_children.end();
 	}
 	while (child != m_children.end()) {
 		switch ((*child)->update(agent, deltaTime)) {

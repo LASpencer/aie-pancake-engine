@@ -1,6 +1,7 @@
 #pragma once
 #include "Agent.h"
 
+
 class VehicleAgent;
 typedef std::shared_ptr<VehicleAgent> VehiclePtr;
 
@@ -61,7 +62,7 @@ public:
 	bool canShoot();
 
 	// If target is in range, and 
-	void attack(VehiclePtr target);
+	bool attack(VehiclePtr target);
 
 	void setAnimationFrame(TankAnimationFrame frame);
 
@@ -69,6 +70,7 @@ protected:
 	float m_fuel, m_maxFuel, m_attackRange, m_attackCD;
 	bool m_alive, m_engineOK, m_canShoot;
 	Team m_team;
+	PursueForcePtr m_pursueForce;
 	std::vector<VehicleAgent*> m_neighbours;
 	std::vector<VehicleAgent*> m_enemyNeighbours;
 };

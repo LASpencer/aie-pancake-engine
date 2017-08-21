@@ -20,6 +20,9 @@ typedef std::shared_ptr<SeekForce> SeekForcePtr;
 class AvoidTerrainForce;
 typedef std::shared_ptr<AvoidTerrainForce> AvoidTerrainForcePtr;
 
+class PursueForce;
+typedef std::shared_ptr<PursueForce> PursueForcePtr;
+
 struct WeightedForce {
 	SteeringForcePtr force;
 	float weight;
@@ -88,6 +91,7 @@ public:
 	// Make agent follow its path to the goal
 	virtual void followPath(float weight = 1.f);
 
+	bool pursueTarget();
 
 	// Observer methods
 	// Inform observer of event that occurred
@@ -114,6 +118,7 @@ protected:
 
 	BoundsForcePtr m_stayInBounds;
 	AvoidTerrainForcePtr m_avoidImpassableTerrain;
+	PursueForcePtr m_pursueTarget;
 	
 	std::stack<GridSquarePtr> m_path;	// Squares forming path to goal position
 	glm::vec2 m_goal;

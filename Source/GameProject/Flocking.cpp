@@ -52,7 +52,7 @@ BehaviourResult Flocking::update(Agent * agent, float deltaTime)
 	else {
 		m_alignment->setNeighbours(neighbours);
 		m_cohesion->setNeighbours(neighbours);
-		m_separation->setNeighbours(neighbours);
+		m_separation;
 		//TODO make these shared_ptrs instead
 		agent->addForce(std::dynamic_pointer_cast<SteeringForce>(m_separation), m_separationWeight);
 		agent->addForce(std::dynamic_pointer_cast<SteeringForce>(m_alignment), m_alignmentWeight);

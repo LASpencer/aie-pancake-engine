@@ -3,6 +3,7 @@
 #include "Behaviour.h"
 
 class LogBehaviour : public Behaviour {
+public:
 	LogBehaviour();
 
 	LogBehaviour(BehaviourPtr behaviour, std::string message);

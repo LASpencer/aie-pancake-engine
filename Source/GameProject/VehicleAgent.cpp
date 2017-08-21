@@ -55,7 +55,7 @@ void VehicleAgent::update(float deltaTime)
 		// Set nearest enemy as target
 		if (distance < nearestEnemyDistance) {
 			nearestEnemyDistance = distance;
-			m_target = std::dynamic_pointer_cast<AgentPtr>(vehicle);
+			m_target = std::dynamic_pointer_cast<Agent>(vehicle);
 		}
 	}
 
@@ -144,7 +144,7 @@ bool VehicleAgent::canShoot()
 	return m_canShoot;
 }
 
-void VehicleAgent::attack(VehiclePtr target)
+bool VehicleAgent::attack(VehiclePtr target)
 {
 	if (m_canShoot && m_attackCD <= 0.f && m_team != target->getTeam()) {
 		glm::vec2 displacement = target->getPosition() - getPosition();
@@ -162,10 +162,14 @@ void VehicleAgent::attack(VehiclePtr target)
 			//Set attacking sprite
 			// TODO maybe start countdown which, while on, shows attacking sprite?
 			setAnimationFrame(shooting);
+			return true;
 		}
 	}
 	//TODO set uvrect of sprite for damage sustained, shooting
+	return false;
 }
+
+
 
 void VehicleAgent::setAnimationFrame(TankAnimationFrame frame)
 {

@@ -18,9 +18,9 @@ BehaviourResult IsDeadQuestion::update(Agent * agent, float deltaTime)
 {
 	VehicleAgent* vehicle = dynamic_cast<VehicleAgent*>(agent);
 	if (vehicle != nullptr && !vehicle->isAlive()) {
-		return success;
+		return failure;
 	}
 	else {
-		return failure;
+		return success;
 	}
 }

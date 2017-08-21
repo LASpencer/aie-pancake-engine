@@ -1,11 +1,12 @@
 #include "stdafx.h"
 #include "TargetInRangeQuestion.h"
+#include "Agent.h"
 
 TargetInRangeQuestion::TargetInRangeQuestion()
 {
 }
 
-TargetInRangeQuestion::TargetInRangeQuestion(TargetPtr target, float range) : m_range(range), m_target(target)
+TargetInRangeQuestion::TargetInRangeQuestion(float range) : m_range(range)
 {
 }
 
@@ -21,8 +22,8 @@ Behaviour * TargetInRangeQuestion::clone()
 BehaviourResult TargetInRangeQuestion::update(Agent * agent, float deltaTime)
 {
 	EntityPtr entity(agent->getEntity());
-	glm::vec2 ownPosition = glm::vec2(entity->getPosition()->getGlobalTransform()[2]);
-	glm::vec2 distance = ownPosition - m_target->getPosition();
+	glm::vec2 ownPosition = agent->getPosition();
+	glm::vec2 distance = ownPosition - agent->getTarget()->getPosition();
 	if (glm::dot(distance, distance) < m_range * m_range) {
 		return success;
 	} else {

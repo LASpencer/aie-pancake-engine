@@ -3,6 +3,9 @@
 #include "SteeringForce.h"
 #include "Target.h"
 
+class PursueForce;
+typedef std::shared_ptr<PursueForce> PursueForcePtr;
+
 class PursueForce :
 	public SteeringForce
 {
@@ -11,20 +14,13 @@ public:
 
 	PursueForce();
 
-	PursueForce(TargetPtr target);
-
 	PursueForce(const PursueForce& other);
 
 	PursueForce& operator=(const PursueForce& other);
 
 	virtual ~PursueForce();
 
-	void setTarget(TargetPtr target);
-
 	//TODO set target size
 
 	virtual glm::vec2 getForce(Agent* agent);
-
-protected:
-	TargetPtr m_target;
 };

@@ -2,7 +2,7 @@
 #include "Behaviour.h"
 #include "VehicleAgent.h"
 
-class GoToBase : Behaviour {
+class GoToBase : public Behaviour {
 public:
 	GoToBase();
 

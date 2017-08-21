@@ -261,6 +261,7 @@
     <ClInclude Include="SteeringBehaviour.h" />
     <ClInclude Include="SteeringForce.h" />
     <ClInclude Include="Subject.h" />
+    <ClInclude Include="TankBehaviour.h" />
     <ClInclude Include="Target.h" />
     <ClInclude Include="TargetInRangeCondition.h" />
     <ClInclude Include="TargetInRangeQuestion.h" />

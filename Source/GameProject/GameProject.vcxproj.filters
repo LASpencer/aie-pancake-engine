@@ -629,5 +629,8 @@
     <ClInclude Include="GoToBase.h">
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
+    <ClInclude Include="TankBehaviour.h">
+      <Filter>Header Files\Entities\Behaviours</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -19,6 +19,9 @@
 #include "AvoidTerrainForce.h"
 #include "Flocking.h"
 
+#include "TankBehaviour.h"
+#include "LogBehaviour.h"
+
 #include "imgui.h"
 
 const glm::vec2 GameProjectApp::min_corner = glm::vec2(0);
@@ -73,6 +76,62 @@ bool GameProjectApp::startup() {
 
 	m_impassableSquares = m_mapGraph->getImpassableSquares();
 
+	//TODO move out to some factory class
+	std::shared_ptr<SequenceBehaviour> tankBehaviour(new SequenceBehaviour());
+	BehaviourPtr isTank(new AgentIsTankQuestion());
+	std::shared_ptr<SelectorBehaviour> pickTankBehaviour(new SelectorBehaviour());
+	std::shared_ptr<SequenceBehaviour> deathSequence(new SequenceBehaviour());
+	std::shared_ptr<SequenceBehaviour> fleeDangerSequence(new SequenceBehaviour());
+	std::shared_ptr<SequenceBehaviour> attackSequence(new SequenceBehaviour());
+	std::shared_ptr<SequenceBehaviour> refuelSequence(new SequenceBehaviour());
+	std::shared_ptr<SelectorBehaviour> getFuel(new SelectorBehaviour());
+	BehaviourPtr isDead(new IsDeadQuestion());
+	BehaviourPtr deathBehaviour(new DeathBehaviour());
+	BehaviourPtr isInDanger(new OutnumberedQuestion());
+	BehaviourPtr fleeDanger(new FleeDanger());
+	BehaviourPtr canAttack(new TargetInRangeQuestion(100.f));	//TODO add also a question checking if it can shoot
+	BehaviourPtr attackEnemy(new AttackTarget());
+	BehaviourPtr isFuelLow(new FuelTooLowQuestion());
+	BehaviourPtr refuel(new RefuelBehaviour());
+	BehaviourPtr goToBase(new GoToBase());
+	BehaviourPtr wander(new Wander());
+
+	std::shared_ptr<LogBehaviour> loggedTankBehaviour(new LogBehaviour(BehaviourPtr(tankBehaviour->clone()), "Tank Behaviour"));
+	std::shared_ptr<LogBehaviour> loggedisTank(new LogBehaviour(BehaviourPtr(isTank->clone()), "Is tank?"));
+	std::shared_ptr<LogBehaviour> loggedPickBehaviour(new LogBehaviour(BehaviourPtr(pickTankBehaviour->clone()), "Select Tank Behaviour"));
+	std::shared_ptr<LogBehaviour> loggedDeathSequence(new LogBehaviour(BehaviourPtr(deathSequence->clone()), "Death Sequence"));
+	std::shared_ptr<LogBehaviour> loggedFleeDangerSequence(new LogBehaviour(BehaviourPtr(fleeDangerSequence->clone()), "Flee Danger Sequence"));
+	std::shared_ptr<LogBehaviour> loggedAttackSequence(new LogBehaviour(BehaviourPtr(attackSequence->clone()), "Attack Sequence"));
+	std::shared_ptr<LogBehaviour> loggedRefuelSequence(new LogBehaviour(BehaviourPtr(refuelSequence->clone()), "Refuel Sequence"));
+	std::shared_ptr<LogBehaviour> loggedGetFuel(new LogBehaviour(BehaviourPtr(getFuel->clone()), "Get Fuel"));
+	std::shared_ptr<LogBehaviour> loggedIsDead(new LogBehaviour(BehaviourPtr(isDead->clone()), "Am I dead?"));
+	std::shared_ptr<LogBehaviour> loggedDeathBehaviour(new LogBehaviour(BehaviourPtr(deathBehaviour->clone()), "Death Behaviour"));
+	std::shared_ptr<LogBehaviour> loggedIsInDanger(new LogBehaviour(BehaviourPtr(isInDanger->clone()), "Am I outnumbered?"));
+	//TODO finish off
+
+	deathSequence->addChild(isDead);
+	deathSequence->addChild(deathBehaviour);
+	fleeDangerSequence->addChild(isInDanger);
+	fleeDangerSequence->addChild(fleeDanger);
+	attackSequence->addChild(canAttack);
+	attackSequence->addChild(attackEnemy);
+	refuelSequence->addChild(isFuelLow);
+	getFuel->addChild(refuel);
+	getFuel->addChild(goToBase);
+	refuelSequence->addChild(getFuel);
+
+	pickTankBehaviour->addChild(deathSequence);
+	pickTankBehaviour->addChild(fleeDangerSequence);
+	pickTankBehaviour->addChild(attackSequence);
+	pickTankBehaviour->addChild(refuelSequence);
+	pickTankBehaviour->addChild(wander); //TODO pick something else?
+
+	tankBehaviour->addChild(isTank);
+	tankBehaviour->addChild(pickTankBehaviour);
+
+	//TODO logged version of this
+	
+
 	// Place bases
 	m_redBase = m_entityFactory->createEntity(EntityFactory::red_base, glm::translate(glm::mat3(1), red_base_pos));
 	m_blueBase = m_entityFactory->createEntity(EntityFactory::blue_base, glm::translate(glm::mat3(1), blue_base_pos));
@@ -94,7 +153,7 @@ bool GameProjectApp::startup() {
 		//wanderAgent->setMaxVelocity(50.f);
 		auto isCar = [](Agent* agent) {	EntityPtr entity(agent->getEntity());
 										return (bool)(entity->getTagMask() & Entity::ETag::car); };
-		wanderAgent->setBehaviour(std::make_shared<Wander>());
+		wanderAgent->setBehaviour(BehaviourPtr(tankBehaviour->clone()));
 	}
 
 	
