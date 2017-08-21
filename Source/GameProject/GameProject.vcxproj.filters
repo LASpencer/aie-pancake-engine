@@ -339,6 +339,18 @@
     <ClCompile Include="LogBehaviour.cpp">
       <Filter>Source Files\Entities\Behaviours\Composite Behaviours</Filter>
     </ClCompile>
+    <ClCompile Include="FuelTooLowQuestion.cpp">
+      <Filter>Source Files\Entities\Behaviours\Question Behaviours</Filter>
+    </ClCompile>
+    <ClCompile Include="AtBaseQuestion.cpp">
+      <Filter>Source Files\Entities\Behaviours\Question Behaviours</Filter>
+    </ClCompile>
+    <ClCompile Include="RefuelBehaviour.cpp">
+      <Filter>Source Files\Entities\Behaviours</Filter>
+    </ClCompile>
+    <ClCompile Include="GoToBase.cpp">
+      <Filter>Source Files\Entities\Behaviours</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameProjectApp.h">
@@ -604,6 +616,18 @@
     </ClInclude>
     <ClInclude Include="LogBehaviour.h">
       <Filter>Header Files\Entities\Behaviours\Composite Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="FuelTooLowQuestion.h">
+      <Filter>Header Files\Entities\Behaviours\Question Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="AtBaseQuestion.h">
+      <Filter>Header Files\Entities\Behaviours\Question Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="RefuelBehaviour.h">
+      <Filter>Header Files\Entities\Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="GoToBase.h">
+      <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

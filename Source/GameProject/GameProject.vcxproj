@@ -103,6 +103,7 @@
     <ClCompile Include="AgentIsTankQuestion.cpp" />
     <ClCompile Include="AlignmentForce.cpp" />
     <ClCompile Include="ArrivalForce.cpp" />
+    <ClCompile Include="AtBaseQuestion.cpp" />
     <ClCompile Include="AttackTarget.cpp" />
     <ClCompile Include="AvoidTerrainForce.cpp" />
     <ClCompile Include="BoundsForce.cpp" />
@@ -129,8 +130,10 @@
     <ClCompile Include="Flocking.cpp" />
     <ClCompile Include="FSMAgent.cpp" />
     <ClCompile Include="FSMBehaviour.cpp" />
+    <ClCompile Include="FuelTooLowQuestion.cpp" />
     <ClCompile Include="GameProjectApp.cpp" />
     <ClCompile Include="GameTimer.cpp" />
+    <ClCompile Include="GoToBase.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="GuardExerciseBehaviour.cpp" />
     <ClCompile Include="GuardStateMachine.cpp" />
@@ -150,6 +153,7 @@
     <ClCompile Include="PathfindingBehaviour.cpp" />
     <ClCompile Include="PursueForce.cpp" />
     <ClCompile Include="Ray.cpp" />
+    <ClCompile Include="RefuelBehaviour.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SceneObject.cpp" />
     <ClCompile Include="SeekForce.cpp" />
@@ -184,6 +188,7 @@
     <ClInclude Include="AlignmentForce.h" />
     <ClInclude Include="AndCondition.h" />
     <ClInclude Include="ArrivalForce.h" />
+    <ClInclude Include="AtBaseQuestion.h" />
     <ClInclude Include="AttackTarget.h" />
     <ClInclude Include="AvoidTerrainForce.h" />
     <ClInclude Include="Behaviour.h" />
@@ -215,8 +220,10 @@
     <ClInclude Include="Flocking.h" />
     <ClInclude Include="FSMAgent.h" />
     <ClInclude Include="FSMBehaviour.h" />
+    <ClInclude Include="FuelTooLowQuestion.h" />
     <ClInclude Include="GameProjectApp.h" />
     <ClInclude Include="GameTimer.h" />
+    <ClInclude Include="GoToBase.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="GuardExerciseBehaviour.h" />
     <ClInclude Include="GuardStateMachine.h" />
@@ -238,6 +245,7 @@
     <ClInclude Include="PathfindingBehaviour.h" />
     <ClInclude Include="PursueForce.h" />
     <ClInclude Include="Ray.h" />
+    <ClInclude Include="RefuelBehaviour.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="SeekForce.h" />

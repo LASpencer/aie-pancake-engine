@@ -126,7 +126,7 @@ float VehicleAgent::getFuel()
 
 void VehicleAgent::addFuel(float fuel)
 {
-	m_fuel += fuel;
+	m_fuel = std::max(0.f, std::min(m_maxFuel, m_fuel + fuel));
 }
 
 bool VehicleAgent::isAlive()
