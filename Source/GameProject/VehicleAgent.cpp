@@ -24,7 +24,7 @@ VehicleAgent::VehicleAgent() : Agent(), m_maxFuel(def_max_fuel), m_attackRange(d
 	m_fuel = m_maxFuel;
 }
 
-VehicleAgent::VehicleAgent(Team team, float attackRange, float maxFuel, float maxVelocity, float maxForce) : Agent(maxVelocity, maxForce), m_attackRange(attackRange), m_maxFuel(maxFuel), m_team(team), m_alive(true), m_engineOK(true), m_canShoot(true), m_attackCD(0.f), m_shootTime(0.f)
+VehicleAgent::VehicleAgent(Team team, float attackRange, float maxFuel, float maxVelocity, float maxForce, float size) : Agent(maxVelocity, maxForce, size), m_attackRange(attackRange), m_maxFuel(maxFuel), m_team(team), m_alive(true), m_engineOK(true), m_canShoot(true), m_attackCD(0.f), m_shootTime(0.f)
 {
 	m_fuel = m_maxFuel;
 }
@@ -47,15 +47,17 @@ void VehicleAgent::update(float deltaTime)
 		}
 	}
 	float nearestEnemyDistance = INFINITY;
+	bool targetAlive = false;
 	for (VehiclePtr vehicle : app->getTeam((m_team == red) ? blue : red)) {
 		glm::vec2 displacement = vehicle->getPosition() - getPosition();
 		float distance = glm::dot(displacement, displacement);
 		if (distance < neighbour_range * neighbour_range) {
 			m_enemyNeighbours.push_back(vehicle.get());
 		}
-		// Set nearest enemy as target
-		if (distance < nearestEnemyDistance) {
+		// Set nearest live enemy if possible, or nearest dead if no live found
+		if (distance < nearestEnemyDistance || (!targetAlive && vehicle->isAlive())) {
 			nearestEnemyDistance = distance;
+			targetAlive = vehicle->isAlive();
 			m_target = std::dynamic_pointer_cast<Agent>(vehicle);
 		}
 	}

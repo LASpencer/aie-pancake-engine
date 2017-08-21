@@ -36,7 +36,7 @@ public:
 	static const float tank_destroyed_uvx;
 	
 	VehicleAgent();
-	VehicleAgent(Team team, float attackRange = def_attack_range, float maxFuel = def_max_fuel, float maxVelocity = def_max_velocity, float maxForce = def_max_force);
+	VehicleAgent(Team team, float attackRange = def_attack_range, float maxFuel = def_max_fuel, float maxVelocity = def_max_velocity, float maxForce = def_max_force, float size = def_size);
 
 	virtual ~VehicleAgent();
 

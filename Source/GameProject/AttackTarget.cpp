@@ -3,7 +3,7 @@
 #include "imgui.h"
 #include "VehicleAgent.h"
 
-AttackTarget::AttackTarget() : m_force(std::make_shared<PursueForce>())
+AttackTarget::AttackTarget()
 {
 }
 
@@ -28,6 +28,7 @@ BehaviourResult AttackTarget::update(Agent * agent, float deltaTime)
 		if (target.get() == nullptr) {
 			return failure;
 		} else if (tank->attack(target)) {
+			tank->matchTargetVelocity();
 			ImGui::Text("Attack Target behaviour");
 		} else{
 			return failure;

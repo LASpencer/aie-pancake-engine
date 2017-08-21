@@ -32,7 +32,8 @@ public:
 		red_tank,
 		blue_tank,
 		red_base,
-		blue_base
+		blue_base,
+		depot
 	};
 
 
@@ -68,6 +69,8 @@ private:
 	EntityPtr createTank(glm::mat3 position, SceneObjectPtr parent, bool isBlueTeam);
 
 	EntityPtr createBase(glm::mat3 position, SceneObjectPtr parent, bool isBlueTeam);
+
+	EntityPtr createDepot(glm::mat3 position, SceneObjectPtr parent);
 
 	// Sets entity's position, and place in scene graph
 	bool setEntityPosition(EntityPtr entity, glm::mat3 position, SceneObjectPtr parent);

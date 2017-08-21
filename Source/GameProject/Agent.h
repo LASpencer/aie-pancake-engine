@@ -33,6 +33,7 @@ class Agent
 public:
 	static const float def_max_velocity;
 	static const float def_max_force;
+	static const float def_size;
 
 	enum TimerID {
 		idle,
@@ -41,7 +42,7 @@ public:
 	};
 
 	Agent();
-	Agent(float maxVelocity, float maxForce = def_max_force);
+	Agent(float maxVelocity, float maxForce = def_max_force, float size = def_size);
 	virtual ~Agent();
 
 	void setVelocity(glm::vec2 velocity);
@@ -65,10 +66,13 @@ public:
 
 	void setMaxVelocity(float maxVelocity);
 	void setMaxForce(float maxForce);
+	void setSize(float size);
 
 	float getMaxVelocity() { return m_adjustedMaxVelocity; };
 
 	float getMaxForce() { return m_maxForce; };
+
+	float getSize() { return m_size; };
 
 	GameTimer& getTimer(TimerID id);
 
@@ -94,6 +98,9 @@ public:
 
 	bool pursueTarget(float weight = 1.f);
 
+	// Try to match target's velocity
+	void matchTargetVelocity(float weight = 1.f);
+
 	void stop(float weight = 1.f);
 
 	// Observer methods
@@ -116,7 +123,7 @@ protected:
 
 	glm::vec2 m_velocity;
 	glm::vec2 m_force;
-	float m_maxVelocity, m_adjustedMaxVelocity, m_maxForce;
+	float m_maxVelocity, m_adjustedMaxVelocity, m_maxForce, m_size;
 	bool m_canMove;
 
 	BoundsForcePtr m_stayInBounds;

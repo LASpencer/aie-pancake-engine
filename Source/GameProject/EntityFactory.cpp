@@ -52,6 +52,9 @@ EntityPtr EntityFactory::createEntity(EntityType type, glm::mat3 position, Scene
 	case(red_base):
 		entity = createBase(position, parent, false);
 	break;
+	case(depot):
+		entity = createDepot(position, parent);
+		break;
 	default:
 		break;
 	}
@@ -63,8 +66,11 @@ EntityPtr EntityFactory::createEntity(EntityType type, glm::mat3 position, Scene
 void EntityFactory::loadResources()
 {
 	//TODO load sprites needed for entities
-	m_app->getResourceManager()->getTexture(filepath::ship);
-	m_app->getResourceManager()->getTexture(filepath::car);
+	m_app->getResourceManager()->getTexture(filepath::red_tank);
+	m_app->getResourceManager()->getTexture(filepath::blue_tank);
+	m_app->getResourceManager()->getTexture(filepath::red_base);
+	m_app->getResourceManager()->getTexture(filepath::blue_base);
+	m_app->getResourceManager()->getTexture(filepath::fuel_depot);
 }
 
 
@@ -147,7 +153,7 @@ EntityPtr EntityFactory::createTank(glm::mat3 position, SceneObjectPtr parent, b
 	// Add agent
 	//TODO change to VehicleAgent when done
 	//TODO create and add behaviour tree as suitable
-	VehiclePtr agent = std::make_shared<VehicleAgent>(team, 100, 100, 100, 200);
+	VehiclePtr agent = std::make_shared<VehicleAgent>(team, 100, 100, 100, 200, 31);
 	tank->addComponent(agent);
 	if (isBlueTeam) {
 		m_app->getTeam(blue).push_back(agent);
@@ -177,6 +183,16 @@ EntityPtr EntityFactory::createBase(glm::mat3 position, SceneObjectPtr parent, b
 	//Add sprite
 	base->addComponent(std::make_shared<Sprite>(sprite));
 	return base;
+}
+
+EntityPtr EntityFactory::createDepot(glm::mat3 position, SceneObjectPtr parent)
+{
+	EntityPtr depot = std::make_shared<Entity>(m_app);
+	setEntityPosition(depot, position, parent);
+	depot->addTag(Entity::depot);
+	//Add sprite
+	depot->addComponent(std::make_shared<Sprite>(m_app->getResourceManager()->getTexture(filepath::fuel_depot)));
+	return depot;
 }
 
 bool EntityFactory::setEntityPosition(EntityPtr entity, glm::mat3 position, SceneObjectPtr parent)

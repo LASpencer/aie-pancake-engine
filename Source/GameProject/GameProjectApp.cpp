@@ -51,10 +51,10 @@ bool GameProjectApp::startup() {
 	{ 2,0,0,1,1,1,2,1,2 },
 	{ 0,0,0,0,1,2,0,0,0 },
 	{ 2,0,0,1,1,0,0,2,0 },
-	{ 0,2,2,1,0,0,0,2,0 },
-	{ 0,0,0,1,0,0,2,0,0 },
-	{ 0,0,1,1,1,1,0,0,0 },
-	{ 1,1,1,1,1,1,1,2,0 },
+	{ 0,2,2,0,0,0,0,2,0 },
+	{ 0,1,1,1,0,0,2,0,0 },
+	{ 0,0,1,0,0,1,0,0,0 },
+	{ 1,1,1,0,0,0,1,2,0 },
 	{ 0,0,0,0,0,1,1,0,0 },
 	{ 0,0,0,2,0,0,0,0,0 },
 	{ 0,0,1,0,0,2,0,0,0 },
@@ -82,7 +82,6 @@ bool GameProjectApp::startup() {
 	std::shared_ptr<SelectorBehaviour> pickTankBehaviour(new SelectorBehaviour());
 	std::shared_ptr<SequenceBehaviour> deathSequence(new SequenceBehaviour());
 	std::shared_ptr<SequenceBehaviour> fleeDangerSequence(new SequenceBehaviour());
-	std::shared_ptr<SequenceBehaviour> attackSequence(new SequenceBehaviour());
 	std::shared_ptr<SequenceBehaviour> refuelSequence(new SequenceBehaviour());
 	std::shared_ptr<SelectorBehaviour> getFuel(new SelectorBehaviour());
 	std::shared_ptr<SequenceBehaviour> refuelAtBaseSequence(new SequenceBehaviour());
@@ -90,7 +89,6 @@ bool GameProjectApp::startup() {
 	BehaviourPtr deathBehaviour(new DeathBehaviour());
 	BehaviourPtr isInDanger(new OutnumberedQuestion());
 	BehaviourPtr fleeDanger(new FleeDanger());
-	BehaviourPtr canAttack(new TargetInRangeQuestion(50.f));	//TODO move out to a chase target behaviour
 	BehaviourPtr attackEnemy(new AttackTarget());
 	BehaviourPtr isFuelLow(new FuelTooLowQuestion());
 	BehaviourPtr refuel(new RefuelBehaviour());
@@ -103,7 +101,6 @@ bool GameProjectApp::startup() {
 	std::shared_ptr<LogBehaviour> loggedPickBehaviour(new LogBehaviour(BehaviourPtr(pickTankBehaviour->clone()), "Select Tank Behaviour"));
 	std::shared_ptr<LogBehaviour> loggedDeathSequence(new LogBehaviour(BehaviourPtr(deathSequence->clone()), "Death Sequence"));
 	std::shared_ptr<LogBehaviour> loggedFleeDangerSequence(new LogBehaviour(BehaviourPtr(fleeDangerSequence->clone()), "Flee Danger Sequence"));
-	std::shared_ptr<LogBehaviour> loggedAttackSequence(new LogBehaviour(BehaviourPtr(attackSequence->clone()), "Attack Sequence"));
 	std::shared_ptr<LogBehaviour> loggedRefuelSequence(new LogBehaviour(BehaviourPtr(refuelSequence->clone()), "Refuel Sequence"));
 	std::shared_ptr<LogBehaviour> loggedGetFuel(new LogBehaviour(BehaviourPtr(getFuel->clone()), "Get Fuel"));
 	std::shared_ptr<LogBehaviour> loggedRefuelAtBase(new LogBehaviour(BehaviourPtr(refuelAtBaseSequence->clone()), "Get fuel from base"));
@@ -111,7 +108,6 @@ bool GameProjectApp::startup() {
 	std::shared_ptr<LogBehaviour> loggedDeathBehaviour(new LogBehaviour(BehaviourPtr(deathBehaviour->clone()), "Death Behaviour"));
 	std::shared_ptr<LogBehaviour> loggedIsInDanger(new LogBehaviour(BehaviourPtr(isInDanger->clone()), "Am I outnumbered?"));
 	std::shared_ptr<LogBehaviour> loggedFleeDanger(new LogBehaviour(BehaviourPtr(fleeDanger->clone()), "Flee Danger"));
-	std::shared_ptr<LogBehaviour> loggedCanAttack(new LogBehaviour(BehaviourPtr(canAttack->clone()), "Is target close enough?"));
 	std::shared_ptr<LogBehaviour> loggedAttackEnemy(new LogBehaviour(BehaviourPtr(attackEnemy->clone()), "Attacking Enemy"));
 	std::shared_ptr<LogBehaviour> loggedIsFuelLow(new LogBehaviour(BehaviourPtr(isFuelLow->clone()), "Is fuel too low?"));
 	std::shared_ptr<LogBehaviour> loggedRefuel(new LogBehaviour(BehaviourPtr(refuel->clone()), "Refuelling"));
@@ -124,8 +120,6 @@ bool GameProjectApp::startup() {
 	deathSequence->addChild(deathBehaviour);
 	fleeDangerSequence->addChild(isInDanger);
 	fleeDangerSequence->addChild(fleeDanger);
-	attackSequence->addChild(canAttack);
-	attackSequence->addChild(attackEnemy);
 	refuelSequence->addChild(isFuelLow);
 	refuelAtBaseSequence->addChild(isAtBase);
 	refuelAtBaseSequence->addChild(refuel);
@@ -135,7 +129,7 @@ bool GameProjectApp::startup() {
 
 	pickTankBehaviour->addChild(deathSequence);
 	pickTankBehaviour->addChild(fleeDangerSequence);
-	pickTankBehaviour->addChild(attackSequence);
+	pickTankBehaviour->addChild(attackEnemy);
 	pickTankBehaviour->addChild(refuelSequence);
 	pickTankBehaviour->addChild(wander); //TODO pick something else?
 
@@ -149,9 +143,6 @@ bool GameProjectApp::startup() {
 	std::dynamic_pointer_cast<SequenceBehaviour>(loggedFleeDangerSequence->getBehaviour())->addChild(loggedIsInDanger);
 	std::dynamic_pointer_cast<SequenceBehaviour>(loggedFleeDangerSequence->getBehaviour())->addChild(loggedFleeDanger);
 
-	std::dynamic_pointer_cast<SequenceBehaviour>(loggedAttackSequence->getBehaviour())->addChild(loggedCanAttack);
-	std::dynamic_pointer_cast<SequenceBehaviour>(loggedAttackSequence->getBehaviour())->addChild(loggedAttackEnemy);
-
 	std::dynamic_pointer_cast<SequenceBehaviour>(loggedRefuelSequence->getBehaviour())->addChild(loggedIsFuelLow);
 
 	std::dynamic_pointer_cast<SequenceBehaviour>(loggedRefuelAtBase->getBehaviour())->addChild(loggedIsAtBase);
@@ -164,7 +155,7 @@ bool GameProjectApp::startup() {
 
 	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedDeathSequence);
 	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedFleeDangerSequence);
-	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedAttackSequence);
+	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedAttackEnemy);
 	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedRefuelSequence);
 	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedWander);
 
@@ -175,6 +166,7 @@ bool GameProjectApp::startup() {
 	m_redBase = m_entityFactory->createEntity(EntityFactory::red_base, glm::translate(glm::mat3(1), red_base_pos));
 	m_blueBase = m_entityFactory->createEntity(EntityFactory::blue_base, glm::translate(glm::mat3(1), blue_base_pos));
 
+	// TODO place depots?
 
 	EntityPtr player = m_entityFactory->createEntity(EntityFactory::blue_tank, glm::translate(glm::mat3(1), glm::vec2(500,500)));
 	AgentPtr playerAgent = std::dynamic_pointer_cast<Agent>(player->getComponent(Component::agent));
@@ -254,13 +246,6 @@ void GameProjectApp::update(float deltaTime) {
 	//
 
 	updateEntities(deltaTime);
-
-	//HACK
-	ImGui::Begin("Test");
-	ImGui::Text("Hello, world!");
-	//ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
-	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-	ImGui::End();
 }
 
 void GameProjectApp::draw() {

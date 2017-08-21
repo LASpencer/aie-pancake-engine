@@ -1,7 +1,7 @@
 #pragma once
 #include "Behaviour.h"
 #include "PursueForce.h"
-#include "Target.h"
+
 // TODO rewrite as method of agent
 
 //class MoveToTarget : public Behaviour {

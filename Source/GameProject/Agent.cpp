@@ -13,6 +13,7 @@
 
 const float Agent::def_max_velocity = 500.f;
 const float Agent::def_max_force = 100.f;
+const float Agent::def_size = 50.f;
 
 Agent::Agent() : Component(), m_maxVelocity(def_max_velocity), m_maxForce(def_max_force), m_velocity(0), m_force(0), m_canMove(true)
 {
@@ -21,7 +22,7 @@ Agent::Agent() : Component(), m_maxVelocity(def_max_velocity), m_maxForce(def_ma
 	m_pursueTarget = std::make_shared<PursueForce>();
 }
 
-Agent::Agent(float maxVelocity, float maxForce) : Component(), m_maxVelocity(maxVelocity), m_maxForce(maxForce), m_velocity(0), m_force(0), m_canMove(true)
+Agent::Agent(float maxVelocity, float maxForce, float size) : Component(), m_maxVelocity(maxVelocity), m_maxForce(maxForce), m_size(size), m_velocity(0), m_force(0), m_canMove(true)
 {
 	m_stayInBounds = std::make_shared<BoundsForce>();
 	m_avoidImpassableTerrain = std::make_shared<AvoidTerrainForce>();
@@ -118,6 +119,11 @@ void Agent::setMaxForce(float maxForce)
 	m_maxForce = maxForce;
 }
 
+void Agent::setSize(float size)
+{
+	m_size = size;
+}
+
 
 GameTimer & Agent::getTimer(TimerID id)
 {
@@ -196,6 +202,11 @@ void Agent::followPath(float weight)
 			m_path.pop();
 		}
 	}
+}
+
+void Agent::matchTargetVelocity(float weight)
+{
+	//TODO write matchVelocity steering force
 }
 
 void Agent::stop(float weight)

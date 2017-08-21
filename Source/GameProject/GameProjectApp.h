@@ -52,6 +52,7 @@ protected:
 	std::vector<VehiclePtr>				m_redTeam;
 	EntityPtr							m_blueBase;
 	EntityPtr							m_redBase;
+	std::vector<EntityPtr>				m_depots;
 
 	//HACK for testing pathfinding
 	GridSquarePtr m_startPos;
