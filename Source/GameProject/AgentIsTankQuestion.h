@@ -2,6 +2,7 @@
 #include "Behaviour.h"
 #include "VehicleAgent.h"
 
+// Checks if agent is a tank
 class AgentIsTankQuestion : public Behaviour {
 public:
 	AgentIsTankQuestion();

@@ -54,9 +54,5 @@ protected:
 	EntityPtr							m_redBase;
 	std::vector<EntityPtr>				m_depots;
 
-	//HACK for testing pathfinding
-	GridSquarePtr m_startPos;
-	std::stack<GridSquarePtr> m_path;
-
 	bool m_showFPS;							// When true, displays fps in corner of screen
 };

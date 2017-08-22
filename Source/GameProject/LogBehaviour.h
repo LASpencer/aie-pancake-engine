@@ -2,6 +2,8 @@
 #pragma once
 #include "Behaviour.h"
 
+// Adds a line of text to an imgui window when the behaviour returns
+// Colour of text indicates the result
 class LogBehaviour : public Behaviour {
 public:
 	LogBehaviour();
@@ -12,6 +14,7 @@ public:
 
 	virtual Behaviour* clone();
 
+	// Updates the behaviour, and adds a message to an imgui window
 	virtual BehaviourResult update(Agent* agent, float deltaTime);
 
 	void setBehaviour(BehaviourPtr behaviour);

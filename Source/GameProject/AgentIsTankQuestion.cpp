@@ -19,6 +19,7 @@ BehaviourResult AgentIsTankQuestion::update(Agent * agent, float deltaTime)
 {
 	VehicleAgent* tank = dynamic_cast<VehicleAgent*>(agent);
 	int entityTag = agent->getEntity().lock()->getTagMask();
+	// Checks agent can be cast as VehicleAgent, and it's entity is tagged as tank
 	if (tank != nullptr && (entityTag & Entity::ETag::tank)) {
 		return success;
 	} else {

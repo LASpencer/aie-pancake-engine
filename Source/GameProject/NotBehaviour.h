@@ -1,6 +1,7 @@
 #pragma once
 #include "Behaviour.h"
 
+// Returns opposite BehaviourResult of contained behaviour
 class NotBehaviour : public Behaviour {
 	NotBehaviour();
 
