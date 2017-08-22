@@ -5,6 +5,8 @@
 class VehicleAgent;
 typedef std::shared_ptr<VehicleAgent> VehiclePtr;
 
+class SeparationForce;
+
 enum Team {
 	red,
 	blue
@@ -76,7 +78,7 @@ protected:
 	float m_fuel, m_maxFuel, m_attackRange, m_attackCD, m_shootTime;
 	bool m_alive, m_engineOK, m_canShoot;
 	Team m_team;
-	PursueForcePtr m_pursueForce;
+	std::shared_ptr<SeparationForce> m_separation;
 	std::vector<VehicleAgent*> m_neighbours;
 	std::vector<VehicleAgent*> m_enemyNeighbours;
 };

@@ -74,49 +74,51 @@ std::stack<GridSquarePtr> Grid::findPath(GridSquarePtr start, GridSquarePtr end,
 	std::set<GridSquare*> closedNodes;
 	std::stack<GridSquarePtr> path;
 
-	for (auto col : m_squares) {
-		for (GridSquarePtr square : col) {
-			square->gScore = INFINITY;
-			square->fScore = INFINITY;
-			square->hScore = INFINITY;
-			square->m_parent.reset();
+	if (!(start->getType() == impassable || end->getType() == impassable)) {
+		for (auto col : m_squares) {
+			for (GridSquarePtr square : col) {
+				square->gScore = INFINITY;
+				square->fScore = INFINITY;
+				square->hScore = INFINITY;
+				square->m_parent.reset();
+			}
 		}
-	}
-	openNodes.push(start);
-	start->gScore = 0;
-	start->fScore = heuristic(start, end);
+		openNodes.push(start);
+		start->gScore = 0;
+		start->fScore = heuristic(start, end);
 
-	while (!openNodes.empty()) {
-		currentSquare = openNodes.top();
-		openNodes.pop();
-		closedNodes.insert(currentSquare.get());
-		if (currentSquare == end) {
-			break;
-		}
-		for (GridEdge edge : currentSquare->m_connections) {
-			GridSquarePtr targetSquare = edge.target.lock();
-			if (closedNodes.count(targetSquare.get()) == 0)
-			{
-				bool isNotInQueue = targetSquare->m_parent.expired();
-				float cost = currentSquare->gScore + edge.cost;
-				if (cost < targetSquare->gScore) {
-					targetSquare->gScore = cost;
-					targetSquare->m_parent = currentSquare;
-				}
-				if (targetSquare->hScore == INFINITY) {
-					targetSquare->hScore = heuristic(targetSquare, end);
-					targetSquare->fScore = targetSquare->gScore + targetSquare->hScore;
-				}
-				if (isNotInQueue) {
-					openNodes.push(targetSquare);
+		while (!openNodes.empty()) {
+			currentSquare = openNodes.top();
+			openNodes.pop();
+			closedNodes.insert(currentSquare.get());
+			if (currentSquare == end) {
+				break;
+			}
+			for (GridEdge edge : currentSquare->m_connections) {
+				GridSquarePtr targetSquare = edge.target.lock();
+				if (closedNodes.count(targetSquare.get()) == 0)
+				{
+					bool isNotInQueue = targetSquare->m_parent.expired();
+					float cost = currentSquare->gScore + edge.cost;
+					if (cost < targetSquare->gScore) {
+						targetSquare->gScore = cost;
+						targetSquare->m_parent = currentSquare;
+					}
+					if (targetSquare->hScore == INFINITY) {
+						targetSquare->hScore = heuristic(targetSquare, end);
+						targetSquare->fScore = targetSquare->gScore + targetSquare->hScore;
+					}
+					if (isNotInQueue) {
+						openNodes.push(targetSquare);
+					}
 				}
 			}
 		}
-	}
-	if (currentSquare == end) {
-		while ((bool)currentSquare) {
-			path.push(currentSquare);
-			currentSquare = currentSquare->m_parent.lock();
+		if (currentSquare == end) {
+			while ((bool)currentSquare) {
+				path.push(currentSquare);
+				currentSquare = currentSquare->m_parent.lock();
+			}
 		}
 	}
 	return path;

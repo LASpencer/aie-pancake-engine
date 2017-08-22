@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "RefuelBehaviour.h"
 
-const float RefuelBehaviour::refuel_rate = 20.f;
+const float RefuelBehaviour::refuel_rate = 50.f;
 
 RefuelBehaviour::RefuelBehaviour()
 {

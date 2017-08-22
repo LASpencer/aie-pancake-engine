@@ -147,6 +147,7 @@
     <ClCompile Include="LogBehaviour.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapGraph.cpp" />
+    <ClCompile Include="MatchVelocityForce.cpp" />
     <ClCompile Include="MoveToHeldMouse.cpp" />
     <ClCompile Include="MoveToTarget.cpp" />
     <ClCompile Include="MultiSprite.cpp" />
@@ -239,6 +240,7 @@
     <ClInclude Include="KeyboardController.h" />
     <ClInclude Include="LogBehaviour.h" />
     <ClInclude Include="MapGraph.h" />
+    <ClInclude Include="MatchVelocityForce.h" />
     <ClInclude Include="MoveToHeldMouse.h" />
     <ClInclude Include="MoveToTarget.h" />
     <ClInclude Include="MultiSprite.h" />

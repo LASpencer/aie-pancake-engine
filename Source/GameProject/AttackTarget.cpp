@@ -29,7 +29,6 @@ BehaviourResult AttackTarget::update(Agent * agent, float deltaTime)
 			return failure;
 		} else if (tank->attack(target)) {
 			tank->matchTargetVelocity();
-			ImGui::Text("Attack Target behaviour");
 		} else{
 			return failure;
 		}

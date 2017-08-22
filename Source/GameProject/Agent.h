@@ -90,6 +90,9 @@ public:
 	*	Returns true if path found, false if not reachable*/
 	virtual bool setGoal(glm::vec2 goal);
 
+	// Adds the steering forces that will always be applied
+	virtual void addDefaultForces();
+
 	// Agent actions
 	// Call these from behaviours to make the agent do things
 	

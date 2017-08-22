@@ -3,9 +3,10 @@
 #include "SpriteBase.h"
 #include "Entity.h"
 #include "GameProjectApp.h"
+#include "SeparationForce.h"
 
 const float VehicleAgent::def_max_fuel = 100.f;
-const float VehicleAgent::def_attack_range = 50.f;
+const float VehicleAgent::def_attack_range = 100.f;
 const float VehicleAgent::neighbour_range = 300.f;
 const float VehicleAgent::idling_speed = 0.4f;
 const float VehicleAgent::cruise_fuel_rate = 2.f;
@@ -22,11 +23,13 @@ const float VehicleAgent::tank_destroyed_uvx = 0.75f;
 VehicleAgent::VehicleAgent() : Agent(), m_maxFuel(def_max_fuel), m_attackRange(def_attack_range), m_team(blue), m_alive(true), m_engineOK(true), m_canShoot(true), m_attackCD(0.f), m_shootTime(0.f)
 {
 	m_fuel = m_maxFuel;
+	m_separation = std::make_shared<SeparationForce>();
 }
 
 VehicleAgent::VehicleAgent(Team team, float attackRange, float maxFuel, float maxVelocity, float maxForce, float size) : Agent(maxVelocity, maxForce, size), m_attackRange(attackRange), m_maxFuel(maxFuel), m_team(team), m_alive(true), m_engineOK(true), m_canShoot(true), m_attackCD(0.f), m_shootTime(0.f)
 {
 	m_fuel = m_maxFuel;
+	m_separation = std::make_shared<SeparationForce>();
 }
 
 VehicleAgent::~VehicleAgent()
@@ -169,22 +172,20 @@ bool VehicleAgent::canShoot()
 
 bool VehicleAgent::attack(VehiclePtr target)
 {
-	if (m_canShoot && m_attackCD <= 0.f && m_team != target->getTeam()) {
+	if (m_canShoot && target->isAlive() && m_team != target->getTeam()) {
 		glm::vec2 displacement = target->getPosition() - getPosition();
 		if (glm::dot(displacement, displacement) < m_attackRange * m_attackRange) {
-			m_attackCD = def_firing_rate; //TODO replace with variable
-			//TODO have attack/armour factor setting kill chances
-			//TODO have chance of 
-			float damageChance = 0.2f;
-			//TODO split into catastrophicChance, mobilityChance, and firepowerChance
+			if (m_attackCD <= 0.f) {
+				m_attackCD = def_firing_rate;
+				float damageChance = 0.2f;
 
-			float hitRoll = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-			if (hitRoll >= 0.8f) {
-				target->kill();
+				float hitRoll = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+				if (hitRoll >= 0.8f) {
+					target->kill();
+				}
+				//Set attacking sprite
+				m_shootTime = shoot_time;
 			}
-			//Set attacking sprite
-			// TODO maybe start countdown which, while on, shows attacking sprite?
-			m_shootTime = shoot_time;
 			return true;
 		}
 	}

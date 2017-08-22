@@ -40,7 +40,7 @@ BehaviourResult OutnumberedQuestion::update(Agent * agent, float deltaTime)
 			}
 		}
 
-		if (foeCount > friendCount * 2) {
+		if (foeCount > (friendCount * 2)) {
 			return success;
 		}
 		else {

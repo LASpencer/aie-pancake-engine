@@ -146,10 +146,10 @@ bool GameProjectApp::startup() {
 	chaseTargetSequence->addChild(chaseTarget);
 
 	pickTankBehaviour->addChild(deathSequence);
+	pickTankBehaviour->addChild(blueGoToMouseSequence);
 	pickTankBehaviour->addChild(fleeDangerSequence);
 	pickTankBehaviour->addChild(attackEnemy);
 	pickTankBehaviour->addChild(refuelSequence);
-	pickTankBehaviour->addChild(blueGoToMouseSequence);
 	pickTankBehaviour->addChild(chaseTargetSequence);
 	pickTankBehaviour->addChild(wander); //TODO pick something else?
 
@@ -180,10 +180,11 @@ bool GameProjectApp::startup() {
 	std::dynamic_pointer_cast<SequenceBehaviour>(loggedChaseTargetSequence->getBehaviour())->addChild(loggedChaseTarget);
 
 	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedDeathSequence);
+
+	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedBlueGoToMouseSequence);
 	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedFleeDangerSequence);
 	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedAttackEnemy);
 	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedRefuelSequence);
-	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedBlueGoToMouseSequence);
 	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedChaseTargetSequence);
 	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedWander);
 
@@ -196,24 +197,17 @@ bool GameProjectApp::startup() {
 
 	// TODO place depots?
 
-	EntityPtr player = m_entityFactory->createEntity(EntityFactory::blue_tank, glm::translate(glm::mat3(1), glm::vec2(500,500)));
-	AgentPtr playerAgent = std::dynamic_pointer_cast<Agent>(player->getComponent(Component::agent));
-	//playerAgent->setBehaviour(std::make_shared<KeyboardController>());
 
-	//pathfinding
-	playerAgent->setBehaviour(std::make_shared<PathfindingBehaviour>());
-	//playerAgent->setMaxVelocity(50.f);
+	// Spawn a bunch of tanks
 
-	// Spawn a bunch of wandering cars
-
-	//for (int i = 0; i < 10; ++i) {
-	//	EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::blue_tank, glm::translate(glm::mat3(1), glm::vec2(200,50*i)));
-	//	AgentPtr wanderAgent = std::dynamic_pointer_cast<Agent>(wanderer->getComponent(Component::agent));
-	//	//wanderAgent->setMaxVelocity(50.f);
-	//	auto isCar = [](Agent* agent) {	EntityPtr entity(agent->getEntity());
-	//									return (bool)(entity->getTagMask() & Entity::ETag::car); };
-	//	wanderAgent->setBehaviour(BehaviourPtr(tankBehaviour->clone()));
-	//}
+	for (int i = 0; i < 10; ++i) {
+		EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::blue_tank, glm::translate(glm::mat3(1), glm::vec2(200,50*i)));
+		AgentPtr wanderAgent = std::dynamic_pointer_cast<Agent>(wanderer->getComponent(Component::agent));
+		//wanderAgent->setMaxVelocity(50.f);
+		auto isCar = [](Agent* agent) {	EntityPtr entity(agent->getEntity());
+										return (bool)(entity->getTagMask() & Entity::ETag::car); };
+		wanderAgent->setBehaviour(BehaviourPtr(tankBehaviour->clone()));
+	}
 
 	for (int i = 0; i < 10; ++i) {
 		EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::red_tank, glm::translate(glm::mat3(1), glm::vec2(1000 , 700 - 50 * i)));
@@ -226,9 +220,6 @@ bool GameProjectApp::startup() {
 
 	EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::blue_tank, glm::translate(glm::mat3(1), glm::vec2(400 , 200)));
 	AgentPtr wanderAgent = std::dynamic_pointer_cast<Agent>(wanderer->getComponent(Component::agent));
-	//wanderAgent->setMaxVelocity(50.f);
-	auto isCar = [](Agent* agent) {	EntityPtr entity(agent->getEntity());
-	return (bool)(entity->getTagMask() & Entity::ETag::car); };
 	wanderAgent->setBehaviour(BehaviourPtr(loggedTankBehaviour->clone()));
 	
 	// Disable face culling, so sprites can be flipped

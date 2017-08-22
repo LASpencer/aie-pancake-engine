@@ -61,8 +61,7 @@ void Agent::update(float deltaTime)
 	// Clear forces
 	m_steeringForces.clear();
 	// Add default forces
-	m_steeringForces.push_back({ std::dynamic_pointer_cast<SteeringForce>(m_stayInBounds), 1.f });
-	m_steeringForces.push_back({ std::dynamic_pointer_cast<SteeringForce>(m_avoidImpassableTerrain), 1.f });
+	addDefaultForces();
 	// Get additional forces and actions from behaviour
 	m_behaviour->update(this, deltaTime);
 
@@ -178,6 +177,12 @@ bool Agent::setGoal(glm::vec2 goal)
 		}
 	}
 	return success;
+}
+
+void Agent::addDefaultForces()
+{
+	m_steeringForces.push_back({ std::dynamic_pointer_cast<SteeringForce>(m_stayInBounds), 1.f });
+	m_steeringForces.push_back({ std::dynamic_pointer_cast<SteeringForce>(m_avoidImpassableTerrain), 1.f });
 }
 
 void Agent::followPath(float weight)

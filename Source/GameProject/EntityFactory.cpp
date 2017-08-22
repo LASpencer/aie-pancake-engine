@@ -153,7 +153,7 @@ EntityPtr EntityFactory::createTank(glm::mat3 position, SceneObjectPtr parent, b
 	// Add agent
 	//TODO change to VehicleAgent when done
 	//TODO create and add behaviour tree as suitable
-	VehiclePtr agent = std::make_shared<VehicleAgent>(team, 100, 100, 100, 200, 31);
+	VehiclePtr agent = std::make_shared<VehicleAgent>(team, 150, 100, 100, 200, 31);
 	tank->addComponent(agent);
 	if (isBlueTeam) {
 		m_app->getTeam(blue).push_back(agent);

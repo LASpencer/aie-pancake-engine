@@ -360,6 +360,9 @@
     <ClCompile Include="MoveToHeldMouse.cpp">
       <Filter>Source Files\Entities\Behaviours</Filter>
     </ClCompile>
+    <ClCompile Include="MatchVelocityForce.cpp">
+      <Filter>Source Files\Entities\Behaviours\Steering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameProjectApp.h">
@@ -649,6 +652,9 @@
     </ClInclude>
     <ClInclude Include="IsBlueQuestion.h">
       <Filter>Header Files\Entities\Behaviours\Question Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="MatchVelocityForce.h">
+      <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
