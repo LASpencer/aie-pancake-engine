@@ -7,15 +7,9 @@
 #include "Filepaths.h"
 #include "Collider.h"
 
-#include "FSMBehaviour.h"
-#include "GuardStateMachine.h"
-#include "KeyboardController.h"
 #include "WeightedSteeringForce.h"
-#include "SteeringBehaviour.h"
 #include "WanderForce.h"
 #include "BoundsForce.h"
-#include "PathfindingBehaviour.h"
-#include "GuardExerciseBehaviour.h"
 #include "AvoidTerrainForce.h"
 #include "Flocking.h"
 
@@ -46,22 +40,22 @@ bool GameProjectApp::startup() {
 	m_sceneRoot = std::make_shared<SceneObject>();
 
 	std::vector<std::vector<int>> tileIDs =
-	{ {0,2,0,0,0,2,0,0,0},
-	{ 0,0,0,2,0,0,0,0,0 },
-	{ 2,0,0,1,1,1,2,1,2 },
+	{ {0,1,0,0,0,2,0,0,0},
+	{ 0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,1,1,1,2,1,2 },
 	{ 0,0,0,0,1,2,0,0,0 },
-	{ 2,0,0,1,1,0,0,2,0 },
-	{ 0,2,2,0,0,0,0,2,0 },
+	{ 2,0,0,1,1,0,0,0,0 },
+	{ 1,1,1,0,0,0,0,0,0 },
 	{ 0,1,1,1,0,0,2,0,0 },
-	{ 0,0,1,0,0,1,0,0,0 },
-	{ 1,1,1,0,0,0,1,2,0 },
-	{ 0,0,0,0,0,1,1,0,0 },
-	{ 0,0,0,2,0,0,0,0,0 },
-	{ 0,0,1,0,0,2,0,0,0 },
+	{ 0,0,2,0,0,1,2,0,0 },
+	{ 1,1,2,0,0,0,1,2,0 },
+	{ 0,0,0,2,0,1,2,0,0 },
+	{ 0,0,0,2,0,2,0,0,0 },
+	{ 0,0,1,0,2,2,0,0,0 },
 	{ 2,2,2,0,0,0,0,2,0 },
-	{ 0,0,1,0,1,1,2,0,0 },
-	{ 0,1,1,1,1,0,0,0,2 },
-	{ 0,0,0,0,1,2,2,0,0 } };
+	{ 0,0,1,0,1,1,0,0,0 },
+	{ 0,1,1,1,1,0,0,0,0 },
+	{ 0,0,0,0,1,0,0,0,0 } };
 
 	std::vector<std::vector<TileType>> tiles;
 	for (std::vector<int> column : tileIDs) {
@@ -200,7 +194,7 @@ bool GameProjectApp::startup() {
 
 	// Spawn a bunch of tanks
 
-	for (int i = 0; i < 10; ++i) {
+	for (int i = 0; i < 5; ++i) {
 		EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::blue_tank, glm::translate(glm::mat3(1), glm::vec2(200,50*i)));
 		AgentPtr wanderAgent = std::dynamic_pointer_cast<Agent>(wanderer->getComponent(Component::agent));
 		//wanderAgent->setMaxVelocity(50.f);
@@ -209,7 +203,7 @@ bool GameProjectApp::startup() {
 		wanderAgent->setBehaviour(BehaviourPtr(tankBehaviour->clone()));
 	}
 
-	for (int i = 0; i < 10; ++i) {
+	for (int i = 0; i < 5; ++i) {
 		EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::red_tank, glm::translate(glm::mat3(1), glm::vec2(1000 , 700 - 50 * i)));
 		AgentPtr wanderAgent = std::dynamic_pointer_cast<Agent>(wanderer->getComponent(Component::agent));
 		//wanderAgent->setMaxVelocity(50.f);

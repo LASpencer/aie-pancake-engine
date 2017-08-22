@@ -26,7 +26,6 @@ public:
 
 	// Different entities which can be created
 	enum EntityType {
-		ship,
 		car,
 		block,
 		red_tank,
@@ -58,9 +57,6 @@ public:
 
 private:
 	GameProjectApp* m_app;
-
-	// Creates a Ship entity
-	EntityPtr createShip(glm::mat3 position, SceneObjectPtr parent);
 
 	EntityPtr createCar(glm::mat3 position, SceneObjectPtr parent);
 

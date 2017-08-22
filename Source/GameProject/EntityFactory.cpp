@@ -9,7 +9,6 @@
 #include "CircleCollider.h"
 #include "Filepaths.h"
 #include "VehicleAgent.h"
-#include "KeyboardController.h"
 
 
 EntityFactory::EntityFactory(GameProjectApp* app) : m_app(app)
@@ -31,9 +30,6 @@ EntityPtr EntityFactory::createEntity(EntityType type, glm::mat3 position, Scene
 	EntityPtr entity;
 	// Select method for creating entity
 	switch (type) {
-	case(ship):
-		entity = createShip(position, parent);
-		break;
 	case(car):
 		entity = createCar(position, parent);
 		break;
@@ -73,20 +69,6 @@ void EntityFactory::loadResources()
 	m_app->getResourceManager()->getTexture(filepath::fuel_depot);
 }
 
-
-EntityPtr EntityFactory::createShip(glm::mat3 position, SceneObjectPtr parent)
-{
-	EntityPtr ship = std::make_shared<Entity>(m_app);
-	setEntityPosition(ship, position, parent);
-	// Add sprite
-	ship->addComponent(std::make_shared<Sprite>(m_app->getResourceManager()->getTexture(filepath::ship)));
-	// Add agent
-	std::shared_ptr<Agent> agent = std::make_shared<Agent>();
-	agent->setBehaviour(std::make_shared<KeyboardController>());
-	ship->addComponent(agent);
-	
-	return ship;
-}
 
 EntityPtr EntityFactory::createCar(glm::mat3 position, SceneObjectPtr parent)
 {

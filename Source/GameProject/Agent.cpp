@@ -5,11 +5,11 @@
 #include "GameProjectApp.h"
 #include "BoundsForce.h"
 #include "AvoidTerrainForce.h"
-#include "ArrivalForce.h"
 #include "SeekForce.h"
 #include "Target.h"
 #include "CollisionEvent.h"
 #include "PursueForce.h"
+#include "ArrivalForce.h"
 
 const float Agent::def_max_velocity = 500.f;
 const float Agent::def_max_force = 100.f;
@@ -190,17 +190,14 @@ void Agent::followPath(float weight)
 	EntityPtr entity(m_entity);
 	Grid* grid = entity->getApp()->getGrid();
 	GridSquarePtr endSquare = grid->getSquare(m_goal);
-	PointTarget currentTarget;
 	SteeringForcePtr force;
 
 	if (m_square == endSquare) {
-		currentTarget.setTarget(m_goal);
-		ArrivalForcePtr arrive(std::make_shared<ArrivalForce>(TargetPtr(currentTarget.clone()))); //TODO rewrite as "ArrivePointForce" or sth
+		ArrivalForcePtr arrive(std::make_shared<ArrivalForce>(m_goal)); //TODO rewrite as "ArrivePointForce" or sth
 		force = std::dynamic_pointer_cast<SteeringForce>(arrive);
 		m_steeringForces.push_back({ force, weight });
 	} else if (!m_path.empty()) {
-		currentTarget.setTarget(m_path.top()->getPosition());
-		SeekForcePtr seek(std::make_shared<SeekForce>(TargetPtr(currentTarget.clone()))); //TODO rewrite as "SeekPointForce" or sth
+		SeekForcePtr seek(std::make_shared<SeekForce>(m_path.top()->getPosition())); //TODO rewrite as "SeekPointForce" or sth
 		force = std::dynamic_pointer_cast<SteeringForce>(seek);
 		m_steeringForces.push_back({ force, weight });
 		if (m_path.top() == m_square) {

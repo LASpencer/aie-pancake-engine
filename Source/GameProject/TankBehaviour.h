@@ -20,5 +20,6 @@
 #include "GoToBase.h"
 #include "ChaseTarget.h"
 #include "MoveToHeldMouse.h"
+#include "Wander.h"
 
 //TODO additional behaviours ie pathfind to clicked point, wander, flocking

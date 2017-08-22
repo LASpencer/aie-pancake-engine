@@ -73,12 +73,6 @@
     <Filter Include="Source Files\Entities\Behaviours\Steering">
       <UniqueIdentifier>{6f0704a5-168a-4b6d-8841-abe63df2c723}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\State Machine\States">
-      <UniqueIdentifier>{8f3fc7e0-fb6c-4cbd-a52e-61bc35e47854}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\State Machine\States">
-      <UniqueIdentifier>{d7c5036c-c83f-4163-928a-b686ad437306}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\State Machine\Conditions">
       <UniqueIdentifier>{d229e5ab-fba5-4b32-a1dc-3d0802377f77}</UniqueIdentifier>
     </Filter>
@@ -168,13 +162,7 @@
     <ClCompile Include="CollisionEvent.cpp">
       <Filter>Source Files\Observer\Events</Filter>
     </ClCompile>
-    <ClCompile Include="KeyboardController.cpp">
-      <Filter>Source Files\Entities\Behaviours</Filter>
-    </ClCompile>
     <ClCompile Include="Agent.cpp">
-      <Filter>Source Files\Entities\Components\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="FSMAgent.cpp">
       <Filter>Source Files\Entities\Components\Agents</Filter>
     </ClCompile>
     <ClCompile Include="SteeringForce.cpp">
@@ -183,29 +171,11 @@
     <ClCompile Include="SeekForce.cpp">
       <Filter>Source Files\Entities\Behaviours\Steering</Filter>
     </ClCompile>
-    <ClCompile Include="DrunkenModifier.cpp">
-      <Filter>Source Files\Entities\Behaviours</Filter>
-    </ClCompile>
-    <ClCompile Include="FSMBehaviour.cpp">
-      <Filter>Source Files\Entities\Behaviours</Filter>
-    </ClCompile>
-    <ClCompile Include="GuardStates.cpp">
-      <Filter>Source Files\State Machine\States</Filter>
-    </ClCompile>
-    <ClCompile Include="GuardStateMachine.cpp">
-      <Filter>Source Files\State Machine\States</Filter>
-    </ClCompile>
     <ClCompile Include="TimerCondition.cpp">
       <Filter>Source Files\State Machine\Conditions</Filter>
     </ClCompile>
     <ClCompile Include="TargetInRangeCondition.cpp">
       <Filter>Source Files\State Machine\Conditions</Filter>
-    </ClCompile>
-    <ClCompile Include="SimpleAgent.cpp">
-      <Filter>Source Files\Entities\Components\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="ArrivalForce.cpp">
-      <Filter>Source Files\Entities\Behaviours\Steering</Filter>
     </ClCompile>
     <ClCompile Include="PursueForce.cpp">
       <Filter>Source Files\Entities\Behaviours\Steering</Filter>
@@ -216,14 +186,8 @@
     <ClCompile Include="EvadeForce.cpp">
       <Filter>Source Files\Entities\Behaviours\Steering</Filter>
     </ClCompile>
-    <ClCompile Include="ChaseyStates.cpp">
-      <Filter>Source Files\State Machine\States</Filter>
-    </ClCompile>
     <ClCompile Include="BoundsForce.cpp">
       <Filter>Source Files\Entities\Behaviours\Steering</Filter>
-    </ClCompile>
-    <ClCompile Include="ChaseyStateMachine.cpp">
-      <Filter>Source Files\State Machine\States</Filter>
     </ClCompile>
     <ClCompile Include="WanderForce.cpp">
       <Filter>Source Files\Entities\Behaviours\Steering</Filter>
@@ -242,9 +206,6 @@
     </ClCompile>
     <ClCompile Include="utility.cpp">
       <Filter>Source Files\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="SteeringBehaviour.cpp">
-      <Filter>Source Files\Entities\Behaviours</Filter>
     </ClCompile>
     <ClCompile Include="CompositeBehaviour.cpp">
       <Filter>Source Files\Entities\Behaviours\Composite Behaviours</Filter>
@@ -276,13 +237,7 @@
     <ClCompile Include="Wander.cpp">
       <Filter>Source Files\Entities\Behaviours</Filter>
     </ClCompile>
-    <ClCompile Include="MoveToTarget.cpp">
-      <Filter>Source Files\Entities\Behaviours</Filter>
-    </ClCompile>
     <ClCompile Include="AttackTarget.cpp">
-      <Filter>Source Files\Entities\Behaviours</Filter>
-    </ClCompile>
-    <ClCompile Include="GuardExerciseBehaviour.cpp">
       <Filter>Source Files\Entities\Behaviours</Filter>
     </ClCompile>
     <ClCompile Include="Grid.cpp">
@@ -290,9 +245,6 @@
     </ClCompile>
     <ClCompile Include="SeparationForce.cpp">
       <Filter>Source Files\Entities\Behaviours\Steering</Filter>
-    </ClCompile>
-    <ClCompile Include="PathfindingBehaviour.cpp">
-      <Filter>Source Files\Entities\Behaviours</Filter>
     </ClCompile>
     <ClCompile Include="AlignmentForce.cpp">
       <Filter>Source Files\Entities\Behaviours\Steering</Filter>
@@ -363,6 +315,9 @@
     <ClCompile Include="MatchVelocityForce.cpp">
       <Filter>Source Files\Entities\Behaviours\Steering</Filter>
     </ClCompile>
+    <ClCompile Include="ArrivalForce.cpp">
+      <Filter>Source Files\Entities\Behaviours\Steering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameProjectApp.h">
@@ -428,9 +383,6 @@
     <ClInclude Include="Behaviour.h">
       <Filter>Header Files\Entities\Behaviours</Filter>
     </ClInclude>
-    <ClInclude Include="KeyboardController.h">
-      <Filter>Header Files\Entities\Behaviours</Filter>
-    </ClInclude>
     <ClInclude Include="StateMachine.h">
       <Filter>Header Files\State Machine</Filter>
     </ClInclude>
@@ -461,9 +413,6 @@
     <ClInclude Include="Agent.h">
       <Filter>Header Files\Entities\Components\Agents</Filter>
     </ClInclude>
-    <ClInclude Include="FSMAgent.h">
-      <Filter>Header Files\Entities\Components\Agents</Filter>
-    </ClInclude>
     <ClInclude Include="utility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -476,29 +425,11 @@
     <ClInclude Include="SeekForce.h">
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
-    <ClInclude Include="DrunkenModifier.h">
-      <Filter>Header Files\Entities\Behaviours</Filter>
-    </ClInclude>
-    <ClInclude Include="GuardStates.h">
-      <Filter>Header Files\State Machine\States</Filter>
-    </ClInclude>
-    <ClInclude Include="FSMBehaviour.h">
-      <Filter>Header Files\Entities\Behaviours</Filter>
-    </ClInclude>
     <ClInclude Include="TargetInRangeCondition.h">
       <Filter>Header Files\State Machine\Conditions</Filter>
     </ClInclude>
     <ClInclude Include="TimerCondition.h">
       <Filter>Header Files\State Machine\Conditions</Filter>
-    </ClInclude>
-    <ClInclude Include="GuardStateMachine.h">
-      <Filter>Header Files\State Machine\States</Filter>
-    </ClInclude>
-    <ClInclude Include="SimpleAgent.h">
-      <Filter>Header Files\Entities\Components\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="ArrivalForce.h">
-      <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
     <ClInclude Include="PursueForce.h">
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
@@ -509,26 +440,14 @@
     <ClInclude Include="EvadeForce.h">
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
-    <ClInclude Include="ChaseyStates.h">
-      <Filter>Header Files\State Machine\States</Filter>
-    </ClInclude>
-    <ClInclude Include="ChaseyStateMachine.h">
-      <Filter>Header Files\State Machine\States</Filter>
-    </ClInclude>
     <ClInclude Include="BoundsForce.h">
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
     <ClInclude Include="WanderForce.h">
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
-    <ClInclude Include="SteeringBehaviour.h">
-      <Filter>Header Files\Entities\Behaviours</Filter>
-    </ClInclude>
     <ClInclude Include="MapGraph.h">
       <Filter>Header Files\Pathfinding</Filter>
-    </ClInclude>
-    <ClInclude Include="PathfindingBehaviour.h">
-      <Filter>Header Files\Entities\Behaviours</Filter>
     </ClInclude>
     <ClInclude Include="..\dependencies\imgui\imgui_internal.h">
       <Filter>Header Files\imgui</Filter>
@@ -569,13 +488,7 @@
     <ClInclude Include="Wander.h">
       <Filter>Header Files\Entities\Behaviours</Filter>
     </ClInclude>
-    <ClInclude Include="MoveToTarget.h">
-      <Filter>Header Files\Entities\Behaviours</Filter>
-    </ClInclude>
     <ClInclude Include="AttackTarget.h">
-      <Filter>Header Files\Entities\Behaviours</Filter>
-    </ClInclude>
-    <ClInclude Include="GuardExerciseBehaviour.h">
       <Filter>Header Files\Entities\Behaviours</Filter>
     </ClInclude>
     <ClInclude Include="Ray.h">
@@ -654,6 +567,9 @@
       <Filter>Header Files\Entities\Behaviours\Question Behaviours</Filter>
     </ClInclude>
     <ClInclude Include="MatchVelocityForce.h">
+      <Filter>Header Files\Entities\Behaviours\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="ArrivalForce.h">
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
   </ItemGroup>
