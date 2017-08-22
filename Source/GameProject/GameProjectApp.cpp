@@ -85,6 +85,9 @@ bool GameProjectApp::startup() {
 	std::shared_ptr<SequenceBehaviour> refuelSequence(new SequenceBehaviour());
 	std::shared_ptr<SelectorBehaviour> getFuel(new SelectorBehaviour());
 	std::shared_ptr<SequenceBehaviour> refuelAtBaseSequence(new SequenceBehaviour());
+	std::shared_ptr<SequenceBehaviour> blueGoToMouseSequence(new SequenceBehaviour());
+	std::shared_ptr<SequenceBehaviour> chaseTargetSequence(new SequenceBehaviour());
+
 	BehaviourPtr isDead(new IsDeadQuestion());
 	BehaviourPtr deathBehaviour(new DeathBehaviour());
 	BehaviourPtr isInDanger(new OutnumberedQuestion());
@@ -94,6 +97,10 @@ bool GameProjectApp::startup() {
 	BehaviourPtr refuel(new RefuelBehaviour());
 	BehaviourPtr isAtBase(new AtBaseQuestion());
 	BehaviourPtr goToBase(new GoToBase());
+	BehaviourPtr isBlueTank(new IsBlueQuestion());
+	BehaviourPtr moveToMouse(new MoveToHeldMouse());
+	BehaviourPtr targetInRange(new TargetInRangeQuestion(200.f));
+	BehaviourPtr chaseTarget(new ChaseTarget());
 	BehaviourPtr wander(new Wander());
 
 	std::shared_ptr<LogBehaviour> loggedTankBehaviour(new LogBehaviour(BehaviourPtr(tankBehaviour->clone()), "Tank Behaviour"));
@@ -102,6 +109,9 @@ bool GameProjectApp::startup() {
 	std::shared_ptr<LogBehaviour> loggedDeathSequence(new LogBehaviour(BehaviourPtr(deathSequence->clone()), "Death Sequence"));
 	std::shared_ptr<LogBehaviour> loggedFleeDangerSequence(new LogBehaviour(BehaviourPtr(fleeDangerSequence->clone()), "Flee Danger Sequence"));
 	std::shared_ptr<LogBehaviour> loggedRefuelSequence(new LogBehaviour(BehaviourPtr(refuelSequence->clone()), "Refuel Sequence"));
+	std::shared_ptr<LogBehaviour> loggedBlueGoToMouseSequence(new LogBehaviour(BehaviourPtr(refuelSequence->clone()), "Blue Go To Mouse Sequence"));
+	std::shared_ptr<LogBehaviour> loggedChaseTargetSequence(new LogBehaviour(BehaviourPtr(refuelSequence->clone()), "Chase Target Sequence"));
+
 	std::shared_ptr<LogBehaviour> loggedGetFuel(new LogBehaviour(BehaviourPtr(getFuel->clone()), "Get Fuel"));
 	std::shared_ptr<LogBehaviour> loggedRefuelAtBase(new LogBehaviour(BehaviourPtr(refuelAtBaseSequence->clone()), "Get fuel from base"));
 	std::shared_ptr<LogBehaviour> loggedIsDead(new LogBehaviour(BehaviourPtr(isDead->clone()), "Am I dead?"));
@@ -113,6 +123,10 @@ bool GameProjectApp::startup() {
 	std::shared_ptr<LogBehaviour> loggedRefuel(new LogBehaviour(BehaviourPtr(refuel->clone()), "Refuelling"));
 	std::shared_ptr<LogBehaviour> loggedIsAtBase(new LogBehaviour(BehaviourPtr(isAtBase->clone()), "Am I at my base?"));
 	std::shared_ptr<LogBehaviour> loggedGoToBase(new LogBehaviour(BehaviourPtr(goToBase->clone()), "Go to base"));
+	std::shared_ptr<LogBehaviour> loggedIsBlue(new LogBehaviour(BehaviourPtr(isBlueTank->clone()), "Am I on blue team?"));
+	std::shared_ptr<LogBehaviour> loggedMoveToMouse(new LogBehaviour(BehaviourPtr(moveToMouse->clone()), "Move to mouse"));
+	std::shared_ptr<LogBehaviour> loggedTargetInRange(new LogBehaviour(BehaviourPtr(targetInRange->clone()), "Is target in range?"));
+	std::shared_ptr<LogBehaviour> loggedChaseTarget(new LogBehaviour(BehaviourPtr(chaseTarget->clone()), "ChaseTarget"));
 	std::shared_ptr<LogBehaviour> loggedWander(new LogBehaviour(BehaviourPtr(wander->clone()), "Wander"));
 	//TODO finish off
 
@@ -126,11 +140,17 @@ bool GameProjectApp::startup() {
 	getFuel->addChild(refuelAtBaseSequence);
 	getFuel->addChild(goToBase);
 	refuelSequence->addChild(getFuel);
+	blueGoToMouseSequence->addChild(isBlueTank);
+	blueGoToMouseSequence->addChild(moveToMouse);
+	chaseTargetSequence->addChild(targetInRange);
+	chaseTargetSequence->addChild(chaseTarget);
 
 	pickTankBehaviour->addChild(deathSequence);
 	pickTankBehaviour->addChild(fleeDangerSequence);
 	pickTankBehaviour->addChild(attackEnemy);
 	pickTankBehaviour->addChild(refuelSequence);
+	pickTankBehaviour->addChild(blueGoToMouseSequence);
+	pickTankBehaviour->addChild(chaseTargetSequence);
 	pickTankBehaviour->addChild(wander); //TODO pick something else?
 
 	tankBehaviour->addChild(isTank);
@@ -153,10 +173,18 @@ bool GameProjectApp::startup() {
 
 	std::dynamic_pointer_cast<SequenceBehaviour>(loggedRefuelSequence->getBehaviour())->addChild(loggedGetFuel);
 
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedBlueGoToMouseSequence->getBehaviour())->addChild(loggedIsBlue);
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedBlueGoToMouseSequence->getBehaviour())->addChild(loggedMoveToMouse);
+
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedChaseTargetSequence->getBehaviour())->addChild(loggedTargetInRange);
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedChaseTargetSequence->getBehaviour())->addChild(loggedChaseTarget);
+
 	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedDeathSequence);
 	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedFleeDangerSequence);
 	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedAttackEnemy);
 	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedRefuelSequence);
+	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedBlueGoToMouseSequence);
+	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedChaseTargetSequence);
 	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedWander);
 
 	std::dynamic_pointer_cast<SequenceBehaviour>(loggedTankBehaviour->getBehaviour())->addChild(loggedIsTank);
@@ -178,14 +206,14 @@ bool GameProjectApp::startup() {
 
 	// Spawn a bunch of wandering cars
 
-	for (int i = 0; i < 10; ++i) {
-		EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::blue_tank, glm::translate(glm::mat3(1), glm::vec2(200,50*i)));
-		AgentPtr wanderAgent = std::dynamic_pointer_cast<Agent>(wanderer->getComponent(Component::agent));
-		//wanderAgent->setMaxVelocity(50.f);
-		auto isCar = [](Agent* agent) {	EntityPtr entity(agent->getEntity());
-										return (bool)(entity->getTagMask() & Entity::ETag::car); };
-		wanderAgent->setBehaviour(BehaviourPtr(tankBehaviour->clone()));
-	}
+	//for (int i = 0; i < 10; ++i) {
+	//	EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::blue_tank, glm::translate(glm::mat3(1), glm::vec2(200,50*i)));
+	//	AgentPtr wanderAgent = std::dynamic_pointer_cast<Agent>(wanderer->getComponent(Component::agent));
+	//	//wanderAgent->setMaxVelocity(50.f);
+	//	auto isCar = [](Agent* agent) {	EntityPtr entity(agent->getEntity());
+	//									return (bool)(entity->getTagMask() & Entity::ETag::car); };
+	//	wanderAgent->setBehaviour(BehaviourPtr(tankBehaviour->clone()));
+	//}
 
 	for (int i = 0; i < 10; ++i) {
 		EntityPtr wanderer = m_entityFactory->createEntity(EntityFactory::red_tank, glm::translate(glm::mat3(1), glm::vec2(1000 , 700 - 50 * i)));

@@ -166,6 +166,7 @@ bool VehicleAgent::canShoot()
 	return m_canShoot;
 }
 
+
 bool VehicleAgent::attack(VehiclePtr target)
 {
 	if (m_canShoot && m_attackCD <= 0.f && m_team != target->getTeam()) {

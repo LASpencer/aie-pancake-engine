@@ -27,6 +27,7 @@ BehaviourResult FleeDanger::update(Agent * agent, float deltaTime)
 	}
 	else {
 		agent->addForce(std::dynamic_pointer_cast<SteeringForce>(m_separation), 1.f);
+		ImGui::Text("Flee Danger behaviour");
 		return success;
 	}
 }

@@ -351,6 +351,15 @@
     <ClCompile Include="GoToBase.cpp">
       <Filter>Source Files\Entities\Behaviours</Filter>
     </ClCompile>
+    <ClCompile Include="ChaseTarget.cpp">
+      <Filter>Source Files\Entities\Behaviours</Filter>
+    </ClCompile>
+    <ClCompile Include="IsBlueQuestion.cpp">
+      <Filter>Source Files\Entities\Behaviours\Question Behaviours</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveToHeldMouse.cpp">
+      <Filter>Source Files\Entities\Behaviours</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameProjectApp.h">
@@ -631,6 +640,15 @@
     </ClInclude>
     <ClInclude Include="TankBehaviour.h">
       <Filter>Header Files\Entities\Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="ChaseTarget.h">
+      <Filter>Header Files\Entities\Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveToHeldMouse.h">
+      <Filter>Header Files\Entities\Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="IsBlueQuestion.h">
+      <Filter>Header Files\Entities\Behaviours\Question Behaviours</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

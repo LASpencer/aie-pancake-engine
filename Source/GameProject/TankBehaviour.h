@@ -6,6 +6,7 @@
 #include "TargetInRangeQuestion.h"
 #include "AtBaseQuestion.h"
 #include "FuelTooLowQuestion.h"
+#include "IsBlueQuestion.h"
 
 #include "LogBehaviour.h"
 #include "NotBehaviour.h"
@@ -17,5 +18,7 @@
 #include "AttackTarget.h"
 #include "RefuelBehaviour.h"
 #include "GoToBase.h"
+#include "ChaseTarget.h"
+#include "MoveToHeldMouse.h"
 
 //TODO additional behaviours ie pathfind to clicked point, wander, flocking

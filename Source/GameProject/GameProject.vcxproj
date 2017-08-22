@@ -108,6 +108,7 @@
     <ClCompile Include="AvoidTerrainForce.cpp" />
     <ClCompile Include="BoundsForce.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="ChaseTarget.cpp" />
     <ClCompile Include="ChaseyStateMachine.cpp" />
     <ClCompile Include="ChaseyStates.cpp" />
     <ClCompile Include="CircleCollider.cpp" />
@@ -139,12 +140,14 @@
     <ClCompile Include="GuardStateMachine.cpp" />
     <ClCompile Include="GuardStates.cpp" />
     <ClCompile Include="InputEvent.cpp" />
+    <ClCompile Include="IsBlueQuestion.cpp" />
     <ClCompile Include="IsDeadQuestion.cpp" />
     <ClCompile Include="KeyboardControlForce.cpp" />
     <ClCompile Include="KeyboardController.cpp" />
     <ClCompile Include="LogBehaviour.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapGraph.cpp" />
+    <ClCompile Include="MoveToHeldMouse.cpp" />
     <ClCompile Include="MoveToTarget.cpp" />
     <ClCompile Include="MultiSprite.cpp" />
     <ClCompile Include="NotBehaviour.cpp" />
@@ -195,6 +198,7 @@
     <ClInclude Include="BinaryCondition.h" />
     <ClInclude Include="BoundsForce.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="ChaseTarget.h" />
     <ClInclude Include="ChaseyStateMachine.h" />
     <ClInclude Include="ChaseyStates.h" />
     <ClInclude Include="CircleCollider.h" />
@@ -229,11 +233,13 @@
     <ClInclude Include="GuardStateMachine.h" />
     <ClInclude Include="GuardStates.h" />
     <ClInclude Include="InputEvent.h" />
+    <ClInclude Include="IsBlueQuestion.h" />
     <ClInclude Include="IsDeadQuestion.h" />
     <ClInclude Include="KeyboardControlForce.h" />
     <ClInclude Include="KeyboardController.h" />
     <ClInclude Include="LogBehaviour.h" />
     <ClInclude Include="MapGraph.h" />
+    <ClInclude Include="MoveToHeldMouse.h" />
     <ClInclude Include="MoveToTarget.h" />
     <ClInclude Include="MultiSprite.h" />
     <ClInclude Include="NotBehaviour.h" />

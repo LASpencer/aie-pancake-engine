@@ -22,6 +22,8 @@ Behaviour * Wander::clone()
 BehaviourResult Wander::update(Agent * entity, float deltaTime)
 {
 	entity->addForce(m_force, 1.f);
+	
+	ImGui::Text("Wander behaviour");
 
 	return success;
 }

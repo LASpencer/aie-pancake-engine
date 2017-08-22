@@ -219,6 +219,7 @@ bool Agent::pursueTarget(float weight)
 {
 	if (canMove()) {
 		m_steeringForces.push_back({ std::dynamic_pointer_cast<SteeringForce>(m_pursueTarget), weight });
+		return true;
 	}
 	return false;
 }

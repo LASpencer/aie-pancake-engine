@@ -62,6 +62,7 @@ public:
 
 	bool canShoot();
 
+
 	// If target is in range, and 
 	bool attack(VehiclePtr target);
 
