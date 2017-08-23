@@ -28,6 +28,7 @@ BehaviourResult GoToBase::update(Agent * agent, float deltaTime)
 		glm::vec2 basePosition(base->getPosition()->getGlobalTransform()[2]);
 		bool pathFound = agent->setGoal(basePosition);
 		if (pathFound) {
+			tank->avoidFriends();
 			agent->followPath();
 			return success;
 		} else {

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "AlignmentForce.h"
 #include "Agent.h"
+#include "VehicleAgent.h"
 
 AlignmentForce::AlignmentForce()
 {
@@ -13,14 +14,16 @@ AlignmentForce::~AlignmentForce()
 glm::vec2 AlignmentForce::getForce(Agent * agent)
 {
 	glm::vec2 targetVelocity(0);
-	for (auto neighbour : m_neighbours) {
-		targetVelocity += neighbour.lock()->getVelocity();
+	VehicleAgent* vehicle = dynamic_cast<VehicleAgent*>(agent);
+	if (vehicle != nullptr) {
+		for (auto neighbour : vehicle->getNeighbours()) {
+			targetVelocity += neighbour->getVelocity();
+		}
+		size_t totalNeighbours = vehicle->getNeighbours().size();
+		if (totalNeighbours != 0) {
+			targetVelocity /= totalNeighbours;
+		}
 	}
-	targetVelocity /= m_neighbours.size();
 	return targetVelocity - agent->getVelocity();
 }
 
-void AlignmentForce::setNeighbours(std::vector<AgentWeakPtr>& neighbours)
-{
-	m_neighbours = neighbours;
-}

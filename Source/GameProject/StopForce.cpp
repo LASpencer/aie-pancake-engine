@@ -11,5 +11,5 @@ StopForce::~StopForce()
 
 glm::vec2 StopForce::getForce(Agent * agent)
 {
-	return -(agent->getVelocity());
+	return -(agent->getVelocity() * 10.f);
 }

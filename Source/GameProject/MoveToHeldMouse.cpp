@@ -2,6 +2,7 @@
 #include "MoveToHeldMouse.h"
 #include "Input.h"
 #include "Agent.h"
+#include "VehicleAgent.h"
 
 MoveToHeldMouse::MoveToHeldMouse()
 {
@@ -24,6 +25,10 @@ BehaviourResult MoveToHeldMouse::update(Agent * agent, float deltaTime)
 		glm::vec2 mousePosition(input->getMouseX(), input->getMouseY());
 		bool pathFound = agent->setGoal(mousePosition);
 		if (pathFound) {
+			VehicleAgent* tank = dynamic_cast<VehicleAgent*>(agent);
+			if (tank != nullptr) {
+				tank->avoidFriends();
+			}
 			agent->followPath();
 			result = success;
 		}

@@ -4,6 +4,8 @@
 #include "Entity.h"
 #include "GameProjectApp.h"
 #include "SeparationForce.h"
+#include "AlignmentForce.h"
+#include "CohesionForce.h"
 
 const float VehicleAgent::def_max_fuel = 100.f;
 const float VehicleAgent::def_attack_range = 100.f;
@@ -13,6 +15,9 @@ const float VehicleAgent::cruise_fuel_rate = 2.f;
 const float VehicleAgent::idle_fuel_rate = 0.5f;
 const float VehicleAgent::def_firing_rate = 1.f;
 const float VehicleAgent::shoot_time = 0.2f;
+const float VehicleAgent::def_alignment_weight = 0.3f;
+const float VehicleAgent::def_cohesion_weight = 0.2f;
+const float VehicleAgent::def_separation_weight = 0.2f;
 const float VehicleAgent::tank_uvh = 1.f;
 const float VehicleAgent::tank_uvw = 0.25f;
 const float VehicleAgent::tank_default_uvx = 0.f;
@@ -24,12 +29,16 @@ VehicleAgent::VehicleAgent() : Agent(), m_maxFuel(def_max_fuel), m_attackRange(d
 {
 	m_fuel = m_maxFuel;
 	m_separation = std::make_shared<SeparationForce>();
+	m_cohesion = std::make_shared<CohesionForce>();
+	m_alignment = std::make_shared<AlignmentForce>();
 }
 
 VehicleAgent::VehicleAgent(Team team, float attackRange, float maxFuel, float maxVelocity, float maxForce, float size) : Agent(maxVelocity, maxForce, size), m_attackRange(attackRange), m_maxFuel(maxFuel), m_team(team), m_alive(true), m_engineOK(true), m_canShoot(true), m_attackCD(0.f), m_shootTime(0.f)
 {
 	m_fuel = m_maxFuel;
 	m_separation = std::make_shared<SeparationForce>();
+	m_cohesion = std::make_shared<CohesionForce>();
+	m_alignment = std::make_shared<AlignmentForce>();
 }
 
 VehicleAgent::~VehicleAgent()
@@ -213,6 +222,18 @@ void VehicleAgent::respawn()
 	EntityPtr base = entity->getApp()->getBase(m_team);
 	glm::vec2 basePos(base->getPosition()->getGlobalTransform()[2]);
 	entity->getPosition()->globalTranslate(basePos - getPosition());
+}
+
+void VehicleAgent::flock(float separationWeight, float alignmentWeight, float cohesionWeight)
+{
+	m_steeringForces.push_back({ std::dynamic_pointer_cast<SteeringForce>(m_separation), separationWeight });
+	m_steeringForces.push_back({ std::dynamic_pointer_cast<SteeringForce>(m_alignment), alignmentWeight });
+	m_steeringForces.push_back({ std::dynamic_pointer_cast<SteeringForce>(m_cohesion), cohesionWeight });
+}
+
+void VehicleAgent::avoidFriends(float separationWeight)
+{
+	m_steeringForces.push_back({ std::dynamic_pointer_cast<SteeringForce>(m_separation), separationWeight });
 }
 
 

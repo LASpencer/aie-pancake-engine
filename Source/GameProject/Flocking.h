@@ -10,26 +10,11 @@
 
 class Flocking : public Behaviour {
 public:
-	static const float def_separation_weight;
-	static const float def_alignment_weight;
-	static const float def_cohesion_weight;
-	static const float def_range;
 
 	Flocking();
-	Flocking(bool(*boidRule)(Agent*), float separationWeight = def_separation_weight, float alignmentWeight = def_alignment_weight, float cohesionWeight = def_cohesion_weight, float range = def_range);
 	virtual ~Flocking();
 
 	virtual Behaviour* clone();
 
 	virtual BehaviourResult update(Agent* agent, float deltaTime);
-	void setRule(bool (*newBoidRule)(Agent*));
-
-
-	float m_separationWeight, m_alignmentWeight, m_cohesionWeight;
-	float m_range;
-protected:
-	std::shared_ptr<AlignmentForce> m_alignment;
-	std::shared_ptr<CohesionForce> m_cohesion;
-	std::shared_ptr<SeparationForce> m_separation;
-	bool(*isBoidRule)(Agent*);
 };

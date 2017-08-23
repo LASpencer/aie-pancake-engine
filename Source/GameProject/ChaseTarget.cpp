@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ChaseTarget.h"
 #include "Agent.h"
+#include "VehicleAgent.h"
 
 ChaseTarget::ChaseTarget()
 {

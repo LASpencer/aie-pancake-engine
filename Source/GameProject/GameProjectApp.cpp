@@ -81,6 +81,7 @@ bool GameProjectApp::startup() {
 	std::shared_ptr<SequenceBehaviour> refuelAtBaseSequence(new SequenceBehaviour());
 	std::shared_ptr<SequenceBehaviour> blueGoToMouseSequence(new SequenceBehaviour());
 	std::shared_ptr<SequenceBehaviour> chaseTargetSequence(new SequenceBehaviour());
+	std::shared_ptr<SequenceBehaviour> flockAndWander(new SequenceBehaviour());
 
 	BehaviourPtr isDead(new IsDeadQuestion());
 	BehaviourPtr deathBehaviour(new DeathBehaviour());
@@ -96,6 +97,7 @@ bool GameProjectApp::startup() {
 	BehaviourPtr targetInRange(new TargetInRangeQuestion(200.f));
 	BehaviourPtr chaseTarget(new ChaseTarget());
 	BehaviourPtr wander(new Wander());
+	BehaviourPtr flock(new Flocking());
 
 	deathSequence->addChild(isDead);
 	deathSequence->addChild(deathBehaviour);
@@ -111,6 +113,8 @@ bool GameProjectApp::startup() {
 	blueGoToMouseSequence->addChild(moveToMouse);
 	chaseTargetSequence->addChild(targetInRange);
 	chaseTargetSequence->addChild(chaseTarget);
+	flockAndWander->addChild(flock);
+	flockAndWander->addChild(wander);
 
 	pickTankBehaviour->addChild(deathSequence);
 	pickTankBehaviour->addChild(fleeDangerSequence);
@@ -118,7 +122,7 @@ bool GameProjectApp::startup() {
 	pickTankBehaviour->addChild(refuelSequence);
 	pickTankBehaviour->addChild(blueGoToMouseSequence);
 	pickTankBehaviour->addChild(chaseTargetSequence);
-	pickTankBehaviour->addChild(wander); //TODO pick something else?
+	pickTankBehaviour->addChild(flockAndWander); //TODO pick something else?
 
 	tankBehaviour->addChild(isTank);
 	tankBehaviour->addChild(pickTankBehaviour);

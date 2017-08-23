@@ -34,7 +34,7 @@ glm::vec2 AvoidTerrainForce::getForce(Agent * agent)
 	else if (agent->getVelocity() != glm::vec2(0.f)) {
 		// Check future collision, and 
 		std::vector<GridSquarePtr> neighbours = grid->getAdjacentSquares(square);
-		Ray futurePath(agent->getPosition(), agent->getVelocity(), glm::length(agent->getVelocity()) * 0.5f);
+		Ray futurePath(agent->getPosition(), agent->getVelocity(), glm::length(agent->getVelocity()) * 2.f);
 		for (GridSquarePtr neighbour : neighbours) {
 			if (neighbour->getType() == impassable) {
 				std::shared_ptr<AABox> collider = neighbour->getCollider();

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "WanderForce.h"
 
-const float WanderForce::def_radius = 200.f;
+const float WanderForce::def_radius = 100.f;
 const float WanderForce::def_jitter = 50.f;
 const float WanderForce::def_distance = 200.f;
 

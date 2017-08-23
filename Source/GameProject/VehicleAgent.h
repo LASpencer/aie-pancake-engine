@@ -6,6 +6,8 @@ class VehicleAgent;
 typedef std::shared_ptr<VehicleAgent> VehiclePtr;
 
 class SeparationForce;
+class CohesionForce;
+class AlignmentForce;
 
 enum Team {
 	red,
@@ -29,6 +31,10 @@ public:
 	static const float idle_fuel_rate;
 	static const float def_firing_rate;
 	static const float shoot_time;
+
+	static const float def_alignment_weight;
+	static const float def_cohesion_weight;
+	static const float def_separation_weight;
 
 	static const float tank_uvh;
 	static const float tank_uvw;
@@ -72,12 +78,18 @@ public:
 
 	void respawn();
 
+	void flock(float separationWeight = def_separation_weight, float alignmentWeight = def_alignment_weight, float cohesionWeight = def_cohesion_weight);
+
+	void avoidFriends(float separationWeight = def_separation_weight);
+
 	void setAnimationFrame(TankAnimationFrame frame);
 
 protected:
 	float m_fuel, m_maxFuel, m_attackRange, m_attackCD, m_shootTime;
 	bool m_alive, m_engineOK, m_canShoot;
 	Team m_team;
+	std::shared_ptr<AlignmentForce> m_alignment;
+	std::shared_ptr<CohesionForce> m_cohesion;
 	std::shared_ptr<SeparationForce> m_separation;
 	std::vector<VehicleAgent*> m_neighbours;
 	std::vector<VehicleAgent*> m_enemyNeighbours;

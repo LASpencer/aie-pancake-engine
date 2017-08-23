@@ -10,6 +10,7 @@
 #include "CollisionEvent.h"
 #include "PursueForce.h"
 #include "ArrivalForce.h"
+#include "StopForce.h"
 
 const float Agent::def_max_velocity = 500.f;
 const float Agent::def_max_force = 100.f;
@@ -20,6 +21,7 @@ Agent::Agent() : Component(), m_maxVelocity(def_max_velocity), m_maxForce(def_ma
 	m_stayInBounds = std::make_shared<BoundsForce>();
 	m_avoidImpassableTerrain = std::make_shared<AvoidTerrainForce>();
 	m_pursueTarget = std::make_shared<PursueForce>();
+	m_stopForce = std::make_shared<StopForce>();
 }
 
 Agent::Agent(float maxVelocity, float maxForce, float size) : Component(), m_maxVelocity(maxVelocity), m_maxForce(maxForce), m_size(size), m_velocity(0), m_force(0), m_canMove(true)
@@ -27,6 +29,7 @@ Agent::Agent(float maxVelocity, float maxForce, float size) : Component(), m_max
 	m_stayInBounds = std::make_shared<BoundsForce>();
 	m_avoidImpassableTerrain = std::make_shared<AvoidTerrainForce>();
 	m_pursueTarget = std::make_shared<PursueForce>();
+	m_stopForce = std::make_shared<StopForce>();
 }
 
 Agent::~Agent()
