@@ -52,6 +52,9 @@ public:
 
 	std::vector<EntityWeakPtr>& getContents();
 
+	bool isInSquare(glm::vec2 position);
+
+	bool isInSelfOrNeighbour(glm::vec2 position);
 
 private:
 	glm::vec2 m_position;
@@ -102,8 +105,12 @@ public:
 
 	void draw(aie::Renderer2D* renderer);
 
+	void toggleShowNodes();
+
 private:
 	std::vector<std::vector<GridSquarePtr>> m_squares;
+
+	bool m_showNodes;
 
 	void calculateEdges();
 

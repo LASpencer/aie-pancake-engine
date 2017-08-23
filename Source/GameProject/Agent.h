@@ -61,6 +61,8 @@ public:
 	// Runs agent behaviours and sets force for this frame
 	virtual void update(float deltaTime);
 
+	virtual void draw(aie::Renderer2D* renderer);
+
 	// Applies force to velocity and moves agent
 	virtual void moveAgent(float deltaTime);
 

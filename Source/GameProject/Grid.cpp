@@ -7,7 +7,7 @@ const float Grid::square_size = 80.f;
 const float Grid::difficult_move_cost = 2.f;
 const float Grid::difficult_speed_factor = 1.f/Grid::difficult_move_cost;
 
-Grid::Grid()
+Grid::Grid() : m_showNodes(false)
 {
 	size_t squaresWide = (GameProjectApp::max_corner - GameProjectApp::min_corner).x / square_size;
 	size_t squaresHigh = (GameProjectApp::max_corner - GameProjectApp::min_corner).y / square_size;
@@ -26,7 +26,7 @@ Grid::Grid()
 	calculateEdges();
 }
 
-Grid::Grid(std::vector<std::vector<TileType>> tiles)
+Grid::Grid(std::vector<std::vector<TileType>> tiles) : m_showNodes(false)
 {
 	for (size_t i = 0; i < tiles.size(); ++i) {
 		std::vector<GridSquarePtr> column;
@@ -204,12 +204,18 @@ void Grid::draw(aie::Renderer2D * renderer)
 		}
 	}
 	//Draw nodes
-	//HACK should be conditional on some bool/"debug mode"
-	for (auto col : m_squares) {
-		for (GridSquarePtr square : col) {
-			square->drawNodes(renderer);
+	if (m_showNodes) {
+		for (auto col : m_squares) {
+			for (GridSquarePtr square : col) {
+				square->drawNodes(renderer);
+			}
 		}
 	}
+}
+
+void Grid::toggleShowNodes()
+{
+	m_showNodes = !m_showNodes;
 }
 
 void Grid::calculateEdges()
@@ -365,6 +371,30 @@ void GridSquare::drawNodes(aie::Renderer2D * renderer)
 std::vector<EntityWeakPtr>& GridSquare::getContents()
 {
 	return m_contents;
+}
+
+bool GridSquare::isInSquare(glm::vec2 position)
+{
+	glm::vec2 displacement = position - m_position;
+	if (abs(displacement.x) < Grid::square_size * 0.5f && abs(displacement.y) < Grid::square_size * 0.5f) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool GridSquare::isInSelfOrNeighbour(glm::vec2 position)
+{
+	bool positionInside = isInSquare(position);
+	if (!positionInside) {
+		for (auto edge : m_connections) {
+			if (edge.target.lock()->isInSquare(position)) {
+				positionInside = true;
+				break;
+			}
+		}
+	}
+	return positionInside;
 }
 
 

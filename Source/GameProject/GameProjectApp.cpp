@@ -34,6 +34,7 @@ GameProjectApp::~GameProjectApp() {
 bool GameProjectApp::startup() {
 
 	m_showFPS = true;
+	m_showPaths = false;
 	m_2dRenderer = new aie::Renderer2D();
 	m_resourceManager = std::make_unique<ResourceManager>();
 	m_entityFactory = std::make_unique<EntityFactory>(this);
@@ -169,6 +170,12 @@ void GameProjectApp::update(float deltaTime) {
 	if (input->wasKeyPressed(aie::INPUT_KEY_GRAVE_ACCENT)) {
 		Collider::setDrawBoxes(!Collider::draw_boxes);
 	}
+	if (input->wasKeyPressed(aie::INPUT_KEY_P)) {
+		m_showPaths = !m_showPaths;
+	}
+	if (input->wasKeyPressed(aie::INPUT_KEY_N)) {
+		m_mapGraph->toggleShowNodes();
+	}
 	if (input->wasKeyPressed(aie::INPUT_KEY_ESCAPE)) {
 		quit();
 	}
@@ -242,9 +249,11 @@ void GameProjectApp::drawEntities()
 			entity->getComponent(Component::collider)->draw(m_2dRenderer);
 		}
 	}
-	entitiesWithComponent = Entity::getEntitiesWithComponent(Component::agent, m_entityList);
-	for (EntityPtr entity : entitiesWithComponent) {
-		entity->getComponent(Component::agent)->draw(m_2dRenderer);
+	if (m_showPaths) {
+		entitiesWithComponent = Entity::getEntitiesWithComponent(Component::agent, m_entityList);
+		for (EntityPtr entity : entitiesWithComponent) {
+			entity->getComponent(Component::agent)->draw(m_2dRenderer);
+		}
 	}
 }
 

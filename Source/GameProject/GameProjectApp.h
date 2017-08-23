@@ -55,4 +55,5 @@ protected:
 	std::vector<EntityPtr>				m_depots;
 
 	bool m_showFPS;							// When true, displays fps in corner of screen
+	bool m_showPaths;
 };

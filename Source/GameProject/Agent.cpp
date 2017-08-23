@@ -85,6 +85,25 @@ void Agent::update(float deltaTime)
 	}
 }
 
+void Agent::draw(aie::Renderer2D * renderer)
+{
+	// Draw current path
+	if (!m_path.empty()) {
+		glm::vec2 oldPosition = getPosition();
+		glm::vec2 nextPosition;
+		std::stack<GridSquarePtr> pathCopy = m_path;
+		renderer->setRenderColour(0x8000ffff);
+		while (!pathCopy.empty()) {
+			nextPosition = pathCopy.top()->getPosition();
+			pathCopy.pop();
+			renderer->drawLine(oldPosition.x, oldPosition.y, nextPosition.x, nextPosition.y, 3.f);
+			oldPosition = nextPosition;
+		}
+		nextPosition = m_goal;
+		renderer->drawLine(oldPosition.x, oldPosition.y, nextPosition.x, nextPosition.y, 3.f);
+	}
+}
+
 void Agent::moveAgent(float deltaTime)
 {
 	EntityPtr entity(m_entity);
@@ -165,7 +184,7 @@ bool Agent::setGoal(glm::vec2 goal)
 	EntityPtr entity(m_entity);
 	Grid* grid = entity->getApp()->getGrid();
 	GridSquarePtr endSquare = grid->getSquare(goal);
-	if (endSquare == m_goalSquare) {
+	if (endSquare == m_goalSquare && !m_path.empty() && m_path.top()->isInSelfOrNeighbour(getPosition())) {
 		m_goal = goal;
 		success = true;
 	}
