@@ -7,7 +7,7 @@ int main() {
 
 	auto app = new GameProjectApp();
 
-	app->run("Code Design and Data Structures Project - Leonard Andrew Spencer", GameProjectApp::max_corner.x, GameProjectApp::max_corner.y, false);
+	app->run("Artificial Intelligence Project - Leonard Andrew Spencer", GameProjectApp::max_corner.x, GameProjectApp::max_corner.y, false);
 	
 	delete app;
 

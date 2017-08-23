@@ -5,9 +5,7 @@
 #include "CohesionForce.h"
 #include "SeparationForce.h"
 
-//TODO add separation and alignment forces
-//on update, gets neighbours and passesto separation and alignment forces
-
+// Flocks with friendly neighbours
 class Flocking : public Behaviour {
 public:
 

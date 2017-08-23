@@ -1,14 +1,13 @@
 #pragma once
 #pragma once
 #include "Behaviour.h"
+#include "GameProjectApp.h"
 
 // Adds a line of text to an imgui window when the behaviour returns
 // Colour of text indicates the result
 class LogBehaviour : public Behaviour {
 public:
-	LogBehaviour();
-
-	LogBehaviour(BehaviourPtr behaviour, std::string message);
+	LogBehaviour(GameProjectApp* app, BehaviourPtr behaviour, std::string message);
 
 	virtual ~LogBehaviour();
 
@@ -26,4 +25,5 @@ public:
 protected:
 	BehaviourPtr m_behaviour;
 	std::string m_message;
+	GameProjectApp* m_app;
 };

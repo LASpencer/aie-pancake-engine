@@ -1,7 +1,7 @@
 #pragma once
 #include "Behaviour.h"
-#include "Target.h"
 
+// Returns success if tank's target is within specified range
 class TargetInRangeQuestion : public Behaviour {
 public:
 	TargetInRangeQuestion();

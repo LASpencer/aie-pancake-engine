@@ -6,7 +6,6 @@
 #include "BoundsForce.h"
 #include "AvoidTerrainForce.h"
 #include "SeekForce.h"
-#include "Target.h"
 #include "CollisionEvent.h"
 #include "PursueForce.h"
 #include "ArrivalForce.h"
@@ -109,8 +108,6 @@ void Agent::moveAgent(float deltaTime)
 	EntityPtr entity(m_entity);
 	glm::vec2 displacement(0);
 	m_velocity = utility::clamp(m_velocity + (deltaTime  * m_force), m_adjustedMaxVelocity);
-
-	m_force = glm::vec2(0);
 
 	displacement += deltaTime * m_velocity;
 

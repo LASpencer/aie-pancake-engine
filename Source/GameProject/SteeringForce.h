@@ -7,9 +7,9 @@ typedef std::shared_ptr<Agent> AgentPtr;
 typedef std::weak_ptr<Agent> AgentWeakPtr;
 
 class SteeringForce;
-
 typedef std::shared_ptr<SteeringForce> SteeringForcePtr;
 
+// Base class for steering forces
 class SteeringForce {
 public:
 	SteeringForce() {};
@@ -20,9 +20,12 @@ public:
 	virtual void draw(Agent* agent, aie::Renderer2D* renderer) {};
 
 protected:
+	// Force to move towards point
 	glm::vec2 seekPoint(Agent* agent, glm::vec2 target);
 
+	// Force to move away from point
 	glm::vec2 avoidPoint(Agent* agent, glm::vec2 target);
 
+	// Force to move towards point, slowing down while approaching
 	glm::vec2 arrivePoint(Agent* agent, glm::vec2 target, float radius);
 };

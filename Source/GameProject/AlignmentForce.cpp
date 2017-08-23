@@ -23,6 +23,10 @@ glm::vec2 AlignmentForce::getForce(Agent * agent)
 		if (totalNeighbours != 0) {
 			targetVelocity /= totalNeighbours;
 		}
+		else {
+			// If no neighbours, return no force
+			return glm::vec2(0);
+		}
 	}
 	return targetVelocity - agent->getVelocity();
 }

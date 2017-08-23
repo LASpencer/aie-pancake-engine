@@ -40,6 +40,8 @@ public:
 
 	EntityPtr getBase(Team team);
 
+	bool shouldShowBehaviourTree();
+
 protected:
 	aie::Renderer2D*	m_2dRenderer;
 	std::unique_ptr<ResourceManager>	m_resourceManager;
@@ -53,7 +55,9 @@ protected:
 	EntityPtr							m_blueBase;
 	EntityPtr							m_redBase;
 	std::vector<EntityPtr>				m_depots;
+	VehiclePtr							m_loggedTank;		// Tank with logged behaviour tree
 
 	bool m_showFPS;							// When true, displays fps in corner of screen
-	bool m_showPaths;
+	bool m_showPaths;						// When true, show tank paths
+	bool m_showBehaviourTree;				// When true, show loggedTank's behaviours
 };

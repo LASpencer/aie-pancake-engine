@@ -23,7 +23,6 @@ BehaviourResult AttackTarget::update(Agent * agent, float deltaTime)
 		return failure;
 	}
 	else {
-		//TODO move all these conditionals into own behaviours
 		VehiclePtr target = std::dynamic_pointer_cast<VehicleAgent>(agent->getTarget());
 		if (target.get() == nullptr) {
 			return failure;

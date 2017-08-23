@@ -2,6 +2,7 @@
 #include "Behaviour.h"
 #include "VehicleAgent.h"
 
+// Follow path leading to base
 class GoToBase : public Behaviour {
 public:
 	GoToBase();

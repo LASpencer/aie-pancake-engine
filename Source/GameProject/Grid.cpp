@@ -361,7 +361,7 @@ void GridSquare::draw(aie::Renderer2D * renderer)
 void GridSquare::drawNodes(aie::Renderer2D * renderer)
 {
 	renderer->setRenderColour(0xffffffff);
-	renderer->drawCircle(m_position.x, m_position.y, Grid::square_size * 0.2f);
+	renderer->drawCircle(m_position.x, m_position.y, Grid::square_size * 0.1f);
 	for (GridEdge edge : m_connections) {
 		GridSquarePtr target(edge.target);
 		renderer->drawLine(m_position.x, m_position.y, target->m_position.x, target->m_position.y, 2.f);

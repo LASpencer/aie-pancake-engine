@@ -1,11 +1,11 @@
 #pragma once
 #include "stdafx.h"
 #include "SteeringForce.h"
-#include "Target.h"
 
 class PursueForce;
 typedef std::shared_ptr<PursueForce> PursueForcePtr;
 
+// Pursue target
 class PursueForce :
 	public SteeringForce
 {
@@ -19,8 +19,6 @@ public:
 	PursueForce& operator=(const PursueForce& other);
 
 	virtual ~PursueForce();
-
-	//TODO set target size
 
 	virtual glm::vec2 getForce(Agent* agent);
 };

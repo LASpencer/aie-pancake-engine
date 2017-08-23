@@ -1,6 +1,7 @@
 #pragma once
 #include "SteeringForce.h"
 
+// Try to match velocity with target
 class MatchVelocityForce : public SteeringForce {
 public:
 	MatchVelocityForce();

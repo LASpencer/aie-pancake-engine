@@ -2,6 +2,7 @@
 #include "Behaviour.h"
 #include "SeparationForce.h"
 
+// Move away from all hostile neighbours
 class FleeDanger : public Behaviour {
 public:
 	FleeDanger();

@@ -5,6 +5,7 @@
 class StopForce;
 typedef std::shared_ptr<StopForce> StopForcePtr;
 
+// Apply force to slow down agent
 class StopForce : public SteeringForce {
 public:
 	StopForce();

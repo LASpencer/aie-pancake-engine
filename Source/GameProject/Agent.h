@@ -55,7 +55,7 @@ public:
 	// Instantaneous change in velocity
 	void applyImpulse(glm::vec2 impulse);
 
-	//TODO: replace with API to enable/disable specific actions
+	// Adds a steering force to this frame's forces
 	void addForce(SteeringForcePtr force, float weight);
 
 	// Runs agent behaviours and sets force for this frame
@@ -75,19 +75,25 @@ public:
 
 	float getMaxVelocity() { return m_adjustedMaxVelocity; };
 
+	float getBaseMaxVelocity() { return m_maxVelocity; };
+
 	float getMaxForce() { return m_maxForce; };
 
-	float getSize() { return m_size; };
+	glm::vec2 getForce() { return m_force; };
 
+	float getSize() { return m_size; };
+	
 	GameTimer& getTimer(TimerID id);
 
 	glm::vec2 getPosition();
 
+	// Gets grid square agent was in when it last updated
 	GridSquarePtr getSquare();
 
 	void setTarget(AgentPtr target);
 
 	AgentPtr getTarget();
+
 
 	virtual void setBehaviour(BehaviourPtr behaviour);
 
@@ -104,11 +110,13 @@ public:
 	// Make agent follow its path to the goal
 	virtual void followPath(float weight = 1.f);
 
+	// Chases after target, anticipating its movement
 	bool pursueTarget(float weight = 1.f);
 
 	// Try to match target's velocity
 	void matchTargetVelocity(float weight = 1.f);
 
+	// Agent comes to a stop
 	void stop(float weight = 1.f);
 
 	// Observer methods
@@ -121,13 +129,14 @@ public:
 	// Perform any cleanup needed when removing subject
 	virtual void removeSubject(Subject* subject);
 
+	// Returns true if agent can move
 	bool canMove();
 
 protected:
-	BehaviourPtr m_behaviour;
-	std::vector<WeightedForce> m_steeringForces;
-	std::map<TimerID, GameTimer> m_timers;
-	GridSquarePtr m_square;
+	BehaviourPtr m_behaviour;						// Behaviour run by agent each update
+	std::vector<WeightedForce> m_steeringForces;	// Force to apply this update
+	std::map<TimerID, GameTimer> m_timers;			// Various timers used by agent
+	GridSquarePtr m_square;							// GridSquare entered on most recent update
 
 	glm::vec2 m_velocity;
 	glm::vec2 m_force;
@@ -140,7 +149,7 @@ protected:
 	StopForcePtr m_stopForce;
 	
 	std::stack<GridSquarePtr> m_path;	// Squares forming path to goal position
-	GridSquarePtr m_goalSquare;
-	glm::vec2 m_goal;
+	GridSquarePtr m_goalSquare;			// Square at end of current path
+	glm::vec2 m_goal;					// Goal position
 	AgentPtr m_target;
 };

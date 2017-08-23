@@ -23,6 +23,10 @@ glm::vec2 CohesionForce::getForce(Agent * agent)
 		if (totalNeighbours != 0) {
 			avgPos /= totalNeighbours;
 		}
+		else {
+			// No force if there are no neighbours
+			return glm::vec2(0);
+		}
 	}
 	return seekPoint(agent, avgPos);
 }

@@ -27,16 +27,15 @@ glm::vec2 BoundsForce::getForce(Agent * agent)
 {
 	glm::vec2 position = agent->getPosition();
 	glm::vec2 force(0);
+	// Check if out of bounds, and if so move back in bounds
 	if (position.x < m_minX) {
 		force += glm::vec2(1, 0);
-	}
-	if (position.x >m_maxX) {
+	} else if (position.x >m_maxX) {
 		force += glm::vec2(-1, 0);
 	}
 	if (position.y < m_minY) {
 		force += glm::vec2(0, 1);
-	}
-	if (position.y > m_maxY) {
+	} else if (position.y > m_maxY) {
 		force += glm::vec2(0, -1);
 	}
 	if (force != glm::vec2(0)) {

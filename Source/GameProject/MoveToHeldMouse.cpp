@@ -27,7 +27,7 @@ BehaviourResult MoveToHeldMouse::update(Agent * agent, float deltaTime)
 		if (pathFound) {
 			VehicleAgent* tank = dynamic_cast<VehicleAgent*>(agent);
 			if (tank != nullptr) {
-				tank->avoidFriends();
+				tank->avoidFriends(0.05f);
 			}
 			agent->followPath();
 			result = success;

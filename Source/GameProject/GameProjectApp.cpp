@@ -7,7 +7,6 @@
 #include "Filepaths.h"
 #include "Collider.h"
 
-#include "WeightedSteeringForce.h"
 #include "WanderForce.h"
 #include "BoundsForce.h"
 #include "AvoidTerrainForce.h"
@@ -35,11 +34,13 @@ bool GameProjectApp::startup() {
 
 	m_showFPS = true;
 	m_showPaths = false;
+	m_showBehaviourTree = false;
 	m_2dRenderer = new aie::Renderer2D();
 	m_resourceManager = std::make_unique<ResourceManager>();
 	m_entityFactory = std::make_unique<EntityFactory>(this);
 	m_sceneRoot = std::make_shared<SceneObject>();
 
+	// Create map
 	std::vector<std::vector<int>> tileIDs =
 	{ {0,1,0,0,0,2,0,0,0},
 	{ 0,0,0,0,0,0,0,0,0 },
@@ -72,14 +73,43 @@ bool GameProjectApp::startup() {
 	m_impassableSquares = m_mapGraph->getImpassableSquares();
 
 	// Create tank behaviour tree
-	std::shared_ptr<SequenceBehaviour> tankBehaviour(new SequenceBehaviour());
-	BehaviourPtr isTank(new AgentIsTankQuestion());
-	std::shared_ptr<SelectorBehaviour> pickTankBehaviour(new SelectorBehaviour());
-	std::shared_ptr<SequenceBehaviour> deathSequence(new SequenceBehaviour());
-	std::shared_ptr<SequenceBehaviour> fleeDangerSequence(new SequenceBehaviour());
-	std::shared_ptr<SequenceBehaviour> refuelSequence(new SequenceBehaviour());
-	std::shared_ptr<SelectorBehaviour> getFuel(new SelectorBehaviour());
-	std::shared_ptr<SequenceBehaviour> refuelAtBaseSequence(new SequenceBehaviour());
+	/*	Structure is as follows
+		
+		tankBehaviour (AND)
+			isTank
+			pickTankBehaviour (OR)
+				deathSequence (AND)
+					isDead
+					deathBehaviour
+				fleeDangerSequence (AND)
+					isInDanger
+					fleeDanger
+				attackEnemy
+				refuelSequence (AND)
+					isFuelLow
+					getFuel (OR)
+						refuelAtBaseSequence (AND)
+							isAtBase
+							refuel
+						goToBase
+				blueGoToMouseSequence (AND)
+					isBlueTank
+					moveToMouse
+				chaseTargetSequence (AND)
+					targetInRange
+					chaseTarget
+				flockAndWander (AND)
+					flock
+					wander
+	*/
+	std::shared_ptr<SequenceBehaviour> tankBehaviour(new SequenceBehaviour());			// Root node
+	BehaviourPtr isTank(new AgentIsTankQuestion());										// Checks agent is a tank
+	std::shared_ptr<SelectorBehaviour> pickTankBehaviour(new SelectorBehaviour());		// Holds behaviours for tank to choose from, in order
+	std::shared_ptr<SequenceBehaviour> deathSequence(new SequenceBehaviour());			// Tank is dead (and will respawn after time)
+	std::shared_ptr<SequenceBehaviour> fleeDangerSequence(new SequenceBehaviour());		// Tank flees enemies if outnumbered
+	std::shared_ptr<SequenceBehaviour> refuelSequence(new SequenceBehaviour());			// Tank returns to base if fuel is low
+	std::shared_ptr<SelectorBehaviour> getFuel(new SelectorBehaviour());				// Refuel if at base, or go to base if not
+	std::shared_ptr<SequenceBehaviour> refuelAtBaseSequence(new SequenceBehaviour());	
 	std::shared_ptr<SequenceBehaviour> blueGoToMouseSequence(new SequenceBehaviour());
 	std::shared_ptr<SequenceBehaviour> chaseTargetSequence(new SequenceBehaviour());
 	std::shared_ptr<SequenceBehaviour> flockAndWander(new SequenceBehaviour());
@@ -100,6 +130,36 @@ bool GameProjectApp::startup() {
 	BehaviourPtr wander(new Wander());
 	BehaviourPtr flock(new Flocking());
 
+	// Create logged clone of behaviours
+	std::shared_ptr<LogBehaviour> loggedTankBehaviour(new LogBehaviour(this, BehaviourPtr(tankBehaviour->clone()), "Tank Behaviour"));
+	std::shared_ptr<LogBehaviour> loggedIsTank(new LogBehaviour(this, BehaviourPtr(isTank->clone()), "Is tank?"));
+	std::shared_ptr<LogBehaviour> loggedPickBehaviour(new LogBehaviour(this, BehaviourPtr(pickTankBehaviour->clone()), "Select Tank Behaviour"));
+	std::shared_ptr<LogBehaviour> loggedDeathSequence(new LogBehaviour(this, BehaviourPtr(deathSequence->clone()), "Death Sequence"));
+	std::shared_ptr<LogBehaviour> loggedFleeDangerSequence(new LogBehaviour(this, BehaviourPtr(fleeDangerSequence->clone()), "Flee Danger Sequence"));
+	std::shared_ptr<LogBehaviour> loggedRefuelSequence(new LogBehaviour(this, BehaviourPtr(refuelSequence->clone()), "Refuel Sequence"));
+	std::shared_ptr<LogBehaviour> loggedBlueGoToMouseSequence(new LogBehaviour(this, BehaviourPtr(refuelSequence->clone()), "Blue Go To Mouse Sequence"));
+	std::shared_ptr<LogBehaviour> loggedChaseTargetSequence(new LogBehaviour(this, BehaviourPtr(refuelSequence->clone()), "Chase Target Sequence"));
+	std::shared_ptr<LogBehaviour> loggedFlockAndWander(new LogBehaviour(this, BehaviourPtr(flockAndWander->clone()), "Flock and Wander"));
+
+	std::shared_ptr<LogBehaviour> loggedGetFuel(new LogBehaviour(this, BehaviourPtr(getFuel->clone()), "Get Fuel"));
+	std::shared_ptr<LogBehaviour> loggedRefuelAtBase(new LogBehaviour(this, BehaviourPtr(refuelAtBaseSequence->clone()), "Get fuel from base"));
+	std::shared_ptr<LogBehaviour> loggedIsDead(new LogBehaviour(this, BehaviourPtr(isDead->clone()), "Am I dead?"));
+	std::shared_ptr<LogBehaviour> loggedDeathBehaviour(new LogBehaviour(this, BehaviourPtr(deathBehaviour->clone()), "Death Behaviour"));
+	std::shared_ptr<LogBehaviour> loggedIsInDanger(new LogBehaviour(this, BehaviourPtr(isInDanger->clone()), "Am I outnumbered?"));
+	std::shared_ptr<LogBehaviour> loggedFleeDanger(new LogBehaviour(this, BehaviourPtr(fleeDanger->clone()), "Flee Danger"));
+	std::shared_ptr<LogBehaviour> loggedAttackEnemy(new LogBehaviour(this, BehaviourPtr(attackEnemy->clone()), "Attacking Enemy"));
+	std::shared_ptr<LogBehaviour> loggedIsFuelLow(new LogBehaviour(this, BehaviourPtr(isFuelLow->clone()), "Is fuel too low?"));
+	std::shared_ptr<LogBehaviour> loggedRefuel(new LogBehaviour(this, BehaviourPtr(refuel->clone()), "Refuelling"));
+	std::shared_ptr<LogBehaviour> loggedIsAtBase(new LogBehaviour(this, BehaviourPtr(isAtBase->clone()), "Am I at my base?"));
+	std::shared_ptr<LogBehaviour> loggedGoToBase(new LogBehaviour(this, BehaviourPtr(goToBase->clone()), "Go to base"));
+	std::shared_ptr<LogBehaviour> loggedIsBlue(new LogBehaviour(this, BehaviourPtr(isBlueTank->clone()), "Am I on blue team?"));
+	std::shared_ptr<LogBehaviour> loggedMoveToMouse(new LogBehaviour(this, BehaviourPtr(moveToMouse->clone()), "Move to mouse"));
+	std::shared_ptr<LogBehaviour> loggedTargetInRange(new LogBehaviour(this, BehaviourPtr(targetInRange->clone()), "Is target in range?"));
+	std::shared_ptr<LogBehaviour> loggedChaseTarget(new LogBehaviour(this, BehaviourPtr(chaseTarget->clone()), "ChaseTarget"));
+	std::shared_ptr<LogBehaviour> loggedWander(new LogBehaviour(this, BehaviourPtr(wander->clone()), "Wander"));
+	std::shared_ptr<LogBehaviour> loggedFlock(new LogBehaviour(this, BehaviourPtr(flock->clone()), "Flock"));
+
+	// Put tree together
 	deathSequence->addChild(isDead);
 	deathSequence->addChild(deathBehaviour);
 	fleeDangerSequence->addChild(isInDanger);
@@ -123,11 +183,48 @@ bool GameProjectApp::startup() {
 	pickTankBehaviour->addChild(refuelSequence);
 	pickTankBehaviour->addChild(blueGoToMouseSequence);
 	pickTankBehaviour->addChild(chaseTargetSequence);
-	pickTankBehaviour->addChild(flockAndWander); //TODO pick something else?
+	pickTankBehaviour->addChild(flockAndWander); 
 
 	tankBehaviour->addChild(isTank);
 	tankBehaviour->addChild(pickTankBehaviour);
 
+	// Create logged tree
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedDeathSequence->getBehaviour())->addChild(loggedIsDead);
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedDeathSequence->getBehaviour())->addChild(loggedDeathBehaviour);
+	
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedFleeDangerSequence->getBehaviour())->addChild(loggedIsInDanger);
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedFleeDangerSequence->getBehaviour())->addChild(loggedFleeDanger);
+	
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedRefuelSequence->getBehaviour())->addChild(loggedIsFuelLow);
+	
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedRefuelAtBase->getBehaviour())->addChild(loggedIsAtBase);
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedRefuelAtBase->getBehaviour())->addChild(loggedRefuel);
+	
+	std::dynamic_pointer_cast<SelectorBehaviour>(loggedGetFuel->getBehaviour())->addChild(loggedRefuelAtBase);
+	std::dynamic_pointer_cast<SelectorBehaviour>(loggedGetFuel->getBehaviour())->addChild(loggedGoToBase);
+	
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedRefuelSequence->getBehaviour())->addChild(loggedGetFuel);
+	
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedBlueGoToMouseSequence->getBehaviour())->addChild(loggedIsBlue);
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedBlueGoToMouseSequence->getBehaviour())->addChild(loggedMoveToMouse);
+	
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedChaseTargetSequence->getBehaviour())->addChild(loggedTargetInRange);
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedChaseTargetSequence->getBehaviour())->addChild(loggedChaseTarget);
+	
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedFlockAndWander->getBehaviour())->addChild(loggedFlock);
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedFlockAndWander->getBehaviour())->addChild(loggedWander);
+
+	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedDeathSequence);
+	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedFleeDangerSequence);
+	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedAttackEnemy);
+	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedRefuelSequence);
+	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedBlueGoToMouseSequence);
+	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedChaseTargetSequence);
+	std::dynamic_pointer_cast<SelectorBehaviour>(loggedPickBehaviour->getBehaviour())->addChild(loggedFlockAndWander);
+	
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedTankBehaviour->getBehaviour())->addChild(loggedIsTank);
+	std::dynamic_pointer_cast<SequenceBehaviour>(loggedTankBehaviour->getBehaviour())->addChild(loggedPickBehaviour);
+	
 	// Place bases
 	m_redBase = m_entityFactory->createEntity(EntityFactory::red_base, glm::translate(glm::mat3(1), red_base_pos));
 	m_blueBase = m_entityFactory->createEntity(EntityFactory::blue_base, glm::translate(glm::mat3(1), blue_base_pos));
@@ -135,11 +232,17 @@ bool GameProjectApp::startup() {
 
 	// Spawn a bunch of tanks
 
-	for (int i = 0; i < 5; ++i) {
+	for (int i = 0; i < 4; ++i) {
 		EntityPtr tank = m_entityFactory->createEntity(EntityFactory::blue_tank, glm::translate(glm::mat3(1), glm::vec2(200,50*i)));
 		AgentPtr tankAgent = std::dynamic_pointer_cast<Agent>(tank->getComponent(Component::agent));
 		tankAgent->setBehaviour(BehaviourPtr(tankBehaviour->clone()));
 	}
+
+	// Spawn tank with logged behaviour tree
+	EntityPtr tank = m_entityFactory->createEntity(EntityFactory::blue_tank, glm::translate(glm::mat3(1), glm::vec2(200, 200)));
+	VehiclePtr tankAgent = std::dynamic_pointer_cast<VehicleAgent>(tank->getComponent(Component::agent));
+	tankAgent->setBehaviour(BehaviourPtr(loggedTankBehaviour->clone()));
+	m_loggedTank = tankAgent;
 
 	for (int i = 0; i < 5; ++i) {
 		EntityPtr tank = m_entityFactory->createEntity(EntityFactory::red_tank, glm::translate(glm::mat3(1), glm::vec2(1000 , 700 - 50 * i)));
@@ -167,20 +270,44 @@ void GameProjectApp::update(float deltaTime) {
 	if (input->wasKeyPressed(aie::INPUT_KEY_F)) {
 		m_showFPS = !m_showFPS;
 	}
+	// Toggle showing hitboxes
 	if (input->wasKeyPressed(aie::INPUT_KEY_GRAVE_ACCENT)) {
 		Collider::setDrawBoxes(!Collider::draw_boxes);
 	}
+	// Toggle showing paths
 	if (input->wasKeyPressed(aie::INPUT_KEY_P)) {
 		m_showPaths = !m_showPaths;
 	}
+	// Toggle showing map nodes
 	if (input->wasKeyPressed(aie::INPUT_KEY_N)) {
 		m_mapGraph->toggleShowNodes();
+	}
+	// Toggle showing behaviours of loggedTank
+	if (input->wasKeyPressed(aie::INPUT_KEY_B)) {
+		m_showBehaviourTree = !m_showBehaviourTree;
 	}
 	if (input->wasKeyPressed(aie::INPUT_KEY_ESCAPE)) {
 		quit();
 	}
 
+	// Add behaviour tree window if shown
+	if (m_showBehaviourTree) {
+		ImGui::Begin("Behaviours");
+	}
 	updateEntities(deltaTime);
+	if (m_showBehaviourTree) {
+		ImGui::End();
+		// Show additional info about logged tank
+		ImGui::Begin("Tank Info");
+		glm::vec2 pos = m_loggedTank->getPosition();
+		glm::vec2 velocity = m_loggedTank->getVelocity();
+		glm::vec2 force = m_loggedTank->getForce();
+		ImGui::Text("Position (%3.0f, %3.0f)", pos.x, pos.y);
+		ImGui::Text("Velocity (%3.0f, %3.0f)", velocity.x, velocity.y);
+		ImGui::Text("Force (%3.0f, %3.0f)", force.x, force.y);
+		ImGui::Text("Fuel %.0f / %.0f", m_loggedTank->getFuel(), m_loggedTank->getMaxFuel());
+		ImGui::End();
+	}
 }
 
 void GameProjectApp::draw() {
@@ -197,6 +324,13 @@ void GameProjectApp::draw() {
 	// Draw game
 	m_mapGraph->draw(m_2dRenderer);
 	drawEntities();
+
+	// If showing behaviour tree, highlight logged tank
+	if (m_showBehaviourTree) {
+		glm::vec2 highlightPos = m_loggedTank->getPosition();
+		m_2dRenderer->setRenderColour(0.8f, 0, 1, 0.5f);
+		m_2dRenderer->drawCircle(highlightPos.x, highlightPos.y, 30.f);
+	}
 
 	//fps info
 	if (m_showFPS) {
@@ -300,6 +434,11 @@ EntityPtr GameProjectApp::getBase(Team team)
 	else {
 		return m_blueBase;
 	}
+}
+
+bool GameProjectApp::shouldShowBehaviourTree()
+{
+	return m_showBehaviourTree;
 }
 
 

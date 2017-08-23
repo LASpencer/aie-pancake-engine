@@ -1,9 +1,9 @@
 #pragma once
 #include "stdafx.h"
 #include "SteeringForce.h"
-#include "Target.h"
 #include <random>
 
+// Force to move around making random turns
 class WanderForce :
 	public SteeringForce
 {

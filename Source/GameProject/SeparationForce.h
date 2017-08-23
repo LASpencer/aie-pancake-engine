@@ -1,6 +1,7 @@
 #pragma once
 #include "SteeringForce.h"
 
+// Stay away from neighbours, either friendly or enemy
 class SeparationForce : public SteeringForce {
 public:
 	SeparationForce(bool fleeEnemies = false);

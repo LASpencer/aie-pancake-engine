@@ -26,16 +26,18 @@ public:
 	static const float def_max_fuel;
 	static const float def_attack_range;
 	static const float neighbour_range;
-	static const float idling_speed;
+	static const float idling_speed;		// Proportion of max speed for reduced fuel consumption
 	static const float cruise_fuel_rate;
 	static const float idle_fuel_rate;
-	static const float def_firing_rate;
-	static const float shoot_time;
+	static const float def_firing_rate;		// Time between shooting
+	static const float shoot_time;			// Length of time shooting sprite is shown
 
+	// Weights for flocking forces
 	static const float def_alignment_weight;
 	static const float def_cohesion_weight;
 	static const float def_separation_weight;
 
+	// uvrect coordinates for sprites
 	static const float tank_uvh;
 	static const float tank_uvw;
 	static const float tank_default_uvx;
@@ -52,9 +54,9 @@ public:
 
 	Team getTeam();
 
-	std::vector<VehicleAgent*>& getNeighbours();
+	std::vector<VehicleAgent*>& getNeighbours();		// Nearby friendly tanks
 
-	std::vector<VehicleAgent*>& getEnemyNeighbours();
+	std::vector<VehicleAgent*>& getEnemyNeighbours();	// Nearby enemy tanks
 
 	float getMaxFuel();
 
@@ -71,15 +73,17 @@ public:
 	bool canShoot();
 
 
-	// If target is in range, and 
+	// If target is in range, and alive, returns true and tries shooting at them
 	bool attack(VehiclePtr target);
 
 	void kill();
 
 	void respawn();
 
+	// Applies forces for flocking behaviour
 	void flock(float separationWeight = def_separation_weight, float alignmentWeight = def_alignment_weight, float cohesionWeight = def_cohesion_weight);
 
+	// Applies separation force from friendly neighbours
 	void avoidFriends(float separationWeight = def_separation_weight);
 
 	void setAnimationFrame(TankAnimationFrame frame);

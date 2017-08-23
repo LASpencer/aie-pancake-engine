@@ -26,7 +26,6 @@ public:
 	friend class Grid;
 
 	GridSquare();
-	//TODO ctor taking tilemap
 
 	GridSquare(glm::vec2 position, TileType type = TileType::open);
 
@@ -34,8 +33,10 @@ public:
 
 	TileType getType();
 
+	// Gets cost for pathfinding through square
 	float getMoveCost();
 
+	// Gets movement speed modifier in square
 	float getSpeedFactor();
 
 	float getGScore();
@@ -46,14 +47,17 @@ public:
 
 	std::shared_ptr<AABox> getCollider();
 
+	// Draws rectangle of appropriate colour
 	void draw(aie::Renderer2D* renderer);
 
 	void drawNodes(aie::Renderer2D* renderer);
 
 	std::vector<EntityWeakPtr>& getContents();
 
+	// Checks if point is within square
 	bool isInSquare(glm::vec2 position);
-
+	
+	// Checks if point is withing square or reachable neighbours
 	bool isInSelfOrNeighbour(glm::vec2 position);
 
 private:
@@ -92,15 +96,17 @@ public:
 
 	std::vector<GridSquarePtr> getAdjacentSquares(GridSquarePtr square);
 
-	//TODO rewrite so it returns stack of gridsquareptrs
+	// Finds path to end square, or empty stack if no paths found
 	std::stack<GridSquarePtr> findPath(GridSquarePtr start, GridSquarePtr end, 
 		float(*heuristic)(GridSquarePtr, GridSquarePtr) = [](GridSquarePtr a, GridSquarePtr b) {return glm::length(a->getPosition() - b->getPosition()); });
 
+	// Finds nearest square that's not impassabl
 	GridSquarePtr getNearestOpenSquare(glm::vec2 position);
 
 	// Places entities as contents of appropriate grid square
 	void placeEntities(std::vector<EntityPtr> entities);
 
+	// Returns all impassable squares in grid
 	std::vector<GridSquarePtr> getImpassableSquares();
 
 	void draw(aie::Renderer2D* renderer);

@@ -40,6 +40,7 @@ BehaviourResult OutnumberedQuestion::update(Agent * agent, float deltaTime)
 			}
 		}
 
+		// If outnumbered more than 3 : 2, tank is in danger
 		if (foeCount > friendCount * 1.5f) {
 			return success;
 		}

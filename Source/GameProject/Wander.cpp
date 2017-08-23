@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Wander.h"
 #include "imgui.h"
+#include "Agent.h"
 
 Wander::Wander() : m_force(std::make_shared<WanderForce>())
 {

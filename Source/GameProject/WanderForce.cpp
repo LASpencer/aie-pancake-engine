@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "WanderForce.h"
+#include "Agent.h"
 
 const float WanderForce::def_radius = 100.f;
 const float WanderForce::def_jitter = 50.f;

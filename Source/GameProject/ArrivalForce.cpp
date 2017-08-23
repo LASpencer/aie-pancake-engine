@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ArrivalForce.h"
 
-const float ArrivalForce::def_radius = 50.f;
+const float ArrivalForce::def_radius = 100.f;
 
 ArrivalForce::ArrivalForce() : m_goal(0), m_radius(def_radius)
 {

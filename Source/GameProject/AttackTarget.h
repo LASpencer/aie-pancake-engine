@@ -1,8 +1,8 @@
 #pragma once
 #include "Behaviour.h"
 #include "PursueForce.h"
-#include "Target.h"
 
+// Stop moving and shoot at target
 class AttackTarget : public Behaviour {
 public:
 	AttackTarget();

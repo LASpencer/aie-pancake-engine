@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "PursueForce.h"
+#include "Agent.h"
 
 const float PursueForce::def_target_size = 30.f;
 

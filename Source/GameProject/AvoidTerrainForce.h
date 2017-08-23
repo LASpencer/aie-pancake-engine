@@ -5,6 +5,7 @@
 class AvoidTerrainForce;
 typedef std::shared_ptr<AvoidTerrainForce> AvoidTerrainForcePtr;
 
+
 class AvoidTerrainForce : public SteeringForce {
 public:
 	AvoidTerrainForce();
@@ -12,6 +13,4 @@ public:
 	virtual ~AvoidTerrainForce();
 
 	virtual glm::vec2 getForce(Agent* agent);
-
-	virtual void draw(Agent* agent, aie::Renderer2D* renderer);
 };

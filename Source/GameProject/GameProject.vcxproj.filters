@@ -76,12 +76,6 @@
     <Filter Include="Source Files\State Machine\Conditions">
       <UniqueIdentifier>{d229e5ab-fba5-4b32-a1dc-3d0802377f77}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Pathfinding">
-      <UniqueIdentifier>{d4b76b79-58a3-4ad5-b36f-046c3e45cb6e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Pathfinding">
-      <UniqueIdentifier>{2813a329-ca60-4421-b9cb-77beaa0f725d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\imgui">
       <UniqueIdentifier>{df3ea7d8-dde8-4563-8851-6afdbf07a6a8}</UniqueIdentifier>
     </Filter>
@@ -174,16 +168,7 @@
     <ClCompile Include="TimerCondition.cpp">
       <Filter>Source Files\State Machine\Conditions</Filter>
     </ClCompile>
-    <ClCompile Include="TargetInRangeCondition.cpp">
-      <Filter>Source Files\State Machine\Conditions</Filter>
-    </ClCompile>
     <ClCompile Include="PursueForce.cpp">
-      <Filter>Source Files\Entities\Behaviours\Steering</Filter>
-    </ClCompile>
-    <ClCompile Include="WeightedSteeringForce.cpp">
-      <Filter>Source Files\Entities\Behaviours\Steering</Filter>
-    </ClCompile>
-    <ClCompile Include="EvadeForce.cpp">
       <Filter>Source Files\Entities\Behaviours\Steering</Filter>
     </ClCompile>
     <ClCompile Include="BoundsForce.cpp">
@@ -191,9 +176,6 @@
     </ClCompile>
     <ClCompile Include="WanderForce.cpp">
       <Filter>Source Files\Entities\Behaviours\Steering</Filter>
-    </ClCompile>
-    <ClCompile Include="MapGraph.cpp">
-      <Filter>Source Files\Pathfinding</Filter>
     </ClCompile>
     <ClCompile Include="..\dependencies\imgui\imgui.cpp">
       <Filter>Source Files\imgui</Filter>
@@ -239,9 +221,6 @@
     </ClCompile>
     <ClCompile Include="AttackTarget.cpp">
       <Filter>Source Files\Entities\Behaviours</Filter>
-    </ClCompile>
-    <ClCompile Include="Grid.cpp">
-      <Filter>Source Files\Pathfinding</Filter>
     </ClCompile>
     <ClCompile Include="SeparationForce.cpp">
       <Filter>Source Files\Entities\Behaviours\Steering</Filter>
@@ -320,6 +299,9 @@
     </ClCompile>
     <ClCompile Include="StopForce.cpp">
       <Filter>Source Files\Entities\Behaviours\Steering</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -422,14 +404,8 @@
     <ClInclude Include="SteeringForce.h">
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
-    <ClInclude Include="Target.h">
-      <Filter>Header Files\Entities\Behaviours\Steering</Filter>
-    </ClInclude>
     <ClInclude Include="SeekForce.h">
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
-    </ClInclude>
-    <ClInclude Include="TargetInRangeCondition.h">
-      <Filter>Header Files\State Machine\Conditions</Filter>
     </ClInclude>
     <ClInclude Include="TimerCondition.h">
       <Filter>Header Files\State Machine\Conditions</Filter>
@@ -437,20 +413,11 @@
     <ClInclude Include="PursueForce.h">
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
-    <ClInclude Include="WeightedSteeringForce.h">
-      <Filter>Header Files\Entities\Behaviours\Steering</Filter>
-    </ClInclude>
-    <ClInclude Include="EvadeForce.h">
-      <Filter>Header Files\Entities\Behaviours\Steering</Filter>
-    </ClInclude>
     <ClInclude Include="BoundsForce.h">
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
     <ClInclude Include="WanderForce.h">
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
-    </ClInclude>
-    <ClInclude Include="MapGraph.h">
-      <Filter>Header Files\Pathfinding</Filter>
     </ClInclude>
     <ClInclude Include="..\dependencies\imgui\imgui_internal.h">
       <Filter>Header Files\imgui</Filter>
@@ -496,9 +463,6 @@
     </ClInclude>
     <ClInclude Include="Ray.h">
       <Filter>Header Files\Entities\Components\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Grid.h">
-      <Filter>Header Files\Pathfinding</Filter>
     </ClInclude>
     <ClInclude Include="Flocking.h">
       <Filter>Header Files\Entities\Behaviours</Filter>
@@ -577,6 +541,9 @@
     </ClInclude>
     <ClInclude Include="StopForce.h">
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

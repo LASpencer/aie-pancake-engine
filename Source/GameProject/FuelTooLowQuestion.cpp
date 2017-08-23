@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "FuelTooLowQuestion.h"
 
-const float FuelTooLowQuestion::fuel_low_factor = 0.2f;
+const float FuelTooLowQuestion::fuel_low_factor = 0.25f;
 
 FuelTooLowQuestion::FuelTooLowQuestion()
 {

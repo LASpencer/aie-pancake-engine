@@ -22,13 +22,15 @@ BehaviourResult GoToBase::update(Agent * agent, float deltaTime)
 		return failure;
 	}
 	else {
-		//TODO if this is slow, have some way to check if path is already valid, and if so use it
+		// Find own base position
 		Team agentTeam = tank->getTeam();
 		EntityPtr base = agent->getEntity().lock()->getApp()->getBase(agentTeam);
 		glm::vec2 basePosition(base->getPosition()->getGlobalTransform()[2]);
+		// Pathfind
 		bool pathFound = agent->setGoal(basePosition);
 		if (pathFound) {
-			tank->avoidFriends();
+			// Follow path, avoiding getting to close to others
+			tank->avoidFriends(0.05f);
 			agent->followPath();
 			return success;
 		} else {

@@ -1,7 +1,6 @@
 #pragma once
 #include "stdafx.h"
 #include "Renderer2D.h"
-//TODO behaviours should be passed agent instead of entity
 
 class Agent;
 
@@ -14,6 +13,7 @@ enum BehaviourResult {
 	running
 };
 
+// Base class for behaviours
 class Behaviour
 {
 public:

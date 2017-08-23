@@ -185,20 +185,20 @@ bool VehicleAgent::attack(VehiclePtr target)
 		glm::vec2 displacement = target->getPosition() - getPosition();
 		if (glm::dot(displacement, displacement) < m_attackRange * m_attackRange) {
 			if (m_attackCD <= 0.f) {
+				// Sets shooting cooldown
 				m_attackCD = def_firing_rate;
+				// Check if attack hits
 				float damageChance = 0.2f;
-
 				float hitRoll = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 				if (hitRoll >= 0.8f) {
 					target->kill();
 				}
-				//Set attacking sprite
+				// Setting shootTime turns on shooting sprite
 				m_shootTime = shoot_time;
 			}
 			return true;
 		}
 	}
-	//TODO set uvrect of sprite for damage sustained, shooting
 	return false;
 }
 
@@ -208,7 +208,7 @@ void VehicleAgent::kill()
 		m_alive = false;
 		m_engineOK = false;
 		m_canShoot = false;
-		m_timers[dead].start();
+		m_timers[dead].start();		// Starting dead timer so it knows when to respawn
 	}
 }
 
@@ -218,6 +218,7 @@ void VehicleAgent::respawn()
 	m_engineOK = true;
 	m_canShoot = true;
 	m_fuel = m_maxFuel;
+	// Move back to base
 	EntityPtr entity(m_entity);
 	EntityPtr base = entity->getApp()->getBase(m_team);
 	glm::vec2 basePos(base->getPosition()->getGlobalTransform()[2]);

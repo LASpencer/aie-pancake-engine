@@ -1,6 +1,7 @@
 #pragma once
 #include "Behaviour.h"
 
+// Dead tank does nothing, and respawns after a few seconds
 class DeathBehaviour : public Behaviour {
 public:
 	DeathBehaviour();

@@ -17,12 +17,17 @@ glm::vec2 SeparationForce::getForce(Agent * agent)
 	VehicleAgent* vehicle = dynamic_cast<VehicleAgent*>(agent);
 	if (vehicle != nullptr) {
 		glm::vec2 position = agent->getPosition();
+		// Get either friendly or enemy neighbours
 		std::vector<VehicleAgent*>& neighbours = (m_fleeEnemies ? vehicle->getEnemyNeighbours() : vehicle->getNeighbours());
+		// Apply repulsion from each neighbour
 		for (auto neighbour : neighbours) {
 			seperatingForce += position - neighbour->getPosition();
 		}
 		if (neighbours.size() > 0) {
-			seperatingForce *= 1.f / neighbours.size();
+			seperatingForce /= neighbours.size();
+		}
+		else {
+			return glm::vec2(0);
 		}
 	}
 	//gets direction from each neighbor to self, divide by size of neighbourhood, use as target velocity

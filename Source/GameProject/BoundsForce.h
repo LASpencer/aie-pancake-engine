@@ -4,6 +4,7 @@
 class BoundsForce;
 typedef std::shared_ptr<BoundsForce> BoundsForcePtr;
 
+// Move back in bounds
 class BoundsForce :
 	public SteeringForce
 {

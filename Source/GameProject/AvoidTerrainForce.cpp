@@ -22,6 +22,7 @@ glm::vec2 AvoidTerrainForce::getForce(Agent * agent)
 	Grid* grid = app->getGrid();
 	glm::vec2 force(0);
 	GridSquarePtr square = agent->getSquare();
+	// If in impassable terrain, get out of it
 	if (square->getType() == impassable) {
 		std::pair<bool, glm::vec2> collision = square->getCollider()->doesCollide(agent->getPosition());
 		if (collision.first) {
@@ -32,7 +33,7 @@ glm::vec2 AvoidTerrainForce::getForce(Agent * agent)
 		}
 	}
 	else if (agent->getVelocity() != glm::vec2(0.f)) {
-		// Check future collision, and 
+		// Check for future collision, and if so move away from potential collision
 		std::vector<GridSquarePtr> neighbours = grid->getAdjacentSquares(square);
 		Ray futurePath(agent->getPosition(), agent->getVelocity(), glm::length(agent->getVelocity()) * 2.f);
 		for (GridSquarePtr neighbour : neighbours) {
@@ -42,6 +43,7 @@ glm::vec2 AvoidTerrainForce::getForce(Agent * agent)
 				if (collisionDistance >= 0.f) {
 					glm::vec2 collisionPoint = futurePath.getOrigin() + futurePath.getDirection() * collisionDistance;
 					glm::vec2 displacement = collisionPoint - neighbour->getPosition();
+					// Figure out which edge of square hit, and move away from that edge
 					if (abs(displacement.x) > abs(displacement.y)) {
 						if (displacement.x > 0.f) {
 							force = glm::vec2(1, 0);
@@ -64,16 +66,4 @@ glm::vec2 AvoidTerrainForce::getForce(Agent * agent)
 		}
 	}
 	return glm::vec2(0);
-}
-
-void AvoidTerrainForce::draw(Agent * agent, aie::Renderer2D * renderer)
-{
-	//TODO draw rays
-	////EntityPtr entity(agent->getEntity());
-	////for (Ray ray : m_rays) {
-	////	Ray globalRay = ray;
-	////	globalRay.transform(entity->getPosition()->getGlobalTransform());
-	////	globalRay.draw(renderer);
-	////}
-
 }

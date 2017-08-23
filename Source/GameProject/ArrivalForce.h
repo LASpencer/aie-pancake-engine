@@ -5,6 +5,7 @@
 class ArrivalForce;
 typedef std::shared_ptr<ArrivalForce> ArrivalForcePtr;
 
+// Move to a point, slowing down as it is approached
 class ArrivalForce :
 	public SteeringForce
 {

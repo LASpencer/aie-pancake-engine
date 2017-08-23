@@ -2,6 +2,7 @@
 #include "Behaviour.h"
 #include "WanderForce.h"
 
+// Wanders randomly
 class Wander : public Behaviour {
 public:
 	Wander();
