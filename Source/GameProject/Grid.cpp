@@ -12,7 +12,7 @@ Grid::Grid() : m_showNodes(false)
 	size_t squaresWide = (GameProjectApp::max_corner - GameProjectApp::min_corner).x / square_size;
 	size_t squaresHigh = (GameProjectApp::max_corner - GameProjectApp::min_corner).y / square_size;
 
-	//TODO make grid of all open squares, with each adjacent (diagonal or orthogonal) connected to each other
+	// make grid of all open squares, with each adjacent (diagonal or orthogonal) connected to each other
 	for (size_t i = 0; i < squaresWide; ++i) {
 		std::vector<GridSquarePtr> column;
 		for (size_t j = 0; j < squaresHigh; ++j) {

@@ -2,7 +2,7 @@
 #include "Behaviour.h"
 #include "PursueForce.h"
 
-// Stop moving and shoot at target
+// Shoot at a target
 class AttackTarget : public Behaviour {
 public:
 	AttackTarget();

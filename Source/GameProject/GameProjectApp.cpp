@@ -275,11 +275,11 @@ void GameProjectApp::update(float deltaTime) {
 		Collider::setDrawBoxes(!Collider::draw_boxes);
 	}
 	// Toggle showing paths
-	if (input->wasKeyPressed(aie::INPUT_KEY_P)) {
+	if (input->wasKeyPressed(aie::INPUT_KEY_N)) {
 		m_showPaths = !m_showPaths;
 	}
 	// Toggle showing map nodes
-	if (input->wasKeyPressed(aie::INPUT_KEY_N)) {
+	if (input->wasKeyPressed(aie::INPUT_KEY_M)) {
 		m_mapGraph->toggleShowNodes();
 	}
 	// Toggle showing behaviours of loggedTank

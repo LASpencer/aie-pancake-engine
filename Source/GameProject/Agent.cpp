@@ -10,6 +10,7 @@
 #include "PursueForce.h"
 #include "ArrivalForce.h"
 #include "StopForce.h"
+#include "MatchVelocityForce.h"
 
 const float Agent::def_max_velocity = 500.f;
 const float Agent::def_max_force = 100.f;
@@ -21,6 +22,7 @@ Agent::Agent() : Component(), m_maxVelocity(def_max_velocity), m_maxForce(def_ma
 	m_avoidImpassableTerrain = std::make_shared<AvoidTerrainForce>();
 	m_pursueTarget = std::make_shared<PursueForce>();
 	m_stopForce = std::make_shared<StopForce>();
+	m_matchVelocity = std::make_shared<MatchVelocityForce>();
 }
 
 Agent::Agent(float maxVelocity, float maxForce, float size) : Component(), m_maxVelocity(maxVelocity), m_maxForce(maxForce), m_size(size), m_velocity(0), m_force(0), m_canMove(true)
@@ -29,6 +31,7 @@ Agent::Agent(float maxVelocity, float maxForce, float size) : Component(), m_max
 	m_avoidImpassableTerrain = std::make_shared<AvoidTerrainForce>();
 	m_pursueTarget = std::make_shared<PursueForce>();
 	m_stopForce = std::make_shared<StopForce>();
+	m_matchVelocity = std::make_shared<MatchVelocityForce>();
 }
 
 Agent::~Agent()
@@ -227,7 +230,7 @@ void Agent::followPath(float weight)
 
 void Agent::matchTargetVelocity(float weight)
 {
-	//TODO write matchVelocity steering force
+	m_steeringForces.push_back({ std::dynamic_pointer_cast<SteeringForce>(m_matchVelocity), weight });
 }
 
 void Agent::stop(float weight)
@@ -246,18 +249,16 @@ bool Agent::pursueTarget(float weight)
 
 void Agent::notify(Subject * subject, EventBase * event)
 {
-	//TODO if terrain collision, or body collided with other body, apply impulse for collision
+	// if terrain collision, or body collided with other body, apply impulse for collision
 	EventBase::EventID id = event->getEventID();
 	if (id == EventBase::collision) {
 		CollisionEvent* collisionEvent = dynamic_cast<CollisionEvent*>(event);
-		//TODO check subject is collider, if body-body impulse away
 		if (collisionEvent->getMyType() == body && collisionEvent->getOtherType() == body) {
 			applyImpulse(collisionEvent->getPenetration() * 0.5f);
 		}
 	}
 	else if (id == EventBase::terrain_collision) {
 		TerrainCollisionEvent* collisionEvent = dynamic_cast<TerrainCollisionEvent*>(event);
-		//TODO check subject is collider, square isn't expired
 		if (collisionEvent->getMyType() == body &&
 			collisionEvent->getSquare().lock()->getType() == impassable) {
 			applyImpulse(collisionEvent->getPenetration());
