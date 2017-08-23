@@ -160,6 +160,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="SteeringForce.cpp" />
+    <ClCompile Include="StopForce.cpp" />
     <ClCompile Include="TargetInRangeCondition.cpp" />
     <ClCompile Include="TargetInRangeQuestion.cpp" />
     <ClCompile Include="TextBar.cpp" />
@@ -242,6 +243,7 @@
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SteeringForce.h" />
+    <ClInclude Include="StopForce.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="TankBehaviour.h" />
     <ClInclude Include="Target.h" />

@@ -20,11 +20,13 @@ Behaviour * SequenceBehaviour::clone()
 	for (BehaviourPtr child : m_children) {
 		BehaviourPtr childClone(child->clone());
 		clonedChildren.push_back(childClone);
+		// If ongoing behaviour was cloned, save clone's pointer for later
 		if (m_ongoingBehaviour != m_children.end() && m_ongoingBehaviour->get() == child.get()) {
 			ongoingChild = childClone.get();
 		}
 	}
 	SequenceBehaviour* cloned = new SequenceBehaviour(clonedChildren);
+	// Set clone ongoing behavior
 	if (m_running) {
 		cloned->m_running = true;
 		for (std::vector<BehaviourPtr>::iterator it = cloned->m_children.begin(); it != cloned->m_children.end(); ++it) {
@@ -51,6 +53,7 @@ BehaviourResult SequenceBehaviour::update(Agent * agent, float deltaTime)
 	while (child != m_children.end()) {
 		switch ((*child)->update(agent, deltaTime)) {
 		case(failure):
+			// Failure ends sequence
 			m_running = false;
 			return failure;
 			break;
@@ -65,6 +68,7 @@ BehaviourResult SequenceBehaviour::update(Agent * agent, float deltaTime)
 		}
 		++child;
 	}
+	// If end reached, sequence must have succeeded
 	m_running = false;
 	return success;
 }

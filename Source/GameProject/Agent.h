@@ -23,6 +23,9 @@ typedef std::shared_ptr<AvoidTerrainForce> AvoidTerrainForcePtr;
 class PursueForce;
 typedef std::shared_ptr<PursueForce> PursueForcePtr;
 
+class StopForce;
+typedef std::shared_ptr<StopForce> StopForcePtr;
+
 struct WeightedForce {
 	SteeringForcePtr force;
 	float weight;
@@ -132,6 +135,7 @@ protected:
 	BoundsForcePtr m_stayInBounds;
 	AvoidTerrainForcePtr m_avoidImpassableTerrain;
 	PursueForcePtr m_pursueTarget;
+	StopForcePtr m_stopForce;
 	
 	std::stack<GridSquarePtr> m_path;	// Squares forming path to goal position
 	GridSquarePtr m_goalSquare;

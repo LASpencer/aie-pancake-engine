@@ -213,8 +213,7 @@ void Agent::matchTargetVelocity(float weight)
 
 void Agent::stop(float weight)
 {
-	//TODO use a force to gradually slow down
-	m_velocity = glm::vec2(0);
+	m_steeringForces.push_back({ std::dynamic_pointer_cast<SteeringForce>(m_stopForce), weight });
 }
 
 bool Agent::pursueTarget(float weight)

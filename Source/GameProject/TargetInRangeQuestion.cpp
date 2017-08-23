@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "TargetInRangeQuestion.h"
 #include "Agent.h"
 

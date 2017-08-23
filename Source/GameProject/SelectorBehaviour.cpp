@@ -17,14 +17,17 @@ Behaviour * SelectorBehaviour::clone()
 {
 	std::vector<BehaviourPtr> clonedChildren;
 	Behaviour* ongoingChild;
+	// Clone children 
 	for (BehaviourPtr child : m_children) {
 		BehaviourPtr childClone(child->clone());
 		clonedChildren.push_back(childClone);
+		// If ongoing behaviour was cloned, save clone's pointer for later
 		if (m_ongoingBehaviour != m_children.end() && m_ongoingBehaviour->get() == child.get()) {
 			ongoingChild = childClone.get();
 		}
 	}
 	SelectorBehaviour* cloned = new SelectorBehaviour(clonedChildren);
+	// If running, set clone's ongoing behaviour
 	if (m_running) {
 		cloned->m_running = true;
 		for (std::vector<BehaviourPtr>::iterator it = cloned->m_children.begin(); it != cloned->m_children.end(); ++it) {
@@ -50,6 +53,7 @@ BehaviourResult SelectorBehaviour::update(Agent * agent, float deltaTime)
 	while(child != m_children.end()) {
 		switch ((*child)->update(agent, deltaTime)) {
 		case(success) :
+			// Success ends the selection
 			m_running = false;
 			return success;
 			break;
@@ -64,6 +68,7 @@ BehaviourResult SelectorBehaviour::update(Agent * agent, float deltaTime)
 		}
 		++child;
 	}
+	// If end reached, everything must have failed
 	m_running = false;
 	return failure;
 }

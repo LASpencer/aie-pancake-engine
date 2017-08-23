@@ -318,6 +318,9 @@
     <ClCompile Include="ArrivalForce.cpp">
       <Filter>Source Files\Entities\Behaviours\Steering</Filter>
     </ClCompile>
+    <ClCompile Include="StopForce.cpp">
+      <Filter>Source Files\Entities\Behaviours\Steering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameProjectApp.h">
@@ -570,6 +573,9 @@
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
     <ClInclude Include="ArrivalForce.h">
+      <Filter>Header Files\Entities\Behaviours\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="StopForce.h">
       <Filter>Header Files\Entities\Behaviours\Steering</Filter>
     </ClInclude>
   </ItemGroup>

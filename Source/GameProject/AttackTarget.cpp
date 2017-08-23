@@ -28,7 +28,7 @@ BehaviourResult AttackTarget::update(Agent * agent, float deltaTime)
 		if (target.get() == nullptr) {
 			return failure;
 		} else if (tank->attack(target)) {
-			tank->matchTargetVelocity();
+			tank->stop();
 		} else{
 			return failure;
 		}
